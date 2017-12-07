@@ -6,7 +6,7 @@ Exposed has two flavors of database access: typesafe SQL wrapping DSL and lightw
 This Wiki contains the following pages:
 
   * [[Introduction|Home]] - This page
-  * [[Getting Started|GettingStarted]]
+  * [[Getting Started|Getting-Started]]
   * [[Frequently Asked Questions|FAQ]]
   * [[Contributing|Contributing]]
 
