@@ -1,4 +1,7 @@
   * [[Introduction|Home]]
   * [[Getting Started|Getting-Started]]
+  * [[DSL Flavor|DSL]]
+  * [[DAO Flavor|DAO]]
+  * [[Classes Documentation|LibDocumentation]]
   * [[Frequently Asked Questions|FAQ]]
   * [[Contributing|Contributing]]
