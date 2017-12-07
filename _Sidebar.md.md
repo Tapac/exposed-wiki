@@ -1,4 +1,4 @@
   * [[Introduction|Home]]
-  * [[Getting Started|GettingStarted]]
+  * [[Getting Started|Getting-Started]]
   * [[Frequently Asked Questions|FAQ]]
   * [[Contributing|Contributing]]
