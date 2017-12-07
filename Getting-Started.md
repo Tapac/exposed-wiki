@@ -4,11 +4,11 @@
 
 ```xml
 <repositories>
-    <repository>
-        <id>exposed</id>
-        <name>exposed</name>
-        <url>https://dl.bintray.com/kotlin/exposed</url>
-    </repository>
+  <repository>
+    <id>exposed</id>
+    <name>exposed</name>
+    <url>https://dl.bintray.com/kotlin/exposed</url>
+  </repository>
 </repositories>
 
 <dependencies>
