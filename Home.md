@@ -7,10 +7,14 @@ This Wiki contains the following pages:
 
   * [[Introduction|Home]] - This page
   * [[Getting Started|Getting-Started]]
+  * [[DSL Flavor|DSL]]
+  * [[DAO Flavor|DAO]]
+  * [[Classes Documentation|LibDocumentation]]
   * [[Frequently Asked Questions|FAQ]]
   * [[Contributing|Contributing]]
 
-Currently supported database dialects:
+
+Currently supported database dialects are:
 
 * PostgreSQL
 * MySQL
