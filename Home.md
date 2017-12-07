@@ -9,3 +9,12 @@ This Wiki contains the following pages:
   * [[Getting Started|GettingStarted]]
   * [[Frequently Asked Questions|FAQ]]
   * [[Contributing|Contributing]]
+
+Currently supported database dialects:
+
+* PostgreSQL
+* MySQL
+* Oracle
+* SQLite
+* H2
+* SQL Server
