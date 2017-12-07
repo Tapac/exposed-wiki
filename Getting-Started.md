@@ -3,16 +3,32 @@
 ### Maven
 
 ```xml
-<dependency>
-  <groupId>org.jetbrains.exposed</groupId>
-  <artifactId>exposed</artifactId>
-  <version>0.9.1</version>
-</dependency>
+<repositories>
+    <repository>
+        <id>exposed</id>
+        <name>exposed</name>
+        <url>https://dl.bintray.com/kotlin/exposed</url>
+    </repository>
+</repositories>
+
+<dependencies>
+  <dependency>
+    <groupId>org.jetbrains.exposed</groupId>
+    <artifactId>exposed</artifactId>
+    <version>0.9.1</version>
+  </dependency>
+</dependencies>
+
 ```
 
 ### Gradle
 
 ```
+repositories {
+  maven {
+    url  "https://dl.bintray.com/kotlin/exposed" 
+  }
+}
 dependencies {
   compile 'org.jetbrains.exposed:exposed:0.9.1'
 }
