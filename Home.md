@@ -7,8 +7,8 @@ This wiki contains the following pages:
 
   * [[Introduction|Home]] - This page
   * [[Getting Started|Getting-Started]]
-  * [[DSL Flavor|DSL]]
-  * [[DAO Flavor|DAO]]
+  * [[DSL API|DSL]]
+  * [[DAO API|DAO]]
   * [[Classes Documentation|LibDocumentation]]
   * [[Frequently Asked Questions|FAQ]]
   * [[Contributing|Contributing]]
