@@ -36,7 +36,74 @@ dependencies {
 
 * Note: There is a separate artifact for `spring-transaction`
 
-## Your first Exposed DAO
+## Getting Started
+
+### Starting a transaction
+
+Every database access using Expose is starting by obtaining a connection and creating a transaction.  
+
+To get a connection:
+
+```kotlin
+Database.connect("jdbc:h2:mem:test", driver = "org.h2.Driver")
+```
+
+It is also possible to provide `javax.sql.DataSource` for advanced behaviors such as connection pooling:
+```kotlin
+Database.connect(dataSource)
+```
+
+After obtaining a connection all SQL statements should be placed inside a transaction:
+```kotlin
+transaction {
+  // Statements here
+}
+```
+
+When starting, it is recommended to log database statements to see the actual DB calls:
+```kotlin
+transaction {
+  // print sql to std-out
+  logger.addLogger(StdOutSqlLogger)
+} 
+```
+
+### DSL & DAO 
+
+Expose comes in two flavors: DSL and DAO.  
+On a high level, DSL means type-safe syntax that is similar to SQL whereas DAO means doing CRUD operations on entities.  
+Observe the below examples and head on to the specific section of each API for more details.
+
+### Your first Exposed DSL
+
+```kotlin
+
+
+fun main(args: Array<String>) {
+  //an example connection to H2 DB  
+  Database.connect("jdbc:h2:mem:test", driver = "org.h2.Driver")
+
+  transaction {
+    // print sql to std-out
+    logger.addLogger(StdOutSqlLogger)
+    
+    // insert new city. SQL: INSERT INTO Cities (name) VALUES ('St. Petersburg')
+    val stPeteId = Cities.insert {
+      it[name] = "St. Petersburg"
+    } get Cities.id
+    
+    // 'select *' SQL: SELECT Cities.id, Cities.name FROM Cities
+    println("Cities: ${Cities.selectAll()}")
+  }
+}
+
+object Cities: IntIdTable() {
+    val name = varchar("name", 50)
+}
+
+```
+
+### Your first Exposed DAO
 
 ```kotlin
 
