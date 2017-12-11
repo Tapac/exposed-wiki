@@ -102,7 +102,7 @@ object Cities: IntIdTable() {
 }
 
 ```
-
+More on [[DSL API|DSL]]
 ### Your first Exposed DAO
 
 ```kotlin
@@ -136,3 +136,6 @@ class City(id: EntityID<Int>) : IntEntity(id) {
     var name by Cities.name
 }
 ```
+More on [[DAO API|DAO]]
+
+Or... back to [[Introduction|Home]]
