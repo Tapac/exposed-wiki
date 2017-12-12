@@ -14,4 +14,11 @@ object StarWarsFilms : IntIdTable() {
   val name: Column<String> = varchar("name", 50)
 }
 ``` 
-## basic CRUD operations
+## Basic CRUD operations
+### Create
+
+### Read
+
+### Update
+
+### Delete
