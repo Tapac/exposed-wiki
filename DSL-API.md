@@ -39,4 +39,26 @@ StarWarsFilms.deleteWhere { StarWarsFilms.sequelId eq 8 }
 ```
 
 ## Where expression
+Query expression (where) expects a boolean operator (ie: `Op<Boolean>`).  
+Allowed conditions are:  
+```
+eq - (==)
+neq - (!=)
+isNull()
+isNotNull()
+less - (<)
+lessEq - (<=)
+greater - (>)
+greaterEq - (>=)
+like - (=~)
+notLike - (!~)
+regexp
+notRegexp
+inList
+notInList
+between
+match
+```
 
+## Advanced operations
+### Join
