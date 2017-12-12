@@ -59,6 +59,10 @@ notInList
 between
 match
 ```
-
+Allowed logical conditions:
+```
+and
+or
+```
 ## Advanced operations
 ### Join
