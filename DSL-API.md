@@ -59,7 +59,7 @@ notInList
 between
 match
 ```
-Allowed logical conditions:
+Allowed logical conditions are:
 ```
 and
 or
