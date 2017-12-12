@@ -16,9 +16,27 @@ object StarWarsFilms : IntIdTable() {
 ``` 
 ## Basic CRUD operations
 ### Create
-
+```kotlin
+val id = StarWarsFilms.insert {
+  it[name] = "The Last Jedi"
+  it[sequelId] = 8
+} get StarWarsFilms.id
+```
 ### Read
-
+```kotlin
+val query: Query = StarWarsFilms.select { StarWarsFilms.sequelId eq 8 }
+```
+`Query` inherit `Iterable` so it is possible to traverse it with map/foreach etc'
 ### Update
-
+```kotlin
+StarWarsFilms.update ({ StarWarsFilms.sequelId eq 8 }) {
+  it[name] = "Episode VIII – The Last Jedi"
+}
+```
 ### Delete
+```kotlin
+StarWarsFilms.deleteWhere { StarWarsFilms.sequelId eq 8 }
+```
+
+## Where expression
+
