@@ -60,7 +60,7 @@ transaction {
 }
 ```
 
-When starting, it is recommended to log database statements to see the actual DB calls:
+To see the actual DB calls, add a logger:
 ```kotlin
 transaction {
   // print sql to std-out
