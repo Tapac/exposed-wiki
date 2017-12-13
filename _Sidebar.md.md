@@ -2,6 +2,7 @@
   * [[Getting Started|Getting-Started]]
   * [[DSL API|DSL]]
   * [[DAO API|DAO]]
-  * [[Classes Documentation|LibDocumentation]]
+  * [[Modules Documentation|LibDocumentation]]
+    * [[Supported Data Types|DataTypes]]
   * [[Frequently Asked Questions|FAQ]]
   * [[Contributing|Contributing]]
