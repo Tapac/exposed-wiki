@@ -15,4 +15,4 @@ Currently Exposed support the following data types:
 * `uuid` - `BINARY(16)`
 
 
-Note: some types are different for specific DB dialect
+Note: some types are different for specific DB dialect.
