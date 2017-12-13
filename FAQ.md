@@ -4,7 +4,8 @@ A: Yes. At the moment the connection usage is implicit (ie: via `ThreadLocal`), 
 
 ### Q: Is `Array` column type supported?
 
-A: Not at the moment. More info here: https://github.com/JetBrains/Exposed/issues/150
+A: Not at the moment. More info here: https://github.com/JetBrains/Exposed/issues/150  
+The complete list of supported data types can be found here: [[Data Types|DataTypes]].
 
 ### Q: Is `upsert` supported?
 
@@ -12,4 +13,5 @@ A: Upsert is an instruction to the Database to insert a new row or update existi
 
 ### Q: Is `json` type supported?
 
-A: Not at the moment. Here is the issue: https://github.com/JetBrains/Exposed/issues/127
+A: Not at the moment. Here is the issue: https://github.com/JetBrains/Exposed/issues/127  
+The complete list of supported data types can be found here: [[Data Types|DataTypes]].
