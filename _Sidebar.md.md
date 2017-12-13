@@ -4,5 +4,6 @@
   * [[DAO API|DAO]]
   * [[Modules Documentation|LibDocumentation]]
     * [[Supported Data Types|DataTypes]]
+    * [[Supported Table View Types|FieldSetTypes]]
   * [[Frequently Asked Questions|FAQ]]
   * [[Contributing|Contributing]]
