@@ -9,7 +9,7 @@ This wiki contains the following pages:
   * [[Getting Started|Getting-Started]]
   * [[DSL API|DSL]]
   * [[DAO API|DAO]]
-  * [[Classes Documentation|LibDocumentation]]
+  * [[Modules Documentation|LibDocumentation]]
   * [[Frequently Asked Questions|FAQ]]
   * [[Contributing|Contributing]]
 
