@@ -1,4 +1,4 @@
-Currently Exposed support the following data types:  
+Currently Exposed support the following data types in table definition:  
 * `integer` - translates to DB `INT`
 * `long` - `BIGINT`
 * `bool` - `BOOLEAN`
