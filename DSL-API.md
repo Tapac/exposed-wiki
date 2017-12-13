@@ -57,7 +57,7 @@ notRegexp
 inList
 notInList
 between
-match
+match (MySQL MATCH AGAINST) 
 ```
 Allowed logical conditions are:
 ```
