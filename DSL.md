@@ -5,6 +5,7 @@ object StarWarsFilms : Table() {
   val id: Column<Int> = integer("id").autoIncrement().primaryKey()
   val sequelId: Column<Int> = integer("sequel_id").uniqueIndex()
   val name: Column<String> = varchar("name", 50)
+  val director: Column<String> = varchar("director", 50)
 }
 ```
 Tables that contains `Int` id with the name `id` can be declared like that:
@@ -12,15 +13,17 @@ Tables that contains `Int` id with the name `id` can be declared like that:
 object StarWarsFilms : IntIdTable() {
   val sequelId: Column<Int> = integer("sequel_id").uniqueIndex()
   val name: Column<String> = varchar("name", 50)
+  val director: Column<String> = varchar("director", 50)
 }
 ``` 
 ## Basic CRUD operations
 ### Create
 ```kotlin
-val id = StarWarsFilms.insert {
+val id = StarWarsFilms. insertAndGetId {
   it[name] = "The Last Jedi"
   it[sequelId] = 8
-} get StarWarsFilms.id
+  it[director] = "Rian Johnson"
+}
 ```
 ### Read
 ```kotlin
@@ -76,5 +79,34 @@ Example:
 StarWarsFilms.selectAll().orderBy(StarWarsFilms.sequelId to true)
 ```
 ## Group-by
- 
+In group by, define fields and their functions (such as `count`) by the `slice()` method.
+```kotlin
+StarWarsFilms.slice(StarWarsFilms.sequelId.count(), StarWarsFilms.director).selectAll().groupBy(StarWarsFilms.director)
+```
+Availbe functions are:
+```
+count
+sum
+max
+min
+average
+...
+``` 
 ## Join
+For the join example consider the following tables:
+```kotlin
+object StarWarsFilms : IntIdTable() {
+  val sequelId: Column<Int> = integer("sequel_id").uniqueIndex()
+  val name: Column<String> = varchar("name", 50)
+  val director: Column<String> = varchar("director", 50)
+}
+
+object Players : Table() {
+  val sequelId: Column<Int> = integer("sequel_id").uniqueIndex()
+  val name: Column<String> = varchar("name", 50)
+}
+```
+Join to count how many players plays in each movie:
+```kotlin
+(Players innerJoin StarWarsFilms).slice(Players.name.count(), StarWarsFilms.name).selectAll().groupBy(StarWarsFilms.name)
+``` 
