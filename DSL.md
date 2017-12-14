@@ -81,7 +81,10 @@ StarWarsFilms.selectAll().orderBy(StarWarsFilms.sequelId to true)
 ## Group-by
 In group by, define fields and their functions (such as `count`) by the `slice()` method.
 ```kotlin
-StarWarsFilms.slice(StarWarsFilms.sequelId.count(), StarWarsFilms.director).selectAll().groupBy(StarWarsFilms.director)
+StarWarsFilms
+  .slice(StarWarsFilms.sequelId.count(), StarWarsFilms.director)
+  .selectAll()
+  .groupBy(StarWarsFilms.director)
 ```
 Availbe functions are:
 ```
