@@ -64,5 +64,17 @@ Allowed logical conditions are:
 and
 or
 ```
-## Advanced operations
-### Join
+## Count
+`count()` is a method of `Query` and executed like that:
+```kotlin
+val count = StarWarsFilms.select { StarWarsFilms.sequelId eq  8 }.count()
+```
+## Order-by
+Order-by accepts a list of columns mapped to boolean indicates if sorting should be ascending or descending.
+Example:
+```kotlin
+StarWarsFilms.selectAll().orderBy(StarWarsFilms.sequelId to true)
+```
+## Group-by
+ 
+## Join
