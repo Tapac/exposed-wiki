@@ -13,6 +13,7 @@ Currently Exposed support the following data types in table definition:
 * `blob` - `BLOB`
 * `binary` - `VARBINARY` with length
 * `uuid` - `BINARY(16)`
+* `reference` - a foreign key
 
 
 Note: some types are different for specific DB dialect.
