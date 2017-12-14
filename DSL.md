@@ -19,7 +19,7 @@ object StarWarsFilms : IntIdTable() {
 ## Basic CRUD operations
 ### Create
 ```kotlin
-val id = StarWarsFilms. insertAndGetId {
+val id = StarWarsFilms.insertAndGetId {
   it[name] = "The Last Jedi"
   it[sequelId] = 8
   it[director] = "Rian Johnson"
