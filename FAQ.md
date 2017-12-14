@@ -15,3 +15,23 @@ A: Upsert is an instruction to the Database to insert a new row or update existi
 
 A: Not at the moment. Here is the issue: https://github.com/JetBrains/Exposed/issues/127  
 The complete list of supported data types can be found here: [[Data Types|DataTypes]].
+
+### Q: Is it possible to use native sql / sql as a string?
+
+A: It is not supported as part of the library but it is possible to implement on top of it and use it like this:
+```
+fun <T:Any> String.execAndMap(transform : (ResultSet) -> T) : List<T> {
+     val result = arrayListOf<T>()
+     TransactionManager.current().exec("") { rs ->
+          while (rs.next()) {
+               result += transform(rs)
+          }
+     }
+     return result
+}
+
+"select u.name, c.name from user u inner join city c where blah blah".execAndMap { rs ->
+    rs.getString("u.name") to rs.getString("c.name") 
+}
+```
+More info in this issue: https://github.com/JetBrains/Exposed/issues/118
