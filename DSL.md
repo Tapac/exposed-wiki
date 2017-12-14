@@ -68,7 +68,7 @@ and
 or
 ```
 ## Count
-`count()` is a method of `Query` and executed like that:
+`count()` is a method of `Query` that is used like below example:
 ```kotlin
 val count = StarWarsFilms.select { StarWarsFilms.sequelId eq  8 }.count()
 ```
