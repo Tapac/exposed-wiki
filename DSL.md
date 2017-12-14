@@ -96,7 +96,7 @@ average
 ...
 ``` 
 ## Join
-For the join example consider the following tables:
+For join example consider the following tables:
 ```kotlin
 object StarWarsFilms : IntIdTable() {
   val sequelId: Column<Int> = integer("sequel_id").uniqueIndex()
