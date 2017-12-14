@@ -35,3 +35,7 @@ fun <T:Any> String.execAndMap(transform : (ResultSet) -> T) : List<T> {
 }
 ```
 More info in this issue: https://github.com/JetBrains/Exposed/issues/118
+
+### Q: Is it possible to update relative to current value?
+
+A: Yes. See example here: https://github.com/JetBrains/Exposed/issues/82
