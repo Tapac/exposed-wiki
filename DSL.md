@@ -117,3 +117,11 @@ Join to count how many players play in each movie:
   .groupBy(StarWarsFilms.name)
 ``` 
 * In case there is a foreign key it is possible to replace `select{}` with `selectAll()`
+
+## Alias
+Aliases allow preventing ambiguity between field names and table names.
+Use the aliased var instead of original one:
+```
+val filmTable1 = StarWarsFilms.alias("ft1")
+filmTable1.selectAll() // can be used in joins etc'
+```
