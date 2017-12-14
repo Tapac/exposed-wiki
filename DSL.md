@@ -79,7 +79,7 @@ Example:
 StarWarsFilms.selectAll().orderBy(StarWarsFilms.sequelId to true)
 ```
 ## Group-by
-In group by, define fields and their functions (such as `count`) by the `slice()` method.
+In group-by, define fields and their functions (such as `count`) by the `slice()` method.
 ```kotlin
 StarWarsFilms
   .slice(StarWarsFilms.sequelId.count(), StarWarsFilms.director)
@@ -109,10 +109,11 @@ object Players : Table() {
   val name: Column<String> = varchar("name", 50)
 }
 ```
-Join to count how many players plays in each movie:
+Join to count how many players play in each movie:
 ```kotlin
 (Players innerJoin StarWarsFilms)
   .slice(Players.name.count(), StarWarsFilms.name)
   .select { StarWarsFilms.sequelId eq Players.sequelId }
   .groupBy(StarWarsFilms.name)
 ``` 
+* In case there is a foreign key it is possible to replace `select{}` with `selectAll()`
