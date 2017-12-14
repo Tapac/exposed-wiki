@@ -108,5 +108,8 @@ object Players : Table() {
 ```
 Join to count how many players plays in each movie:
 ```kotlin
-(Players innerJoin StarWarsFilms).slice(Players.name.count(), StarWarsFilms.name).selectAll().groupBy(StarWarsFilms.name)
+(Players innerJoin StarWarsFilms)
+  .slice(Players.name.count(), StarWarsFilms.name)
+  .selectAll()
+  .groupBy(StarWarsFilms.name)
 ``` 
