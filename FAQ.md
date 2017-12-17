@@ -22,7 +22,7 @@ A: It is not supported as part of the library but it is possible to implement on
 ```
 fun <T:Any> String.execAndMap(transform : (ResultSet) -> T) : List<T> {
      val result = arrayListOf<T>()
-     TransactionManager.current().exec("") { rs ->
+     TransactionManager.current().exec(this) { rs ->
           while (rs.next()) {
                result += transform(rs)
           }
