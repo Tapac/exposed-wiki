@@ -125,3 +125,12 @@ Use the aliased var instead of original one:
 val filmTable1 = StarWarsFilms.alias("ft1")
 filmTable1.selectAll() // can be used in joins etc'
 ```
+
+## Batch Insert
+Batch Insert allow mapping a list of entities into DB raws in one sql statement. It is more efficient than inserting one by one as it initiates only one statement. Here is an example:
+```kotlin
+val cityNames = listOf("Paris", "Moscow", "Helsinki")
+val allCitiesID = cities.batchInsert(cityNames) { name ->
+  this[cities.name] = name
+}
+```
