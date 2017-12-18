@@ -10,7 +10,7 @@
 * [Group-by](#group-by)
 * [Join](#join)
 * [Alias](#alias)
-* [Batch Insert](#batch Insert)
+* [Batch Insert](#batch-insert)
 
 
 
