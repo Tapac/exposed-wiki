@@ -1,3 +1,7 @@
+* [Overview](#Overview)
+
+## Overview
+
 The DSL (Domain Specific Language) API of Exposed, is similar to actual SQL statements with type safety that Kotlin offers.  
 A DB table is represented by an `object` inherited from `org.jetbrains.exposed.sql.Table` like that:
 ```kotlin
