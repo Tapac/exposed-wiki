@@ -39,3 +39,8 @@ More info in this issue: https://github.com/JetBrains/Exposed/issues/118
 ### Q: Is it possible to update a field relative to current field value?
 
 A: Yes. See example here: https://github.com/JetBrains/Exposed/issues/82
+
+### Q: How can I add another type of Database?
+
+A: Implement `DatabaseDialect` interface and register it with `Database.registerDialect()`.  
+If the implementation adds a lot of value consider contributing it as a PR to Exposed.
