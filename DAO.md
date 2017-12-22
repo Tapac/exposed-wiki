@@ -44,7 +44,7 @@ class StarWarsFilm(id: EntityID<Int>) : IntEntity(id) {
 ## Basic CRUD operations
 ### Create
 ```kotlin
-val stPete = City.new {
+val movie = StarWarsFilm.new {
   name = "The Last Jedi"
   sequelId = 8
   director = "Rian Johnson"
@@ -61,6 +61,6 @@ val stPete = City.new {
 ```
 ### Delete
 ```kotlin
-
+movie.delete() 
 ```
 
