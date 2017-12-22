@@ -59,12 +59,12 @@ val movie = StarWarsFilm.findById(5)
 ```
 * For a list of avaialable predicates see [DSL Where expression](https://github.com/JetBrains/Exposed/wiki/DSL#where-expression).  
 
-Read a value from a property is same as a field in a class:
+Read a value from a property similarly to any property in a Kotlin class:
 ```kotlin
 val name = movie.name
 ```
 ### Update
-Update a value from of a property is same as a field in a class:
+Update a value of a property similarly to any property in a Kotlin class:
 ```kotlin
 movie.name = "Episode VIII – The Last Jedi"
 ```
