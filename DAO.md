@@ -32,11 +32,23 @@ object StarWarsFilms : IntIdTable() {
 }
 ```
 An instance or a row in the table is defined as a class instance:
- 
+ ```kotlin
+class StarWarsFilm(id: EntityID<Int>) : IntEntity(id) {
+  companion object : IntEntityClass<StarWarsFilm>(StarWarsFilms)
+
+  var sequelId by StarWarsFilms.sequelId 
+  var name     by StarWarsFilms.name
+  var director by StarWarsFilms.director
+}
+```
 ## Basic CRUD operations
 ### Create
 ```kotlin
-
+val stPete = City.new {
+  name = "The Last Jedi"
+  sequelId = 8
+  director = "Rian Johnson"
+}
 ```
 ### Read
 ```kotlin
