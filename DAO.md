@@ -57,7 +57,8 @@ val movies = StarWarsFilm.all()
 val movies = StarWarsFilm.find {StarWarsFilms.sequelId eq 8}
 val movie = StarWarsFilm.findById(5)
 ```
-* For a list of avaialable predicates see [DSL Where expression](https://github.com/JetBrains/Exposed/wiki/DSL#where-expression).
+* For a list of avaialable predicates see [DSL Where expression](https://github.com/JetBrains/Exposed/wiki/DSL#where-expression).  
+
 Read a value from a property is same as a field in a class:
 ```kotlin
 val name = movie.name
