@@ -51,13 +51,21 @@ val movie = StarWarsFilm.new {
 }
 ```
 ### Read
+To get entities use one of the following
 ```kotlin
-
+val movies = StarWarsFilm.all()
+val movies = StarWarsFilm.find {StarWarsFilms.sequelId eq 8}
+val movie = StarWarsFilm.findById(5)
 ```
-
-### Update
+* For a list of avaialable predicates see [DSL Where expression](https://github.com/JetBrains/Exposed/wiki/DSL#where-expression).
+Read a value from a property is same as a field in a class:
 ```kotlin
-
+val name = movie.name
+```
+### Update
+Update a value from of a property is same as a field in a class:
+```kotlin
+movie.name = "Episode VIII – The Last Jedi"
 ```
 ### Delete
 ```kotlin
