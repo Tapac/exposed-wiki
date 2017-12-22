@@ -31,7 +31,7 @@ object StarWarsFilms : IntIdTable() {
   val director: Column<String> = varchar("director", 50)
 }
 ```
-An instance or a row in the table is defined as a class instance:
+An entity instance or a row in the table is defined as a class instance:
  ```kotlin
 class StarWarsFilm(id: EntityID<Int>) : IntEntity(id) {
   companion object : IntEntityClass<StarWarsFilm>(StarWarsFilms)
