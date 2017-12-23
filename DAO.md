@@ -34,6 +34,14 @@ object StarWarsFilms : IntIdTable() {
   val director: Column<String> = varchar("director", 50)
 }
 ```
+Note that these Column types will be defined automatically, so you can also just leave them away. This would produce the same result as the example above:
+```kotlin
+object StarWarsFilms : IntIdTable() {
+  val sequelId = integer("sequel_id").uniqueIndex()
+  val name = varchar("name", 50)
+  val director = varchar("director", 50)
+}
+```
 An entity instance or a row in the table is defined as a class instance:
  ```kotlin
 class StarWarsFilm(id: EntityID<Int>) : IntEntity(id) {
