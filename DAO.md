@@ -5,8 +5,8 @@
   * [Update](#update)
   * [Delete](#delete)
 * [Referencing](#referencing)
-  * [Simple reference](#simple reference)
-  * [Optional reference](#optional reference)
+  * [Simple reference](#simple-reference)
+  * [Optional reference](#optional-reference)
 
 
 
@@ -77,7 +77,7 @@ movie.delete()
 ```
 
 ## Referencing
-### Simple reference
+### Simple-reference
 Let's say you have this table:
 ```kotlin
 object Users: IntIdTable() {
@@ -124,7 +124,7 @@ You can call:
 ```kotlin
 movie.ratings // returns all UserRating objects with this movie as film
 ```
-### Optional reference
+### Optional-reference
 You can also add an optional reference:
 ```kotlin
 object UserRatings: IntIdTable() {
