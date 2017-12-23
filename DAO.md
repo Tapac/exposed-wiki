@@ -4,6 +4,9 @@
   * [Read](#read)
   * [Update](#update)
   * [Delete](#delete)
+* [Referencing](#referencing)
+  * [Simple reference](#simple reference)
+  * [Optional reference](#optional reference)
 
 
 
@@ -73,3 +76,70 @@ movie.name = "Episode VIII – The Last Jedi"
 movie.delete() 
 ```
 
+## Referencing
+### Simple reference
+Let's say you have this table:
+```kotlin
+object Users: IntIdTable() {
+    val name = varchar("name", 50)
+}
+
+class User(id: EntityID<Int>): IntEntity(id) {
+    companion object : IntEntityClass<User>(Users)
+
+    var name by Users.name
+}
+```
+And now you want to add a table referencing this table (and other tables!):
+```kotlin
+object UserRatings: IntIdTable() {
+    val value = long("value")
+    val film = reference("film", StarWarsFilms)
+    val user = reference("user", Users)
+}
+
+class UserRating(id: EntityID<Int>): IntEntity(id) {
+    companion object : IntEntityClass<UserRating>(UserRatings)
+
+    var value by UserRatings.value
+    var film by StarWarsFilm referencedOn UserRatings.film // use referencedOn for normal references
+    var user by User referencedOn UserRatings.user
+}
+```
+Now you can get the film for a rating in the same way you would get any other field:
+```kotlin
+filmRating.film // returns a StarWarsFilm object
+```
+Now if you wanted to get all the ratings for a film, you could do that by using the `FilmRating.find` function, but what is much easier is to just add a `referrersOn` field to the StarWarsFilm class:
+```kotlin
+class StarWarsFilm(id: EntityID<Int>) : IntEntity(id) {
+    companion object : IntEntityClass<StarWarsFilm>(StarWarsFilms)
+
+    ...
+    val ratings by UserRating referrersOn UserRatings.film // make sure to use val and backReferencedOn
+    ...
+}
+```
+You can call:
+```kotlin
+movie.ratings // returns all UserRating objects with this movie as film
+```
+### Optional reference
+You can also add an optional reference:
+```kotlin
+object UserRatings: IntIdTable() {
+    ...
+    val secondUser = reference("second_user", Users).nullable() // this reference is nullable!
+    ...
+}
+
+class UserRating(id: EntityID<Int>): IntEntity(id) {
+    companion object : IntEntityClass<UserRating>(UserRatings)
+
+    ...
+    var secondUser by User optionalReferencedOn UserRatings.secondUser // use optionalReferencedOn for nullable references
+    ...
+}
+```
+Now `secondUser` will be a nullable field.
+Of course you can still use `referrersOn`.
