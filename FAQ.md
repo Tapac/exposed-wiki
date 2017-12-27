@@ -49,5 +49,5 @@ If the implementation adds a lot of value consider contributing it as a PR to Ex
 
 A: No. Its possible in sql directly in couple of steps. More details here: https://github.com/JetBrains/Exposed/issues/185
 
-### More questions in stackoverflow:
+### More questions on stackoverflow:
 https://stackoverflow.com/questions/tagged/kotlin-exposed
