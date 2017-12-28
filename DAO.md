@@ -3,7 +3,7 @@
   * [Create](#create)
   * [Read](#read)
   * [Update](#update)
-    * [Sort](#sort)
+    * [Sort](#sort-order-by)
   * [Delete](#delete)
 * [Referencing](#referencing)
   * [Simple reference](#simple-reference)
