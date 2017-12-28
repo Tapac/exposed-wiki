@@ -3,6 +3,7 @@
   * [Create](#create)
   * [Read](#read)
   * [Update](#update)
+    * [Sort](#sort)
   * [Delete](#delete)
 * [Referencing](#referencing)
   * [Simple reference](#simple-reference)
@@ -70,12 +71,16 @@ val movie = StarWarsFilm.findById(5)
 ```
 * For a list of avaialable predicates see [DSL Where expression](https://github.com/JetBrains/Exposed/wiki/DSL#where-expression).  
 
-Read a value from a property similarly to any property in a Kotlin class:
+Read a value from a property similar to any property in a Kotlin class:
 ```kotlin
 val name = movie.name
 ```
+#### Sort (Order-by)
+```kotlin
+val movies = StarWarsFilm.all().sortedBy { it.sequelId }
+```
 ### Update
-Update a value of a property similarly to any property in a Kotlin class:
+Update a value of a property similar to any property in a Kotlin class:
 ```kotlin
 movie.name = "Episode VIII – The Last Jedi"
 ```
