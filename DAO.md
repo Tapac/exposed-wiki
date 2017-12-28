@@ -79,6 +79,7 @@ Update a value of a property similarly to any property in a Kotlin class:
 ```kotlin
 movie.name = "Episode VIII – The Last Jedi"
 ```
+* Note: Exposed doesn't make an immediate update when you set a new value for Entity, it just store it on the inner map. "Flushing" values to the database occurs at the end of the transaction or before next "select *" from the database.
 ### Delete
 ```kotlin
 movie.delete() 
