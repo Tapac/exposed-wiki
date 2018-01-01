@@ -2,6 +2,7 @@
   * [[Getting Started|Getting-Started]]
   * [[DSL API|DSL]]
   * [[DAO API|DAO]]
+  * [[Transactions|Transactions]]
   * [[Modules Documentation|LibDocumentation]]
     * [[Supported Data Types|DataTypes]]
     * [[Supported Table View Types|FieldSetTypes]]
