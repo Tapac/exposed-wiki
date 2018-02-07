@@ -50,7 +50,12 @@ val id = StarWarsFilms.insertAndGetId {
 ```kotlin
 val query: Query = StarWarsFilms.select { StarWarsFilms.sequelId eq 8 }
 ```
-`Query` inherit `Iterable` so it is possible to traverse it with map/foreach etc'
+`Query` inherit `Iterable` so it is possible to traverse it with map/foreach etc'. For example:
+```kotlin
+StarWarsFilms.select { StarWarsFilms.sequelId eq 8 }.forEach {
+  println(it[StarWarsFilms.name])
+}
+```
 ### Update
 ```kotlin
 StarWarsFilms.update ({ StarWarsFilms.sequelId eq 8 }) {
