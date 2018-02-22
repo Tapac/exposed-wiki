@@ -47,7 +47,11 @@ If the implementation adds a lot of value consider contributing it as a PR to Ex
 
 ### Q: Is it possible to create tables with cross / cyclic reference?
 
-A: No. Its possible in sql directly in couple of steps. More details here: https://github.com/JetBrains/Exposed/issues/185
+A: No. Its possible in sql directly in a couple of steps. More details here: https://github.com/JetBrains/Exposed/issues/185
+
+### Q: How can I implement nested queries?
+
+A: See example here: https://github.com/JetBrains/Exposed/issues/248
 
 ### More questions on Stack Overflow:
 https://stackoverflow.com/questions/tagged/kotlin-exposed
