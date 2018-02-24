@@ -1,6 +1,6 @@
 ### Q: Can I use multiple Database Connections?
 
-A: Yes. At the moment the connection usage is implicit (ie: via `ThreadLocal`), and it is not possible to specify connection explicitly. So switching between connections is not supported at the moment. There is an open issue about it: https://github.com/JetBrains/Exposed/issues/93.  
+A: Yes. See [[Working with a multiple databases|Transactions#working-with-a-multiple-databases]]
 
 ### Q: Is `Array` column type supported?
 
