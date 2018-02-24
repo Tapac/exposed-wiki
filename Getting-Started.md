@@ -15,7 +15,7 @@
   <dependency>
     <groupId>org.jetbrains.exposed</groupId>
     <artifactId>exposed</artifactId>
-    <version>0.9.1</version>
+    <version>0.10.1</version>
   </dependency>
 </dependencies>
 
@@ -30,7 +30,7 @@ repositories {
   }
 }
 dependencies {
-  compile 'org.jetbrains.exposed:exposed:0.9.1'
+  compile 'org.jetbrains.exposed:exposed:0.10.1'
 }
 ```
 
