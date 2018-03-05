@@ -8,6 +8,7 @@
 * [Count](#count)
 * [Order-by](#order-by)
 * [Group-by](#group-by)
+* [Limit](#limit)
 * [Join](#join)
 * [Alias](#alias)
 * [Batch Insert](#batch-insert)
@@ -121,6 +122,12 @@ min
 average
 ...
 ``` 
+## Limit
+You can use limit function to prevent loading large data sets or use it for pagination with second `offset` parameter.
+```kotlin
+// Take 2 films after the first one.
+StarWarsFilms.select { StarWarsFilms.sequelId eq Players.sequelId }.limit(2, offset = 1)
+```
 ## Join
 For join example consider the following tables:
 ```kotlin
