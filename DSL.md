@@ -124,7 +124,7 @@ StarWarsFilms
   .selectAll()
   .groupBy(StarWarsFilms.director)
 ```
-Availbe functions are:
+Available functions are:
 ```
 count
 sum
