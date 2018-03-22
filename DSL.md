@@ -57,6 +57,17 @@ StarWarsFilms.select { StarWarsFilms.sequelId eq 8 }.forEach {
   println(it[StarWarsFilms.name])
 }
 ```
+
+If you want to select only distinct value then use `withDistinct()` function:
+```kotlin
+val directors = StarWarsFilms.
+   slice{ StarWarsFilms.director }.
+   select { StarWarsFilms.sequelId < 5 }.
+   withDistinct().map {
+      it[StarWarsFilms.director]
+   }
+```
+
 ### Update
 ```kotlin
 StarWarsFilms.update ({ StarWarsFilms.sequelId eq 8 }) {
