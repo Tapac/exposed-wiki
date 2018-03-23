@@ -61,5 +61,14 @@ A: No. Its possible in sql directly in a couple of steps. More details here: htt
 
 A: See example here: https://github.com/JetBrains/Exposed/issues/248
 
+### Q: SQLite3 fails with the error Transaction attempt #0 failed: SQLite supports only TRANSACTION_SERIALIZABLE and TRANSACTION_READ_UNCOMMITTED.
+
+A: Make your connect code look like below (taken from [ThreadLocalManagerTest.kt](https://github.com/JetBrains/Exposed/blob/4360ae18c708072dfda261742e65b8b56a696adc/src/test/kotlin/org/jetbrains/exposed/sql/tests/shared/ThreadLocalManagerTest.kt#L282-L291)).  The setting below tells SQLite3 to enforce transactional integrity by [serializing writes from different connections](https://sqlite.org/isolation.html).
+```
+Database.connect("jdbc:sqlite:my.db", "org.sqlite.JDBC")
+TransactionManager.manager.defaultIsolationLevel = Connection.TRANSACTION_SERIALIZABLE
+```
+
+
 ### More questions on Stack Overflow:
 https://stackoverflow.com/questions/tagged/kotlin-exposed
