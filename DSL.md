@@ -74,6 +74,16 @@ StarWarsFilms.update ({ StarWarsFilms.sequelId eq 8 }) {
   it[name] = "Episode VIII – The Last Jedi"
 }
 ```
+
+If you want to update column value with some expression like increment:
+```kotlin
+StarWarsFilms.update({ StarWarsFilms.sequelId eq 8 }) {
+    with(SqlExpressionBuilder) {
+       it.update(StarWarsFilms.sequelId, StarWarsFilms.sequelId + 1)
+    }
+} 
+```
+
 ### Delete
 ```kotlin
 StarWarsFilms.deleteWhere { StarWarsFilms.sequelId eq 8 }
