@@ -12,6 +12,7 @@
 * [Join](#join)
 * [Alias](#alias)
 * [Batch Insert](#batch-insert)
+* [Insert From Select](#insert-from-select)
 
 
 
@@ -187,4 +188,16 @@ val cityNames = listOf("Paris", "Moscow", "Helsinki")
 val allCitiesID = cities.batchInsert(cityNames) { name ->
   this[cities.name] = name
 }
+```
+
+## Insert From Select
+If you want to use `INSERT INTO ... SELECT ` SQL clause try Exposed analog `Table.insert(Query)`.
+```kotlin
+val substring = users.name.substring(1, 2)
+cities.insert(users.slice(substring).selectAll().orderBy(users.id).limit(2))
+```
+By default it will try to insert into all non auto-autoincrement `Table` columns in order they defined in Table instance. If you want to specify columns or change the order, provide list of columns as second paramter:
+```kotlin
+val userCount = users.selectAll().count()
+users.insert(users.slice(stringParam("Foo"), Random().castTo<String>(VarCharColumnType()).substring(1, 10)).selectAll(), columns = listOf(users.name, users.id))
 ```
