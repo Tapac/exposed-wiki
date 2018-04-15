@@ -130,7 +130,7 @@ class StarWarsFilm(id: EntityID<Int>) : IntEntity(id) {
     companion object : IntEntityClass<StarWarsFilm>(StarWarsFilms)
 
     ...
-    val ratings by UserRating referrersOn UserRatings.film // make sure to use val and backReferencedOn
+    val ratings by UserRating referrersOn UserRatings.film // make sure to use val and referrersOn
     ...
 }
 ```
