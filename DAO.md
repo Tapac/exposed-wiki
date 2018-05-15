@@ -8,8 +8,8 @@
 * [Referencing](#referencing)
   * [Simple reference](#simple-reference)
   * [Optional reference](#optional-reference)
-
-
+* [Advanced CRUD operations](#advanced-crud-operations)
+  * [Read entity with a join to another table](#read-entity-with-a-join-to-another-table)
 
 
 ***
@@ -157,3 +157,19 @@ class UserRating(id: EntityID<Int>): IntEntity(id) {
 ```
 Now `secondUser` will be a nullable field.
 Of course you can still use `referrersOn`.
+
+## Advanced CRUD operations
+### Read entity with a join to another table
+Lets imagine that you want to find all users who rated second SW film with more then 5.
+First of all we should write that query using Exposed DSL.
+```kotlin
+val query = Users.innerJoin(UserRatings).innerJoin(StarWarsFilm)
+  .slice { Users.columns }
+  .select {
+    StarWarsFilms.sequelId eq 2 and (UserRatings.value gt 5) 
+  }.withDistinct()
+```
+After that all we have to do is to "wrap" a result with User entity:
+```kotlin
+val users = User.wrapRows(query).toList()
+```
