@@ -15,7 +15,6 @@ This wiki contains the following pages:
 
 
 Currently supported database dialects are:
-> Gray is the database connection  
 
 * PostgreSQL
 * MySQL
