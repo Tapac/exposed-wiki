@@ -15,11 +15,12 @@ This wiki contains the following pages:
 
 
 Currently supported database dialects are:
+> Gray is the database connection  
 
 * PostgreSQL
 * MySQL
     > Code:  
-    > Database.connect("jdbc:mysql://localhost:3306/niuniu_server",driver = "org.sqlite.JDBC", user = "root", password = "a4264168")  
+    > Database.connect("jdbc:mysql://localhost:3306/niuniu_server",driver = "org.sqlite.JDBC", user = "root", password = "your_pwd")  
     > Gradle:  
     > maven{ url 'https://mvnrepository.com/artifac/'}
     > compile "mysql:mysql-connector-java:5.1.46"
