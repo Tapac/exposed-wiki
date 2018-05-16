@@ -19,17 +19,7 @@ Currently supported database dialects are:
 
 * PostgreSQL
 * MySQL
-    > Code:  
-    > Database.connect("jdbc:mysql://localhost:3306/niuniu_server",driver = "org.sqlite.JDBC", user = "root", password = "your_pwd")  
-    > Gradle:  
-    > maven{ url 'https://mvnrepository.com/artifac/'}
-    > compile "mysql:mysql-connector-java:5.1.46"
 * Oracle
-+ SQLite  
-    > Code:  
-    > Database.connect("jdbc:sqlite:/data/data.db", "org.sqlite.JDBC")  
-    > Gradle:  
-    > maven{ url 'https://mvnrepository.com/artifac/'}  
-    > compile group: 'org.xerial', name: 'sqlite-jdbc', version: '3.7.2'
+* SQLite  
 * H2
 * SQL Server
