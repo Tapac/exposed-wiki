@@ -83,7 +83,7 @@ transaction {
     > Database.connect("jdbc:sqlite:/data/data.db", "org.sqlite.JDBC")  
     > Gradle:  
     > maven{ url 'https://mvnrepository.com/artifac/'}  
-    > compile group: 'org.xerial', name: 'sqlite-jdbc', version: '3.7.2'
+    > compile group: 'org.xerial', name: 'sqlite-jdbc', version: '3.21.0.1'
 * H2
 * SQL Server
 
