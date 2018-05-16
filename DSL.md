@@ -58,11 +58,19 @@ StarWarsFilms.select { StarWarsFilms.sequelId eq 8 }.forEach {
   println(it[StarWarsFilms.name])
 }
 ```
+There is `slice` function which allows you to select specific columns or/and expressions.
+```kotlin
+val filmAndDirector = StarWarsFilms.
+   slice(StarWarsFilms.name, StarWarsFilms.director).
+   selectAll().map {
+      it[StarWarsFilms.name] to it[StarWarsFilms.director]
+   }
+```
 
 If you want to select only distinct value then use `withDistinct()` function:
 ```kotlin
 val directors = StarWarsFilms.
-   slice{ StarWarsFilms.director }.
+   slice(StarWarsFilms.director).
    select { StarWarsFilms.sequelId < 5 }.
    withDistinct().map {
       it[StarWarsFilms.director]
