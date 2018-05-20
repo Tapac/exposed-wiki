@@ -164,7 +164,7 @@ Lets imagine that you want to find all users who rated second SW film with more 
 First of all we should write that query using Exposed DSL.
 ```kotlin
 val query = Users.innerJoin(UserRatings).innerJoin(StarWarsFilm)
-  .slice { Users.columns }
+  .slice(Users.columns)
   .select {
     StarWarsFilms.sequelId eq 2 and (UserRatings.value gt 5) 
   }.withDistinct()
