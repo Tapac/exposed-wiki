@@ -89,6 +89,8 @@ fun main(args: Array<String>) {
     // print sql to std-out
     logger.addLogger(StdOutSqlLogger)
     
+    create (Cities)
+
     // insert new city. SQL: INSERT INTO Cities (name) VALUES ('St. Petersburg')
     val stPeteId = Cities.insert {
       it[name] = "St. Petersburg"
@@ -118,6 +120,8 @@ fun main(args: Array<String>) {
     // print sql to std-out
     logger.addLogger(StdOutSqlLogger)
     
+    create (Cities)
+
     // insert new city. SQL: INSERT INTO Cities (name) VALUES ('St. Petersburg')
     val stPete = City.new {
             name = "St. Petersburg"
