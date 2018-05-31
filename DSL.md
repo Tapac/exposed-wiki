@@ -181,6 +181,13 @@ Join to count how many players play in each movie:
 ``` 
 * In case there is a foreign key it is possible to replace `select{}` with `selectAll()`
 
+Another example using the full syntax:
+```kotlin
+Players.join(StarWarsFilms, JoinType.INNER, additionalConstraint = {StarWarsFilms.sequelId eq Players.sequelId})
+  .slice(Players.name.count(), StarWarsFilms.name)
+  .groupBy(StarWarsFilms.name)
+```
+
 ## Alias
 Aliases allow preventing ambiguity between field names and table names.
 Use the aliased var instead of original one:
