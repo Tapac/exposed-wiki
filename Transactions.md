@@ -14,11 +14,10 @@ Although you can modify variables from your code within the transaction block, `
 
 ```kotlin
 val jamesList = transaction {
-    return@transaction Users.select { Users.firstName eq "James" }
+    Users.select { Users.firstName eq "James" }.toList()
 }
 // jamesList is now a List<ResultRow> containing Users data
 ```
-(In the above example, `return@transaction` is unneccessary, but added for clarity.)
 
 ### Working with a multiple databases
 _This functionality supported since 0.10.1 version_
