@@ -1,11 +1,12 @@
 Currently Exposed support the following data types in table definition:  
 * `integer` - translates to DB `INT`
 * `long` - `BIGINT`
+* `float` - `FLOAT`
+* `decimal` - `DECIMAL` with scale and precision
 * `bool` - `BOOLEAN`
 * `char` - `CHAR`
 * `varchar` - `VARCHAR` with length
 * `text` - `TEXT`
-* `decimal` - `DECIMAL` with scale and precision
 * `enumeration` - `INT` ordinal value
 * `enumerationByName` - `VARCHAR`
 * `customEnumeration` - see [additional section](#how-to-use-database-enum-types)
