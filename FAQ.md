@@ -69,6 +69,9 @@ Database.connect("jdbc:sqlite:my.db", "org.sqlite.JDBC")
 TransactionManager.manager.defaultIsolationLevel = Connection.TRANSACTION_SERIALIZABLE
 ```
 
+### Q: How can I use SAVEPOINT?
+It possible only through using a raw connection. See example [here](https://github.com/JetBrains/Exposed/issues/320#issuecomment-394825415).
+
 
 ### More questions on Stack Overflow:
 https://stackoverflow.com/questions/tagged/kotlin-exposed
