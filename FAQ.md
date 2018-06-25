@@ -46,7 +46,7 @@ More info in this issue: https://github.com/JetBrains/Exposed/issues/118
 
 ### Q: Is it possible to update a field relative to current field value?
 
-A: Yes. See example here: https://github.com/JetBrains/Exposed/issues/82
+A: Yes. See example here: https://github.com/JetBrains/Exposed/wiki/DSL#update
 
 ### Q: How can I add another type of Database?
 
