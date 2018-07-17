@@ -1,5 +1,5 @@
 ### Working with DataBase and DataSource
-Every database access using Expose is starting by obtaining a connection and creating a transaction.  
+Every database access using Exposed is starting by obtaining a connection and creating a transaction.  
 
 To get a connection:
 
