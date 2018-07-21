@@ -66,7 +66,7 @@ To see the actual DB calls, add a logger:
 ```kotlin
 transaction {
   // print sql to std-out
-  logger.addLogger(StdOutSqlLogger)
+  addLogger(StdOutSqlLogger)
 } 
 ```
 
@@ -87,9 +87,9 @@ fun main(args: Array<String>) {
 
   transaction {
     // print sql to std-out
-    logger.addLogger(StdOutSqlLogger)
+    addLogger(StdOutSqlLogger)
     
-    create (Cities)
+    SchemaUtils.create (Cities)
 
     // insert new city. SQL: INSERT INTO Cities (name) VALUES ('St. Petersburg')
     val stPeteId = Cities.insert {
@@ -118,9 +118,9 @@ fun main(args: Array<String>) {
 
   transaction {
     // print sql to std-out
-    logger.addLogger(StdOutSqlLogger)
+    addLogger(StdOutSqlLogger)
     
-    create (Cities)
+    SchemaUtils.create (Cities)
 
     // insert new city. SQL: INSERT INTO Cities (name) VALUES ('St. Petersburg')
     val stPete = City.new {
