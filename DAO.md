@@ -91,7 +91,7 @@ movie.delete()
 ```
 
 ## Referencing
-### Simple reference
+### many-to-one reference
 Let's say you have this table:
 ```kotlin
 object Users: IntIdTable() {
@@ -157,6 +157,65 @@ class UserRating(id: EntityID<Int>): IntEntity(id) {
 ```
 Now `secondUser` will be a nullable field.
 Of course you can still use `referrersOn`.
+
+### many-to-many reference
+In some cases a many-to-many reference may be required.
+Let's assume you want to add a reference to the following actors table to your StarWarsFilm DAO:
+```kotlin
+object Actors: IntIdTable() {
+    val firstname = varchar("firstname", 50)
+    val lastname = varchar("lastname", 50)
+}
+
+class Actor(id: EntityID<Int>): IntEntity(id) {
+    companion object : IntEntityClass<Actor>(Actors)
+
+    var firstname by Actors.firstname
+    var lastname by Actors.lastname
+}
+```
+Create an additional intermediate table to store the references:
+```kotlin
+object StarWarsFilmActors : Table() {
+    val starWarsFilm = reference("starWarsFilm", StarWarsFilms).primaryKey(0)
+    val actor = reference("actor", Actors).primaryKey(1)
+}
+```
+Add a reference to `StarWarsFilm`:
+```kotlin
+class StarWarsFilm(id: EntityID<Int>) : IntEntity(id) {
+    companion object : IntEntityClass<StarWarsFilm>(StarWarsFilms)
+
+    ...
+    var actors by Actor via StarWarsFilmActors
+    ...
+}
+```
+Note: Creating the entity and the reference in the same `transaction` is not supported yet.
+The creation needs to be done before setting the reference:
+```kotlin
+// create film
+val film = transaction {
+   StarWarsFilm.new {
+    name = "The Last Jedi"
+    sequelId = 8
+    director = "Rian Johnson"
+  }
+}
+
+//create actor
+val actor = transaction {
+  Actor.new {
+    firstname = "Daisy"
+    lastname = "Ridley"
+  }
+}
+
+//add reference
+transaction {
+  film.actors = SizedCollection(listOf(actor))
+}
+```
 
 ## Advanced CRUD operations
 ### Read entity with a join to another table
