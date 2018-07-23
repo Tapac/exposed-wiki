@@ -6,8 +6,9 @@
     * [Sort](#sort-order-by)
   * [Delete](#delete)
 * [Referencing](#referencing)
-  * [Simple reference](#simple-reference)
+  * [many-to-one reference](#many-to-one-reference)
   * [Optional reference](#optional-reference)
+  * [many-to-many reference](#many-to-many-reference)
 * [Advanced CRUD operations](#advanced-crud-operations)
   * [Read entity with a join to another table](#read-entity-with-a-join-to-another-table)
 
