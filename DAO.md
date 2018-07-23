@@ -161,7 +161,7 @@ Of course you can still use `referrersOn`.
 
 ### many-to-many reference
 In some cases a many-to-many reference may be required.
-Let's assume you want to add a reference to the following actors table to your StarWarsFilm DAO:
+Let's assume you want to add a reference to the following Actors table to the StarWarsFilm class:
 ```kotlin
 object Actors: IntIdTable() {
     val firstname = varchar("firstname", 50)
@@ -192,8 +192,18 @@ class StarWarsFilm(id: EntityID<Int>) : IntEntity(id) {
     ...
 }
 ```
-Note: Creating the entity and the reference in the same `transaction` is not supported yet.
-The creation needs to be done before setting the reference:
+Note: Creating the entity and the reference in the same `transaction` does only work if you set the
+id column manually. If you're using `UUIDTables` and `UUIDEntity` you can do it like this:
+```kotlin
+transaction {
+ //only works with UUIDTable and UUIDEntity
+ StarWarsFilm.new (UUID.randomUUID()){
+    ...
+    actors = SizedCollection(listOf(actor))
+  }
+}
+```
+If you don't want to set the ID column manually, you have to create the entity in it's own `transaction` and set the relation afterward in another `transaction`:
 ```kotlin
 // create film
 val film = transaction {
