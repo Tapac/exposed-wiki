@@ -27,18 +27,46 @@ object DbSettings {
 ### DataSource
 
 * PostgreSQL
+```Kotlin
+Database.connect("jdbc:postgresql://localhost:12346/test", driver = "org.postgresql.Driver", 
+                 user = "root", password = "your_pwd")  
+//Gradle
+compile "org.postgresql:postgresql:42.2.2"  
+```
 * MySQL
-    > Code:  
-    > Database.connect("jdbc:mysql://localhost:3306/niuniu_server",driver = "com.mysql.jdbc.Driver", user = "root", password = "your_pwd")  
-    > Gradle:  
-    > maven{ url 'https://mvnrepository.com/artifac/'}  
-    > compile "mysql:mysql-connector-java:5.1.46"  
+```Kotlin
+Database.connect("jdbc:mysql://localhost:3306/test", driver = "com.mysql.jdbc.Driver", 
+                 user = "root", password = "your_pwd")  
+//Gradle
+compile "mysql:mysql-connector-java:5.1.46"  
+```
 * Oracle
-+ SQLite  
-    > Code:  
-    > Database.connect("jdbc:sqlite:/data/data.db", "org.sqlite.JDBC")  
-    > Gradle:  
-    > maven{ url 'https://mvnrepository.com/artifac/'}  
-    > compile group: 'org.xerial', name: 'sqlite-jdbc', version: '3.21.0.1'  
+```Kotlin
+Database.connect("jdbc:jdbc:oracle:thin:@//localhost:1521/test", driver = "oracle.jdbc.OracleDriver", 
+                 user = "root", password = "your_pwd")  
+//Gradle
+// Oracle jdbc-driver should be obtained from Oracle maven repo: https://blogs.oracle.com/dev2dev/get-oracle-jdbc-drivers-and-ucp-from-oracle-maven-repository-without-ides
+```
++ SQLite
+```Kotlin
+// In file
+Database.connect("jdbc:sqlite:/data/data.db", "org.sqlite.JDBC")  
+// In memory
+Database.connect("jdbc:sqlite:file:test?mode=memory&cache=shared", "org.sqlite.JDBC")  
+//Gradle
+compile "org.xerial:sqlite-jdbc:3.21.0.1"  
+```  
 * H2
+```Kotlin
+// In memory
+Database.connect("jdbc:h2:mem:regular", "org.h2.Driver")  
+//Gradle
+compile "com.h2database:h2:1.4.197"  
+```  
 * SQL Server
+```Kotlin
+Database.connect("jdbc:sqlserver://localhost:32781/test", "com.microsoft.sqlserver.jdbc.SQLServerDriver", 
+                 user = "root", password = "your_pwd")  
+//Gradle
+compile "com.microsoft.sqlserver:mssql-jdbc:6.4.0.jre7"  
+```  
