@@ -22,7 +22,7 @@
 ## Overview
 
 The DSL (Domain Specific Language) API of Exposed, is similar to actual SQL statements with type safety that Kotlin offers.  
-A DB table is represented by an `object` inherited from `org.jetbrains.exposed.sql.Table` like that:
+A DB table is represented by an `object` inherited from `org.jetbrains.exposed.sql.Table` like this:
 ```kotlin
 object StarWarsFilms : Table() {
   val id: Column<Int> = integer("id").autoIncrement().primaryKey()
@@ -31,7 +31,7 @@ object StarWarsFilms : Table() {
   val director: Column<String> = varchar("director", 50)
 }
 ```
-Tables that contains `Int` id with the name `id` can be declared like that:
+Tables that contains `Int` id with the name `id` can be declared like this:
 ```kotlin
 object StarWarsFilms : IntIdTable() {
   val sequelId: Column<Int> = integer("sequel_id").uniqueIndex()
@@ -211,7 +211,7 @@ If you want to use `INSERT INTO ... SELECT ` SQL clause try Exposed analog `Tabl
 val substring = users.name.substring(1, 2)
 cities.insert(users.slice(substring).selectAll().orderBy(users.id).limit(2))
 ```
-By default it will try to insert into all non auto-autoincrement `Table` columns in order they defined in Table instance. If you want to specify columns or change the order, provide list of columns as second paramter:
+By default it will try to insert into all non auto-increment `Table` columns in order they defined in Table instance. If you want to specify columns or change the order, provide list of columns as second parameter:
 ```kotlin
 val userCount = users.selectAll().count()
 users.insert(users.slice(stringParam("Foo"), Random().castTo<String>(VarCharColumnType()).substring(1, 10)).selectAll(), columns = listOf(users.name, users.id))
