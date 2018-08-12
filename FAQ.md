@@ -22,7 +22,7 @@ A:
 ```kotlin
 val plainSQL = FooTable.select {}.prepareSQL(QueryBuilder(false)) 
 ```
-Use QueryBuiler with `false` - if you want to inline statement arguments, true - to see '?' in query.
+Use QueryBuiler with `false` - if you want to inline statement arguments, `true` - to see '?' in query.
 
 ### Q: Is it possible to use native sql / sql as a string?
 
