@@ -11,7 +11,7 @@
   * [many-to-many reference](#many-to-many-reference)
 * [Advanced CRUD operations](#advanced-crud-operations)
   * [Read entity with a join to another table](#read-entity-with-a-join-to-another-table)
-
+  * [Auto-fill created and updated columns on entity change](#auto-fill-created-and-updated-columns-on-entity-change)
 
 ***
 
@@ -243,3 +243,6 @@ After that all we have to do is to "wrap" a result with User entity:
 ```kotlin
 val users = User.wrapRows(query).toList()
 ```
+
+### Auto-fill created and updated columns on entity change
+See example by @PaulMuriithi [here](https://github.com/PaulMuriithi/ExposedDatesAutoFill/blob/master/src/main/kotlin/app/Models.kt).
