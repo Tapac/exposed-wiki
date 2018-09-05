@@ -191,9 +191,19 @@ Players.join(StarWarsFilms, JoinType.INNER, additionalConstraint = {StarWarsFilm
 ## Alias
 Aliases allow preventing ambiguity between field names and table names.
 Use the aliased var instead of original one:
-```
+```Kotlin
 val filmTable1 = StarWarsFilms.alias("ft1")
 filmTable1.selectAll() // can be used in joins etc'
+```
+
+Also, aliases allow you to use the same table in a join multiple times:
+```Kotlin
+val sequelTable = StarWarsFilms.alias("sql")
+val originalAndSequelNames = StarWarsFilms
+    .innerJoin(sequelTable, { StarWarsFilms.sequelId }, { sequelTable[StarWarsFilms.id] })
+    .slice(StarWarsFilms.name, sequelTable[StarWarsFilms.name])
+    .selectAll()
+    .map { it[StarWarsFilms.name] to it[sequelTable[StarWarsFilms.name]] }
 ```
 
 ## Batch Insert
