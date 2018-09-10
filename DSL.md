@@ -5,6 +5,7 @@
   * [Update](#update)
   * [Delete](#delete)
 * [Where expression](#where-expression)
+* [Conditional where](#conditional-where)
 * [Count](#count)
 * [Order-by](#order-by)
 * [Group-by](#group-by)
@@ -123,6 +124,59 @@ Allowed logical conditions are:
 ```
 and
 or
+```
+## Conditional where
+It rather common case when your query's `where` condition depends on some other code conditions. Moreover, it could be independent or nested conditions what make it more complicated to prepare such `where`. 
+Let's imagine that we have a form on a website where a user can optionally filter "Star Wars" films by a director and/or a sequel.
+In Exposed version before 0.8.1 you had to code it like:
+```Kotlin 
+val condition = when {
+    directorName != null && sequelId != null ->
+        Op.build { StarWarsFilms.director eq directorName and (StarWarsFilms.sequelId eq sequelId) }
+    directorName != null ->
+        Op.build { StarWarsFilms.director eq directorName }
+    sequelId != null ->
+        Op.build { StarWarsFilms.sequelId eq sequelId }
+    else -> null
+}
+
+val query = condition?.let { StarWarsFilms.select(condition) } ?: StarWarsFilms.selectAll()
+```
+or 
+```Kotlin
+val query = when {
+    directorName != null && sequelId != null ->
+        StarWarsFilms.select { StarWarsFilms.director eq directorName and (StarWarsFilms.sequelId eq sequelId) }
+    directorName != null ->
+        StarWarsFilms.select { StarWarsFilms.director eq directorName }
+    sequelId != null ->
+        StarWarsFilms.select { StarWarsFilms.sequelId eq sequelId }
+    else -> StarWarsFilms.selectAll()
+}
+```
+This is a very primitive example, but you should get the main idea about the problem.
+
+Now let's try to write the same query in a more simple way (`andWhere` function available since 0.10.5):
+```Kotlin
+val query = StarWarsFilms.selectAll()
+
+directorName?.let {
+    query.andWhere { StarWarsFilms.director eq it }
+}
+
+sequelId?.let {
+    query.andWhere { StarWarsFilms.sequelId eq it }
+}
+
+```
+But what if we have conditionaly select from another table and want to join it only when condition is true? 
+You have to use `adjustColumnSet` and `adjustSlice` functions (available since 0.8.1) which allows to extend and modify `join` and `slice` parts of a query (see kdoc on that functions):
+```Kotlin
+playerName?.let {
+    query.adjustColumnSet { innerJoin(Players, {StarWarsFilms.sequelId}, {Players.sequelId}) }
+        .adjustSlice { slice(fields + Players.columns) }
+        .andWhere { Players.name eq playerName }
+}
 ```
 ## Count
 `count()` is a method of `Query` that is used like below example:
