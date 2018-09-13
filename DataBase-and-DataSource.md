@@ -65,7 +65,7 @@ compile "com.h2database:h2:1.4.197"
 ```  
 * SQL Server
 ```Kotlin
-Database.connect("jdbc:sqlserver://localhost:32781/test", "com.microsoft.sqlserver.jdbc.SQLServerDriver", 
+Database.connect("jdbc:sqlserver://localhost:32768;databaseName=test", "com.microsoft.sqlserver.jdbc.SQLServerDriver", 
                  user = "root", password = "your_pwd")  
 //Gradle
 compile "com.microsoft.sqlserver:mssql-jdbc:6.4.0.jre7"  
