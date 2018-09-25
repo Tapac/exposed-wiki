@@ -7,7 +7,7 @@
   <repository>
     <id>exposed</id>
     <name>exposed</name>
-    <url>https://dl.bintray.com/kotlin/exposed</url>
+    <url>http://jcenter.bintray.com</url>
   </repository>
 </repositories>
 
@@ -25,9 +25,7 @@
 
 ```
 repositories {
-  maven {
-    url  "https://dl.bintray.com/kotlin/exposed" 
-  }
+  jcenter()
 }
 dependencies {
   compile 'org.jetbrains.exposed:exposed:0.10.5'
