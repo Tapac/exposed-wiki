@@ -5,8 +5,8 @@
 ```xml
 <repositories>
   <repository>
-    <id>exposed</id>
-    <name>exposed</name>
+    <id>jcenter</id>
+    <name>jcenter</name>
     <url>http://jcenter.bintray.com</url>
   </repository>
 </repositories>
