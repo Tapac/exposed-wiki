@@ -38,8 +38,8 @@ For such enum `private enum class Foo { Bar, Baz }` you can use provided code fo
 
 **MySQL**
 ```Kotlin
-    val existingEnumColumn = customEnumeration("enumColumn", {Foo.valueOf(value as String)}, {it.name})
-    val newEnumColumn = customEnumeration("enumColumn", "ENUM('Bar', 'Baz')" {Foo.valueOf(value as String)}, {it.name})
+    val existingEnumColumn = customEnumeration("enumColumn", {value -> Foo.valueOf(value as String)}, {it.name})
+    val newEnumColumn = customEnumeration("enumColumn", "ENUM('Bar', 'Baz')" {value -> Foo.valueOf(value as String)}, {it.name})
 ```
 
 **PostgreSQL**
@@ -54,7 +54,7 @@ class PGEnum<T:Enum<T>>(enumTypeName: String, enumValue: T?) : PGobject() {
 }
 
 object EnumTable : Table() {
-    val enumColumn = customEnumeration("enumColumn", "FooEnum", {Foo.valueOf(value as String)}, { PGEnum("FooEnum", it})
+    val enumColumn = customEnumeration("enumColumn", "FooEnum", {value -> Foo.valueOf(value as String)}, { PGEnum("FooEnum", it)}
 }
 ...
 transaction {
