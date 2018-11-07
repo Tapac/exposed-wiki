@@ -18,8 +18,8 @@
 
 ## Overview
 
-The DAO (Data Access Object) API of Exposed, is similar to ORM frameworks like Hibernate with specific Kotlin API.  
-A DB table is represented by an `object` inherited from `org.jetbrains.exposed.sql.Table` like that:
+The DAO (Data Access Object) API of Exposed, is similar to ORM frameworks like Hibernate with a Kotlin-specific API.  
+A DB table is represented by an `object` inherited from `org.jetbrains.exposed.sql.Table` like this:
 ```kotlin
 object StarWarsFilms : Table() {
   val id: Column<Int> = integer("id").autoIncrement().primaryKey()
@@ -28,7 +28,7 @@ object StarWarsFilms : Table() {
   val director: Column<String> = varchar("director", 50)
 }
 ```
-Tables that contains `Int` id with the name `id` can be declared like that:
+Tables that contain an `Int` id with the name `id` can be declared like this:
 ```kotlin
 object StarWarsFilms : IntIdTable() {
   val sequelId: Column<Int> = integer("sequel_id").uniqueIndex()
@@ -36,7 +36,7 @@ object StarWarsFilms : IntIdTable() {
   val director: Column<String> = varchar("director", 50)
 }
 ```
-Note that these Column types will be defined automatically, so you can also just leave them away. This would produce the same result as the example above:
+Note that these Column types will be defined automatically, so you can also just leave them out. This would produce the same result as the example above:
 ```kotlin
 object StarWarsFilms : IntIdTable() {
   val sequelId = integer("sequel_id").uniqueIndex()
@@ -67,10 +67,10 @@ val movie = StarWarsFilm.new {
 To get entities use one of the following
 ```kotlin
 val movies = StarWarsFilm.all()
-val movies = StarWarsFilm.find {StarWarsFilms.sequelId eq 8}
+val movies = StarWarsFilm.find { StarWarsFilms.sequelId eq 8 }
 val movie = StarWarsFilm.findById(5)
 ```
-* For a list of avaialable predicates see [DSL Where expression](https://github.com/JetBrains/Exposed/wiki/DSL#where-expression).  
+* For a list of available predicates see [DSL Where expression](https://github.com/JetBrains/Exposed/wiki/DSL#where-expression).  
 
 Read a value from a property similar to any property in a Kotlin class:
 ```kotlin
@@ -85,7 +85,7 @@ Update a value of a property similar to any property in a Kotlin class:
 ```kotlin
 movie.name = "Episode VIII – The Last Jedi"
 ```
-* Note: Exposed doesn't make an immediate update when you set a new value for Entity, it just store it on the inner map. "Flushing" values to the database occurs at the end of the transaction or before next "select *" from the database.
+* Note: Exposed doesn't make an immediate update when you set a new value for Entity, it just stores it on the inner map. "Flushing" values to the database occurs at the end of the transaction or before next `select *` from the database.
 ### Delete
 ```kotlin
 movie.delete() 
