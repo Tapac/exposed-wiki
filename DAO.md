@@ -77,8 +77,13 @@ Read a value from a property similar to any property in a Kotlin class:
 val name = movie.name
 ```
 #### Sort (Order-by)
+Ascending order:
 ```kotlin
 val movies = StarWarsFilm.all().sortedBy { it.sequelId }
+```
+Descending order:
+```kotlin
+val movies = StarWarsFilm.all().sortedByDescending{ it.sequelId }
 ```
 ### Update
 Update a value of a property similar to any property in a Kotlin class:
