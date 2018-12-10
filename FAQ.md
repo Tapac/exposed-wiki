@@ -70,7 +70,10 @@ TransactionManager.manager.defaultIsolationLevel = Connection.TRANSACTION_SERIAL
 ```
 
 ### Q: How can I use SAVEPOINT?
-It possible only through using a raw connection. See example [here](https://github.com/JetBrains/Exposed/issues/320#issuecomment-394825415).
+A: It possible only through using a raw connection. See example [here](https://github.com/JetBrains/Exposed/issues/320#issuecomment-394825415).
+
+### Q: How to prepare query like: `SELECT * FROM table WHERE (x,y) IN ((1, 2), (3, 4), (5, 6))`
+A: It possible with custom function. See [example](https://github.com/JetBrains/Exposed/issues/373#issuecomment-414123325).
 
 
 ### More questions on Stack Overflow:
