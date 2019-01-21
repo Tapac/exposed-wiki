@@ -18,6 +18,12 @@ val jamesList = transaction {
 }
 // jamesList is now a List<ResultRow> containing Users data
 ```
+*Note:* `Blob` and `text` fields wont be available without transaction if you don't load them directly like:
+```kotlin
+   val idsAndContent = transaction {
+       Documents.selectAll().limit(10).map { it[Documents.id] to it[Documents.content] }
+   }
+```
 
 ### Working with a multiple databases
 _This functionality supported since 0.10.1 version_
