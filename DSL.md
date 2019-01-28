@@ -81,7 +81,7 @@ val directors = StarWarsFilms.
 ### Update
 ```kotlin
 StarWarsFilms.update ({ StarWarsFilms.sequelId eq 8 }) {
-  it[name] = "Episode VIII – The Last Jedi"
+  it[StarWarsFilms.name] = "Episode VIII – The Last Jedi"
 }
 ```
 
