@@ -60,6 +60,8 @@ compile "org.xerial:sqlite-jdbc:3.21.0.1"
 ```Kotlin
 // In memory
 Database.connect("jdbc:h2:mem:regular", "org.h2.Driver")  
+// In memory / keep alive between connections/transactions
+Database.connect("jdbc:h2:mem:regular;CLOSE_DELAY=-1;", "org.h2.Driver")  
 //Gradle
 compile "com.h2database:h2:1.4.197"  
 ```  
