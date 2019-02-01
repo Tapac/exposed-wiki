@@ -113,6 +113,8 @@ greater - (>)
 greaterEq - (>=)
 like - (=~)
 notLike - (!~)
+exists
+notExists
 regexp
 notRegexp
 inList
@@ -122,6 +124,7 @@ match (MySQL MATCH AGAINST)
 ```
 Allowed logical conditions are:
 ```
+not
 and
 or
 ```
