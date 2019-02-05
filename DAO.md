@@ -251,3 +251,18 @@ val users = User.wrapRows(query).toList()
 
 ### Auto-fill created and updated columns on entity change
 See example by @PaulMuriithi [here](https://github.com/PaulMuriithi/ExposedDatesAutoFill/blob/master/src/main/kotlin/app/Models.kt).
+
+### Use queries as expressions
+Imagine that you want to sort cities by how many users each city has. In order to do so, you can write a sub-query which counts users in each city and order by that number. Though in order to do so you'll have to convert `Query` to `Expression`. This can be done using `wrapAsExpression` function:
+```kotlin
+val expression = wrapAsExpression<Int>(Users
+  .slice(Users.id.count())
+  .select {
+      Cities.id eq Users.cityId
+  })
+
+val cities = Cities
+  .selectAll()
+  .orderBy(expression, SortOrder.DESC)
+  .toList()
+```
