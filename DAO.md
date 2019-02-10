@@ -9,6 +9,7 @@
   * [many-to-one reference](#many-to-one-reference)
   * [Optional reference](#optional-reference)
   * [many-to-many reference](#many-to-many-reference)
+  * [Parent-Child reference](#parent-child-reference)
 * [Advanced CRUD operations](#advanced-crud-operations)
   * [Read entity with a join to another table](#read-entity-with-a-join-to-another-table)
   * [Auto-fill created and updated columns on entity change](#auto-fill-created-and-updated-columns-on-entity-change)
@@ -232,6 +233,39 @@ transaction {
   film.actors = SizedCollection(listOf(actor))
 }
 ```
+###Parent-Child reference 
+Parent-child reference is very similar to many-to-many version, but an intermediate table contains both references to the same table.
+Let's assume you want to build a hierarchical entity which could have parents and children. Our tables and an enitity mapping will look like
+```kotlin
+object NodeTable : IntIdTable() {
+    val name = varchar("name", 50)
+}
+object NodeToNodes : Table() {
+    val parent = reference("parent_node_id", NodeTable)
+    val child = reference("child_user_id", NodeTable)
+}
+class Node(id: EntityID<Int>) : IntEntity(id) {
+    companion object : IntEntityClass<Node>(NodeTable)
+
+    var name by NodeTable.name
+    var parents by Node.via(NodeToNodes.child, NodeToNodes.parent)
+    var children by Node.via(NodeToNodes.parent, NodeToNodes.child)
+}
+```
+
+As you can see `NodeToNodes` columns target only `NodeTable` and another version of `via` function were used. 
+Now you can create a hierarchy of nodes.
+```kotlin
+val root = Node.new { name = "root" }
+val child1 = Node.new {
+    name = "child1" 
+}
+child1.parents = SizedCollection(root) // assign parent
+
+val child2 = Node.new { name = "child2" }
+root.children = SizedCollection(listOf(child1, child2)) // assign children
+```
+Beware that you can't setup references inside a `new` block as an entity is not created yet and id is not defined to be referenced to.
 
 ## Advanced CRUD operations
 ### Read entity with a join to another table
