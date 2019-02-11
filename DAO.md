@@ -163,10 +163,10 @@ class UserRating(id: EntityID<Int>): IntEntity(id) {
 }
 ```
 Now `secondUser` will be a nullable field.
-Of course you can still use `referrersOn`.
+Of course, you can still use `referrersOn`.
 
 ### many-to-many reference
-In some cases a many-to-many reference may be required.
+In some cases, a many-to-many reference may be required.
 Let's assume you want to add a reference to the following Actors table to the StarWarsFilm class:
 ```kotlin
 object Actors: IntIdTable() {
@@ -233,9 +233,9 @@ transaction {
   film.actors = SizedCollection(listOf(actor))
 }
 ```
-###Parent-Child reference 
+### Parent-Child reference 
 Parent-child reference is very similar to many-to-many version, but an intermediate table contains both references to the same table.
-Let's assume you want to build a hierarchical entity which could have parents and children. Our tables and an enitity mapping will look like
+Let's assume you want to build a hierarchical entity which could have parents and children. Our tables and an entity mapping will look like
 ```kotlin
 object NodeTable : IntIdTable() {
     val name = varchar("name", 50)
@@ -269,8 +269,8 @@ Beware that you can't setup references inside a `new` block as an entity is not 
 
 ## Advanced CRUD operations
 ### Read entity with a join to another table
-Lets imagine that you want to find all users who rated second SW film with more then 5.
-First of all we should write that query using Exposed DSL.
+Let's imagine that you want to find all users who rated second SW film with more than 5.
+First of all, we should write that query using Exposed DSL.
 ```kotlin
 val query = Users.innerJoin(UserRatings).innerJoin(StarWarsFilm)
   .slice(Users.columns)
