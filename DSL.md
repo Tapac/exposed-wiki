@@ -263,6 +263,22 @@ val originalAndSequelNames = StarWarsFilms
     .map { it[StarWarsFilms.name] to it[sequelTable[StarWarsFilms.name]] }
 ```
 
+And they can be used when selecting from sub-queries:
+```kotlin
+val starWarsFilms = StarWarsFilms
+    .slice(StarWarsFilms.id, StarWarsFilms.name)
+    .selectAll()
+    .alias("swf")
+
+val id = starWarsFilms[StarWarsFilms.id]
+val name = starWarsFilms[StarWarsFilms.name]
+
+starWarsFilms
+    .slice(id, name)
+    .selectAll()
+    .map { it[id] to it[name] }
+```
+
 ## Batch Insert
 Batch Insert allow mapping a list of entities into DB raws in one sql statement. It is more efficient than inserting one by one as it initiates only one statement. Here is an example:
 ```kotlin
