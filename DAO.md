@@ -10,6 +10,7 @@
   * [Optional reference](#optional-reference)
   * [many-to-many reference](#many-to-many-reference)
   * [Parent-Child reference](#parent-child-reference)
+  * [Eager Loading](#eager-loading)
 * [Advanced CRUD operations](#advanced-crud-operations)
   * [Read entity with a join to another table](#read-entity-with-a-join-to-another-table)
   * [Auto-fill created and updated columns on entity change](#auto-fill-created-and-updated-columns-on-entity-change)
@@ -266,6 +267,37 @@ val child2 = Node.new { name = "child2" }
 root.children = SizedCollection(listOf(child1, child2)) // assign children
 ```
 Beware that you can't setup references inside a `new` block as an entity is not created yet and id is not defined to be referenced to.
+
+### Eager Loading
+**Available since 0.13.1**. 
+References in Exposed are lazily loaded, meaning queries to fetch the data for the reference are made at the moment the reference is first utilised. For scenarios wherefore you know you will require references ahead of time, Exposed can eager load them at the time of the parent query, this is prevents the classic "N+1" problem as references can be aggregated and loaded in a single query.
+
+To eager load a reference you can call the "load" function and pass the DAO's reference as a KProperty:
+
+```kotlin
+
+StarWarsFilm.findById(1).load(StarWarsFilm::actors)
+
+```
+
+This works for references of references also, for example if Actors had a rating reference you could:
+
+```kotlin
+
+StarWarsFilm.findById(1).load(StarWarsFilm::actors, Actor::rating)
+
+```
+
+Similarly you can eager load references on Collections of DAO's such as Lists and SizedIterables, for collections you can use the with function in the same fashion as before, passing the DAO's references as KProperty's.
+
+```kotlin
+
+StarWarsFilm.all().with(StarWarsFilm::actors)
+
+```
+
+NOTE: References that are eagerly loaded are stored inside the Transaction Cache, this means that they are not available in other transactions and thus must be loaded and referenced inside the same transaction.
+
 
 ## Advanced CRUD operations
 ### Read entity with a join to another table
