@@ -23,3 +23,4 @@ Currently supported database dialects are:
 * SQLite  
 * H2
 * SQL Server
+* MariaDB
