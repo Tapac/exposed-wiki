@@ -190,7 +190,7 @@ val count = StarWarsFilms.select { StarWarsFilms.sequelId eq  8 }.count()
 Order-by accepts a list of columns mapped to boolean indicates if sorting should be ascending or descending.
 Example:
 ```kotlin
-StarWarsFilms.selectAll().orderBy(StarWarsFilms.sequelId to true)
+StarWarsFilms.selectAll().orderBy(StarWarsFilms.sequelId to SortOrder.ASC)
 ```
 ## Group-by
 In group-by, define fields and their functions (such as `count`) by the `slice()` method.
