@@ -43,7 +43,11 @@ Every database access using Exposed is started by obtaining a connection and cre
 To get a connection:
 
 ```kotlin
+// h2 version < 1.4.198
 Database.connect("jdbc:h2:mem:test", driver = "org.h2.Driver")
+
+// h2 version 1.4.198+
+Database.connect("jdbc:h2:mem:test?DATABASE_TO_UPPER=false;", driver = "org.h2.Driver")
 ```
 
 It is also possible to provide `javax.sql.DataSource` for advanced behaviors such as connection pooling:
