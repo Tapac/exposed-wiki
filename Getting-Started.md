@@ -15,7 +15,7 @@
   <dependency>
     <groupId>org.jetbrains.exposed</groupId>
     <artifactId>exposed</artifactId>
-    <version>0.14.1</version>
+    <version>0.14.2</version>
   </dependency>
 </dependencies>
 
@@ -28,7 +28,7 @@ repositories {
   jcenter()
 }
 dependencies {
-  compile 'org.jetbrains.exposed:exposed:0.14.1'
+  compile 'org.jetbrains.exposed:exposed:0.14.2'
 }
 ```
 
