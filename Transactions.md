@@ -49,7 +49,7 @@ In the modern world non-blocking and asynchronous code is popular. Kotlin has [C
 
 Why? 
 
-Because Exposed uses JDBC-api to interact with databases, which was designed in an era of blocking apis. What's more, Exposed store some values in thread-local variables while Coroutines could (and will) be executed in different threads. 
+Because Exposed uses JDBC-api to interact with databases that was designed in an era of blocking apis. What's more, Exposed store some values in thread-local variables while Coroutines could (and will) be executed in different threads. 
 
 Since Exposed 0.15.1 there are bridge functions that  will give you a safe way to interact with Exposed within `suspend` blocks: `suspendedTransaction/Transaction.suspendedTransaction` have same parameters as a blocking `transaction` function but will allow you to provide `coroutineContext` in which function will be executed. If context is not provided your code will be executed within current `coroutineContext`.
 
