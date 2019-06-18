@@ -42,7 +42,42 @@ transaction(db1) {
 }
 ```
 
-Entities (see [[DAO API|DAO]] page) `stick` to a transaction which was used to load that entity. That means that all changes persist to the same database and what cross-database references are prohibited and will throw exceptions. 
+Entities (see [[DAO API|DAO]] page) `stick` to a transaction which was used to load that entity. That means that all changes persist to the same database and what cross-database references are prohibited and will throw exceptions.
+
+### Working with Coroutines
+In the modern world it's rather popular to write non-blocking and asynchronous code, Kotlin has [Coroutines](https://kotlinlang.org/docs/reference/coroutines-overview.html) to simplify writing asynchronous code in imperative way. Most of Kotlin frameworks (like [ktor](https://ktor.io)) has built-in support for Coroutines while Exposed is mostly blocking. 
+
+Why? 
+
+Because Exposed uses JDBC-api to interact with databases, which was designed in an era of blocking apis and store some values in thread-local variables while Coroutines could (and should) be executed on different threads. 
+
+Since Exposed 0.15.1 there are bridge functions that will allow you safely use Exposed within `suspend` blocks: `suspendedTransaction/Transaction.suspendedTransaction` have similar parameters as a blocking `transaction` function but also allow you to provide `coroutineContext` where function will be executed. If context was not provided your code will be executed with current `coroutineContext`.
+
+Sample usage looks like:
+```kotlin
+runBlocking {
+    transaction {    
+        SchemaUtils.create(FooTable) // Table will be created on a current thread
+    
+        suspendedTransaction {
+            FooTable.insert { it[id] = 1 } // This insert will be also executed on a current thread 
+    
+            launch(Dispatchers.Default) {
+                suspendedTransaction {
+                    val id = FooTable.select { FooTable.id eq 1 }.single()()[FooTable.id] // This select will be executed on some thread from Default dispatcher using the same transaction
+                }
+            }
+        }
+    
+        val result = suspendedTransaction(Dispatchers.IO) {
+            FooTable.select { FooTable.id eq 1 }.single()[H2Tests.Testing.id] // This select will be executed on some thread from IO dispatcher using the same transaction
+        }
+    }
+}
+
+```  
+
+Please note what such code is still blocking (as it still uses JDBC) and you should not try to share a transaction between multiple threads as it might lead to unpredictable result.  
 
 ### Advanced parameters and usage
 
