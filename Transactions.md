@@ -45,13 +45,13 @@ transaction(db1) {
 Entities (see [[DAO API|DAO]] page) `stick` to a transaction which was used to load that entity. That means that all changes persist to the same database and what cross-database references are prohibited and will throw exceptions.
 
 ### Working with Coroutines
-In the modern world it's rather popular to write non-blocking and asynchronous code, Kotlin has [Coroutines](https://kotlinlang.org/docs/reference/coroutines-overview.html) to simplify writing asynchronous code in imperative way. Most of Kotlin frameworks (like [ktor](https://ktor.io)) has built-in support for Coroutines while Exposed is mostly blocking. 
+In the modern world non-blocking and asynchronous code is popular. Kotlin has [Coroutines](https://kotlinlang.org/docs/reference/coroutines-overview.html) that give you an imperative way of asynchronous code writing. Most of Kotlin frameworks (like [ktor](https://ktor.io)) have built-in support for Coroutines while Exposed is mostly blocking. 
 
 Why? 
 
-Because Exposed uses JDBC-api to interact with databases, which was designed in an era of blocking apis and store some values in thread-local variables while Coroutines could (and should) be executed on different threads. 
+Because Exposed uses JDBC-api to interact with databases, which was designed in an era of blocking apis. What's more, Exposed store some values in thread-local variables while Coroutines could (and will) be executed in different threads. 
 
-Since Exposed 0.15.1 there are bridge functions that will allow you safely use Exposed within `suspend` blocks: `suspendedTransaction/Transaction.suspendedTransaction` have similar parameters as a blocking `transaction` function but also allow you to provide `coroutineContext` where function will be executed. If context was not provided your code will be executed with current `coroutineContext`.
+Since Exposed 0.15.1 there are bridge functions that  will give you a safe way to interact with Exposed within `suspend` blocks: `suspendedTransaction/Transaction.suspendedTransaction` have same parameters as a blocking `transaction` function but will allow you to provide `coroutineContext` in which function will be executed. If context is not provided your code will be executed within current `coroutineContext`.
 
 Sample usage looks like:
 ```kotlin
@@ -77,7 +77,7 @@ runBlocking {
 
 ```  
 
-Please note what such code is still blocking (as it still uses JDBC) and you should not try to share a transaction between multiple threads as it might lead to unpredictable result.  
+Please note what such code remains blocking (as it still uses JDBC) and you should not try to share a transaction between multiple threads as it will lead to undefined behaviour.
 
 ### Advanced parameters and usage
 
