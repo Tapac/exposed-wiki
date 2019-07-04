@@ -42,7 +42,31 @@ transaction(db1) {
 }
 ```
 
-Entities (see [[DAO API|DAO]] page) `stick` to a transaction which was used to load that entity. That means that all changes persist to the same database and what cross-database references are prohibited and will throw exceptions.
+Entities (see [[DAO API|DAO]] page) `stick` to a transaction that was used to load that entity. That means that all changes persist to the same database and what cross-database references are prohibited and will throw exceptions.
+
+### Using nested transactions
+Since Exposed 0.16.1 it is possible to use nested transactions. To enable this feature you should set `useNestedTransactions` on desire `Database` instance to `true`.
+
+After that any exception that happens within `transaction` block will not rollback the whole transaction but only the code inside current `transaction`. 
+Exposed uses SQL `SAVEPOINT` functionality to mark current transaction at the begining of `transaction` block and release it on exit from it. 
+
+Using savepoint could affect performance, so please read documentation on DBMS you use for more details.
+
+```kotlin
+val db = Database.connect()
+db.useNestedTransactions = true
+
+transaction {
+    FooTable.insert{ it[id] = 1 }
+    
+    var idToInsert = 0
+    transaction { // nested transaction
+        idToInsert++
+        // On the first insert it will fail with unique constraint exception and will rollback to the `nested transaction` and then insert a new record with id = 2
+        FooTable.insert{ it[id] = idToInsert } 
+    }
+}
+```
 
 ### Working with Coroutines
 In the modern world non-blocking and asynchronous code is popular. Kotlin has [Coroutines](https://kotlinlang.org/docs/reference/coroutines-overview.html) that give you an imperative way of asynchronous code writing. Most of Kotlin frameworks (like [ktor](https://ktor.io)) have built-in support for Coroutines while Exposed is mostly blocking. 
@@ -51,7 +75,7 @@ Why?
 
 Because Exposed uses JDBC-api to interact with databases that was designed in an era of blocking apis. What's more, Exposed store some values in thread-local variables while Coroutines could (and will) be executed in different threads. 
 
-Since Exposed 0.15.1 there are bridge functions that  will give you a safe way to interact with Exposed within `suspend` blocks: `suspendedTransaction/Transaction.suspendedTransaction` have same parameters as a blocking `transaction` function but will allow you to provide `coroutineContext` in which function will be executed. If context is not provided your code will be executed within current `coroutineContext`.
+Since Exposed 0.15.1 there are bridge functions that will give you a safe way to interact with Exposed within `suspend` blocks: `suspendedTransaction/Transaction.suspendedTransaction` have same parameters as a blocking `transaction` function but will allow you to provide `coroutineContext` in which function will be executed. If context is not provided your code will be executed within current `coroutineContext`.
 
 Sample usage looks like:
 ```kotlin
@@ -59,7 +83,7 @@ runBlocking {
     transaction {    
         SchemaUtils.create(FooTable) // Table will be created on a current thread
     
-        suspendedTransaction {
+        newSuspendedTransaction {
             FooTable.insert { it[id] = 1 } // This insert will be also executed on a current thread 
     
             launch(Dispatchers.Default) {
@@ -69,7 +93,7 @@ runBlocking {
             }
         }
     
-        val result = suspendedTransaction(Dispatchers.IO) {
+        val result = newSuspendedTransaction(Dispatchers.IO) {
             FooTable.select { FooTable.id eq 1 }.single()[H2Tests.Testing.id] // This select will be executed on some thread from IO dispatcher using the same transaction
         }
     }
