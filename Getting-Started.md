@@ -28,7 +28,7 @@ repositories {
   jcenter()
 }
 dependencies {
-  compile 'org.jetbrains.exposed:exposed:0.14.2'
+  compile 'org.jetbrains.exposed:exposed:0.16.1'
 }
 ```
 
