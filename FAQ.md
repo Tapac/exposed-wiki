@@ -92,7 +92,8 @@ A: It possible with custom function. See [example](https://github.com/JetBrains/
 
 ### Q: Where can I find snapshot builds of Exposed
 A; You could use jitpack.io service for that. 
-Add jitoack.io to repositories:
+
+Add jitpack.io to repositories:
 ```
 repositories {
     maven { url 'https://jitpack.io' }
