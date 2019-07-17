@@ -90,6 +90,20 @@ A: It possible only through using a raw connection. See example [here](https://g
 ### Q: How to prepare query like: `SELECT * FROM table WHERE (x,y) IN ((1, 2), (3, 4), (5, 6))`
 A: It possible with custom function. See [example](https://github.com/JetBrains/Exposed/issues/373#issuecomment-414123325).
 
+### Q: Where can I find snapshot builds of Exposed
+A; You could use jitpack.io service for that. 
+Add jitoack.io to repositories:
+```
+repositories {
+    maven { url 'https://jitpack.io' }
+}
+```
+Then add Exposed dependency as stated below:
+```
+dependencies {
+    implementation 'com.github.JetBrains:Exposed:-SNAPSHOT'
+}
+```
 
 ### More questions on Stack Overflow:
 https://stackoverflow.com/questions/tagged/kotlin-exposed
