@@ -75,7 +75,7 @@ Why?
 
 Because Exposed uses JDBC-api to interact with databases that was designed in an era of blocking apis. What's more, Exposed store some values in thread-local variables while Coroutines could (and will) be executed in different threads. 
 
-Since Exposed 0.15.1 there are bridge functions that will give you a safe way to interact with Exposed within `suspend` blocks: `suspendedTransaction/Transaction.suspendedTransaction` have same parameters as a blocking `transaction` function but will allow you to provide `coroutineContext` in which function will be executed. If context is not provided your code will be executed within current `coroutineContext`.
+Since Exposed 0.15.1 there are bridge functions that will give you a safe way to interact with Exposed within `suspend` blocks: `newSuspendedTransaction/Transaction.suspendedTransaction` have same parameters as a blocking `transaction` function but will allow you to provide `CoroutineDispatcher` in which function will be executed. If context is not provided your code will be executed within current `coroutineContext`.
 
 Sample usage looks like:
 ```kotlin
@@ -83,13 +83,11 @@ runBlocking {
     transaction {    
         SchemaUtils.create(FooTable) // Table will be created on a current thread
     
-        newSuspendedTransaction {
-            FooTable.insert { it[id] = 1 } // This insert will be also executed on a current thread 
+        newSuspendedTransaction(Dispatchers.Default) {
+            FooTable.insert { it[id] = 1 } // This insert will be executed in one of Default dispatcher threads
     
-            launch(Dispatchers.Default) {
-                suspendedTransaction {
-                    val id = FooTable.select { FooTable.id eq 1 }.single()()[FooTable.id] // This select will be executed on some thread from Default dispatcher using the same transaction
-                }
+            suspendedTransaction {
+                val id = FooTable.select { FooTable.id eq 1 }.single()()[FooTable.id] // This select also will be executed on some thread from Default dispatcher using the same transaction
             }
         }
     
@@ -102,6 +100,35 @@ runBlocking {
 ```  
 
 Please note what such code remains blocking (as it still uses JDBC) and you should not try to share a transaction between multiple threads as it will lead to undefined behaviour.
+
+If you desire to execute some code asynchronously and use the result later in your code take a look at `suspendedTransactionAsync` function.
+
+```kotlin
+val launchResult = suspendedTransactionAsync(Dispatchers.IO, db = db) {
+    FooTable.insert{}
+
+    FooTable.select { FooTable.id eq 1 }.singleOrNull()?.getOrNull(Testing.id)
+}
+
+println("Result: " + (launchResult.await() ?: -1))
+
+```
+
+This function will accept the same parameters as `newSuspendedTransaction` above but returns `TransactionResult` instance which you could `await` on to achieve your result. 
+
+`suspendedTransactionAsync` is always executed in new transaction to prevent concurrency issues when queries execution order could be changed by `CoroutineDispatcher`. If you want to use the result and execute another queries within the same transaction you can use `andThen` function.
+
+```kotlin
+
+val launchResult = suspendedTransactionAsync(Dispatchers.IO, db = db) {
+    FooTable.selectAll().count()
+}.andThen { count ->
+    BarTable.select { BarTable.value eq count }.map { it[BarTable.name] }
+}
+
+println("Result: " + launchResult.await())
+
+```
 
 ### Advanced parameters and usage
 
