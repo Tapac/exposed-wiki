@@ -14,7 +14,8 @@
 * [Advanced CRUD operations](#advanced-crud-operations)
   * [Read entity with a join to another table](#read-entity-with-a-join-to-another-table)
   * [Auto-fill created and updated columns on entity change](#auto-fill-created-and-updated-columns-on-entity-change)
-
+* [Entities mapping](#entities-mapping)
+  * [Fields transformation](#fields-transformaation)
 ***
 
 
@@ -332,3 +333,28 @@ val cities = Cities
   .orderBy(expression, SortOrder.DESC)
   .toList()
 ```
+
+## Entities mapping
+
+### Fields transformation
+As databases could store only basic types like integers and strings it's not always conveniently to keep the same simplicity on DAO level. 
+Sometimes you may want to make some transformations like parsing json from a varchar column or get some value from a cache based on value from a database.
+
+In that case the preferred way is to use column transformations. Assume that we want to define unsigned integer field on Entity, but Exposed doesn't have such column type yet.
+```kotlin
+object TableWithUnsignedInteger : IntIdTable() {
+    val uint = integer("uint")
+}
+
+class EntityWithUInt : IntEntity() {
+    var uint: UInt by TableWithUnsignedInteger.uint.transform({ it.toInt() }, { it.toUInt() })
+    
+    companion object : IntEntityClass<EntityWithUInt>()
+}
+```
+`transform` function accept two lambdas to convert values to and from an original column type. 
+
+After that in your code you'll be able to put only `UInt` instances into `uint` field. 
+It still possible to insert/update values with negative integers via DAO, but your business code becomes much cleaner. 
+
+Please keep in mind what such transformations will aqure on every access to a field what means that you should avoid heavy transformations here.
