@@ -15,7 +15,7 @@
   * [Read entity with a join to another table](#read-entity-with-a-join-to-another-table)
   * [Auto-fill created and updated columns on entity change](#auto-fill-created-and-updated-columns-on-entity-change)
 * [Entities mapping](#entities-mapping)
-  * [Fields transformation](#fields-transformaation)
+  * [Fields transformation](#fields-transformation)
 ***
 
 
