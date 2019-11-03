@@ -114,21 +114,9 @@ println("Result: " + (launchResult.await() ?: -1))
 
 ```
 
-This function will accept the same parameters as `newSuspendedTransaction` above but returns `TransactionResult` instance which you could `await` on to achieve your result. 
+This function will accept the same parameters as `newSuspendedTransaction` above but returns `Deferred` which you could `await` on to achieve your result. 
 
-`suspendedTransactionAsync` is always executed in new transaction to prevent concurrency issues when queries execution order could be changed by `CoroutineDispatcher`. If you want to use the result and execute another queries within the same transaction you can use `andThen` function.
-
-```kotlin
-
-val launchResult = suspendedTransactionAsync(Dispatchers.IO, db = db) {
-    FooTable.selectAll().count()
-}.andThen { count ->
-    BarTable.select { BarTable.value eq count }.map { it[BarTable.name] }
-}
-
-println("Result: " + launchResult.await())
-
-```
+`suspendedTransactionAsync` is always executed in new transaction to prevent concurrency issues when queries execution order could be changed by `CoroutineDispatcher`. 
 
 ### Advanced parameters and usage
 
