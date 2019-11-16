@@ -12,11 +12,21 @@
 </repositories>
 
 <dependencies>
-  <dependency>
-    <groupId>org.jetbrains.exposed</groupId>
-    <artifactId>exposed</artifactId>
-    <version>0.17.7</version>
-  </dependency>
+    <dependency>
+      <groupId>org.jetbrains.exposed</groupId>
+      <artifactId>exposed-core</artifactId>
+      <version>0.18.1</version>
+    </dependency>
+    <dependency>
+      <groupId>org.jetbrains.exposed</groupId>
+      <artifactId>exposed-dao</artifactId>
+      <version>0.18.1</version>
+    </dependency>
+    <dependency>
+      <groupId>org.jetbrains.exposed</groupId>
+      <artifactId>exposed-jdbc</artifactId>
+      <version>0.18.1</version>
+    </dependency>
 </dependencies>
 
 ```
@@ -28,11 +38,13 @@ repositories {
   jcenter()
 }
 dependencies {
-  compile 'org.jetbrains.exposed:exposed:0.17.7'
+  compile("org.jetbrains.exposed", "exposed-core", "0.18.1")
+  compile("org.jetbrains.exposed", "exposed-dao", "0.18.1")
+  compile("org.jetbrains.exposed", "exposed-jdbc", "0.18.1")
 }
 ```
 
-* Note: There is a separate artifact for `spring-transaction`
+* Note: There are another modules. Detailed information located in [[Modules Documentation|LibDocumentation]] section.
 
 ## Getting Started
 
