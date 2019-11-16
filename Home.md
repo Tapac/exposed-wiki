@@ -12,7 +12,7 @@ This wiki contains the following pages:
   * [[DAO API|DAO]]
   * [[Modules Documentation|LibDocumentation]]
   * [[Frequently Asked Questions|FAQ]]
-  * [[Contributing|Contributing]]
+  * [[Migration Guide|Migration-Guide]]
 
 
 Currently supported database dialects are:
