@@ -1,7 +1,7 @@
 ## Migrating from Exposed 0.17.x and earlier to 0.18.+
 ### Dependencies
 
-See [["Exposed 0.18.1 and higher" section|LibDocumentation#exposed-0.18.1-and-higher]] in Modules Documentation
+See [["Exposed 0.18.1 and higher" section|LibDocumentation#exposed-0181-and-higher]] in Modules Documentation
 
 ### Code changes:
 Some functions and extensions had changed their places, another became extension functions instead of member functions.
