@@ -1,5 +1,3 @@
-#Migration Guide
-
 ## Migrating from Exposed 0.17.x and earlier to 0.18.+
 ### Dependencies
 
