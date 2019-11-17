@@ -32,7 +32,7 @@ To add `Exposed` framework of that version you had to use:
   <dependency>
     <groupId>org.jetbrains.exposed</groupId>
     <artifactId>exposed</artifactId>
-    <version>0.17.6</version>
+    <version>0.17.7</version>
   </dependency>
 </dependencies>
 
@@ -41,13 +41,13 @@ To add `Exposed` framework of that version you had to use:
 #### Gradle Groovy
 ```groovy
 dependencies {
-  compile 'org.jetbrains.exposed:exposed:0.17.6'
+  compile 'org.jetbrains.exposed:exposed:0.17.7'
 }
 ```
 #### Gradle Kotlin DSL
 ```kotlin
 dependencies {
-    compile("org.jetbrains.exposed", "exposed", "0.17.6")
+    compile("org.jetbrains.exposed", "exposed", "0.17.7")
 }
 ```
 
