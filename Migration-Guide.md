@@ -42,6 +42,7 @@ To allow Exposed to work with Java 9 module system some classes in a `exposed-co
 Also, `exposed-jodatime` functions/classes were moved to a new package.
 
 Affected classes:
+
 `org.jetbrains.exposed.dao.EntityID`     -> `org.jetbrains.exposed.dao.id.EntityID` 
 
 `org.jetbrains.exposed.dao.IdTable`      -> `org.jetbrains.exposed.dao.id.IdTable` 
