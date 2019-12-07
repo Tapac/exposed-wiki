@@ -11,9 +11,13 @@ In both cases it could require re-import to be possible to compile your code aga
 Those classes were replaced with Exposed alternatives. Only part of original interface functions reused in new interfaces.
 
 `java.sql.Connection` -> `org.jetbrains.exposed.sql.statements.api.ExposedConnection` 
+
 `java.sql.Savepoint` -> `org.jetbrains.exposed.sql.statements.api.ExposedSavepoint`
+
 `java.sql.Blob` and `javax.sql.rowset.serial.SerialBlob` -> `org.jetbrains.exposed.sql.statements.api.ExposedBlob`
+
 `java.sql.PreparedStatement` -> `org.jetbrains.exposed.sql.statements.api.PreparedStatementApi`
+
 `java.sql.DatabaseMetadata` -> `org.jetbrains.exposed.sql.statements.api.ExposedDatabaseMetadata` (access it with `Database.metadata { }` function)
 
 If you need to get original jdbc connection (and you use `exposed-jdbc` as a dependency) you should cast `ExposedConnection` instance to `JdbcConnectionImpl` and get value from a `connection` field.
@@ -39,9 +43,13 @@ Also, `exposed-jodatime` functions/classes were moved to a new package.
 
 Affected classes:
 `org.jetbrains.exposed.dao.EntityID`     -> `org.jetbrains.exposed.dao.id.EntityID` 
+
 `org.jetbrains.exposed.dao.IdTable`      -> `org.jetbrains.exposed.dao.id.IdTable` 
+
 `org.jetbrains.exposed.dao.IntIdTable`   -> `org.jetbrains.exposed.dao.id.IntIdTable` 
+
 `org.jetbrains.exposed.dao.LongIdTable`  -> `org.jetbrains.exposed.dao.id.LongIdTable` 
+
 `org.jetbrains.exposed.dao.UUIDTable`    -> `org.jetbrains.exposed.dao.id.UUIDTable` 
 
 As this change could hardly affect large projects we move existing classes with their original package to `exposed-dao` module, deprecate them and prepare migration steps with IntelliJ IDEA:
