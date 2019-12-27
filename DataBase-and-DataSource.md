@@ -63,7 +63,7 @@ Database.connect("jdbc:h2:mem:regular", "org.h2.Driver")
 // In memory / keep alive between connections/transactions
 Database.connect("jdbc:h2:mem:regular;DB_CLOSE_DELAY=-1;", "org.h2.Driver")  
 //Gradle
-compile("com.h2database:h2:1.4.197")  
+compile("com.h2database:h2:1.4.199")  
 ```  
 * SQL Server
 ```kotlin
