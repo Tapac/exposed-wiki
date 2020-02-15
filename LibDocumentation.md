@@ -8,7 +8,7 @@ To use them you have to add appropriate dependency into your repositories mappin
   <repository>
     <id>jcenter</id>
     <name>jcenter</name>
-    <url>http://jcenter.bintray.com</url>
+    <url>https://jcenter.bintray.com</url>
   </repository>
 </repositories>
 ```
