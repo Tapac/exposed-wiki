@@ -85,11 +85,13 @@ StarWarsFilms.update ({ StarWarsFilms.sequelId eq 8 }) {
 }
 ```
 
-If you want to update column value with some expression like increment:
+If you want to update column value with some expression like increment use `update` function or setter:
 ```kotlin
 StarWarsFilms.update({ StarWarsFilms.sequelId eq 8 }) {
     with(SqlExpressionBuilder) {
        it.update(StarWarsFilms.sequelId, StarWarsFilms.sequelId + 1)
+       // or 
+       it[StarWarsFilms.sequelId] = StarWarsFilms.sequelId + 1
     }
 } 
 ```
