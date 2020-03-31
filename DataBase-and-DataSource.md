@@ -1,21 +1,15 @@
 ### Working with DataBase and DataSource
 Every database access using Exposed is starting by obtaining a connection and creating a transaction.  
-
 To get a connection:
-
 ```kotlin
 val db = Database.connect("jdbc:h2:mem:test", driver = "org.h2.Driver")
 ```
-
 It is also possible to provide `javax.sql.DataSource` for advanced behaviors such as connection pooling:
 ```kotlin
 val db = Database.connect(dataSource)
 ```
-
 * Note: Starting Exposed 0.10 executing this code more than once per db will create leaks in your application, hence it is recommended to store it for later use.
-
 For example:
-
 ```kotlin
 object DbSettings {
    val db by lazy { 
@@ -23,15 +17,20 @@ object DbSettings {
    }
 }
 ```
-
 ### DataSource
-
 * PostgreSQL
 ```kotlin
 Database.connect("jdbc:postgresql://localhost:12346/test", driver = "org.postgresql.Driver", 
                  user = "root", password = "your_pwd")  
 //Gradle
 compile("org.postgresql:postgresql:42.2.2")  
+```
+* PostgreSQL using the pgjdbc-ng JDBC driver
+```kotlin
+Database.connect("jdbc:pgsql://localhost:12346/test", driver = "com.impossibl.postgres.jdbc.PGDriver", 
+                 user = "root", password = "your_pwd")  
+//Gradle
+compile("com.impossibl.pgjdbc-ng", "pgjdbc-ng", "0.8.3")  
 ```
 * MySQL
 ```kotlin
@@ -71,4 +70,4 @@ Database.connect("jdbc:sqlserver://localhost:32768;databaseName=test", "com.micr
                  user = "root", password = "your_pwd")  
 //Gradle
 compile("com.microsoft.sqlserver:mssql-jdbc:6.4.0.jre7")  
-```  
+```

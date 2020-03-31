@@ -12,24 +12,21 @@
 * [Limit](#limit)
 * [Join](#join)
 * [Alias](#alias)
+* [Schema](#schema)
+* [Sequence](#sequence)
 * [Batch Insert](#batch-insert)
 * [Insert From Select](#insert-from-select)
-
-
-
 ***
-
-
 ## Overview
-
 The DSL (Domain Specific Language) API of Exposed, is similar to actual SQL statements with type safety that Kotlin offers.  
 A DB table is represented by an `object` inherited from `org.jetbrains.exposed.sql.Table` like this:
 ```kotlin
 object StarWarsFilms : Table() {
-  val id: Column<Int> = integer("id").autoIncrement().primaryKey()
+  val id: Column<Int> = integer("id").autoIncrement()
   val sequelId: Column<Int> = integer("sequel_id").uniqueIndex()
   val name: Column<String> = varchar("name", 50)
   val director: Column<String> = varchar("director", 50)
+  override val primaryKey = PrimaryKey(id, name = "PK_StarWarsFilms_Id") // PK_StarWarsFilms_Id is optional here
 }
 ```
 Tables that contains `Int` id with the name `id` can be declared like this:
@@ -67,7 +64,6 @@ val filmAndDirector = StarWarsFilms.
       it[StarWarsFilms.name] to it[StarWarsFilms.director]
    }
 ```
-
 If you want to select only distinct value then use `withDistinct()` function:
 ```kotlin
 val directors = StarWarsFilms.
@@ -77,14 +73,12 @@ val directors = StarWarsFilms.
       it[StarWarsFilms.director]
    }
 ```
-
 ### Update
 ```kotlin
 StarWarsFilms.update ({ StarWarsFilms.sequelId eq 8 }) {
   it[StarWarsFilms.name] = "Episode VIII – The Last Jedi"
 }
 ```
-
 If you want to update column value with some expression like increment use `update` function or setter:
 ```kotlin
 StarWarsFilms.update({ StarWarsFilms.sequelId eq 8 }) {
@@ -95,12 +89,10 @@ StarWarsFilms.update({ StarWarsFilms.sequelId eq 8 }) {
     }
 } 
 ```
-
 ### Delete
 ```kotlin
 StarWarsFilms.deleteWhere { StarWarsFilms.sequelId eq 8 }
 ```
-
 ## Where expression
 Query expression (where) expects a boolean operator (ie: `Op<Boolean>`).  
 Allowed conditions are:  
@@ -144,7 +136,6 @@ val condition = when {
         Op.build { StarWarsFilms.sequelId eq sequelId }
     else -> null
 }
-
 val query = condition?.let { StarWarsFilms.select(condition) } ?: StarWarsFilms.selectAll()
 ```
 or 
@@ -160,19 +151,15 @@ val query = when {
 }
 ```
 This is a very primitive example, but you should get the main idea about the problem.
-
 Now let's try to write the same query in a more simple way (`andWhere` function available since 0.10.5):
 ```Kotlin
 val query = StarWarsFilms.selectAll()
-
 directorName?.let {
     query.andWhere { StarWarsFilms.director eq it }
 }
-
 sequelId?.let {
     query.andWhere { StarWarsFilms.sequelId eq it }
 }
-
 ```
 But what if we have conditionaly select from another table and want to join it only when condition is true? 
 You have to use `adjustColumnSet` and `adjustSlice` functions (available since 0.8.1) which allows to extend and modify `join` and `slice` parts of a query (see kdoc on that functions):
@@ -225,7 +212,6 @@ object StarWarsFilms : IntIdTable() {
   val name: Column<String> = varchar("name", 50)
   val director: Column<String> = varchar("director", 50)
 }
-
 object Players : Table() {
   val sequelId: Column<Int> = integer("sequel_id").uniqueIndex()
   val name: Column<String> = varchar("name", 50)
@@ -239,14 +225,12 @@ Join to count how many players play in each movie:
   .groupBy(StarWarsFilms.name)
 ``` 
 * In case there is a foreign key it is possible to replace `select{}` with `selectAll()`
-
 Same example using the full syntax:
 ```kotlin
 Players.join(StarWarsFilms, JoinType.INNER, additionalConstraint = {StarWarsFilms.sequelId eq Players.sequelId})
   .slice(Players.name.count(), StarWarsFilms.name)
   .groupBy(StarWarsFilms.name)
 ```
-
 ## Alias
 Aliases allow preventing ambiguity between field names and table names.
 Use the aliased var instead of original one:
@@ -254,7 +238,6 @@ Use the aliased var instead of original one:
 val filmTable1 = StarWarsFilms.alias("ft1")
 filmTable1.selectAll() // can be used in joins etc'
 ```
-
 Also, aliases allow you to use the same table in a join multiple times:
 ```Kotlin
 val sequelTable = StarWarsFilms.alias("sql")
@@ -264,23 +247,75 @@ val originalAndSequelNames = StarWarsFilms
     .selectAll()
     .map { it[StarWarsFilms.name] to it[sequelTable[StarWarsFilms.name]] }
 ```
-
 And they can be used when selecting from sub-queries:
 ```kotlin
 val starWarsFilms = StarWarsFilms
     .slice(StarWarsFilms.id, StarWarsFilms.name)
     .selectAll()
     .alias("swf")
-
 val id = starWarsFilms[StarWarsFilms.id]
 val name = starWarsFilms[StarWarsFilms.name]
-
 starWarsFilms
     .slice(id, name)
     .selectAll()
     .map { it[id] to it[name] }
 ```
-
+## Schema
+You can create a schema or drop an existing one:
+```Kotlin
+val schema = Schema("my_schema") // my_schema is the schema name.
+// Creates a Schema
+SchemaUtils.createSchema(schema)
+// Drops a Schema
+SchemaUtils.dropSchema(schema)
+```
+Also, you can specify the schema owner like this (some databases require the explicit owner) :
+```Kotlin
+val schema = Schema("my_schema", authorization = "owner")
+```
+If you have many schemas and you want to set a default one, you can use:
+```Kotlin
+SchemaUtils.setSchema(schema)
+```
+## Sequence
+If you want to use Sequence, Exposed allows you to:
+### Define a Sequence
+```Kotlin
+val myseq = Sequence("my_sequence") // my_sequence is the sequence name.
+```
+Several parameters can be specified to control the properties of the sequence:
+```Kotlin
+private val myseq = Sequence(
+        name = "my_sequence",
+        startWith = 4,
+        incrementBy = 2,
+        minValue = 1,
+        maxValue = 10,
+        cycle = true,
+        cache = 20
+    )
+```
+### Create and Drop a Sequence
+```Kotlin
+// Creates a sequence
+SchemaUtils.createSequence(myseq)
+// Drops a sequence
+SchemaUtils.dropSequence(myseq)
+```
+### Use the NextVal function
+You can use the nextVal function like this:
+```Kotlin
+val nextVal = myseq.nextVal()
+val id = StarWarsFilms.insertAndGetId {
+  it[id] = nextVal
+  it[name] = "The Last Jedi"
+  it[sequelId] = 8
+  it[director] = "Rian Johnson"
+}
+```
+```Kotlin
+val firstValue = StarWarsFilms.slice(nextVal).selectAll().single()[nextVal]
+```
 ## Batch Insert
 Batch Insert allow mapping a list of entities into DB raws in one sql statement. It is more efficient than inserting one by one as it initiates only one statement. Here is an example:
 ```kotlin
@@ -290,10 +325,7 @@ val allCitiesID = cities.batchInsert(cityNames) { name ->
 }
 ```
 *NOTE:* The `batchInsert` function will still create multiple `INSERT` statements when interacting with your database. You most likely want to couple this with the `rewriteBatchedInserts=true` (or `rewriteBatchedStatements=true` option of your relevant JDBC driver, which will convert those into a single bulkInsert.
-
 You can find the documentation for this option for MySQL [here](https://dev.mysql.com/doc/connector-j/5.1/en/connector-j-reference-configuration-properties.html) and PostgreSQL [here](https://jdbc.postgresql.org/documentation/94/connect.html).
-
-
 ## Insert From Select
 If you want to use `INSERT INTO ... SELECT ` SQL clause try Exposed analog `Table.insert(Query)`.
 ```kotlin

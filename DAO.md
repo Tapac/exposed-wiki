@@ -17,18 +17,16 @@
 * [Entities mapping](#entities-mapping)
   * [Fields transformation](#fields-transformation)
 ***
-
-
 ## Overview
-
 The DAO (Data Access Object) API of Exposed, is similar to ORM frameworks like Hibernate with a Kotlin-specific API.  
 A DB table is represented by an `object` inherited from `org.jetbrains.exposed.sql.Table` like this:
 ```kotlin
 object StarWarsFilms : Table() {
-  val id: Column<Int> = integer("id").autoIncrement().primaryKey()
+  val id: Column<Int> = integer("id").autoIncrement()
   val sequelId: Column<Int> = integer("sequel_id").uniqueIndex()
   val name: Column<String> = varchar("name", 50)
   val director: Column<String> = varchar("director", 50)
+  override val primaryKey = PrimaryKey(id, name = "PK_StarWarsFilms_Id") // PK_StarWarsFilms_Id is optional here
 }
 ```
 Tables that contain an `Int` id with the name `id` can be declared like this:
@@ -51,7 +49,6 @@ An entity instance or a row in the table is defined as a class instance:
  ```kotlin
 class StarWarsFilm(id: EntityID<Int>) : IntEntity(id) {
   companion object : IntEntityClass<StarWarsFilm>(StarWarsFilms)
-
   var sequelId by StarWarsFilms.sequelId 
   var name     by StarWarsFilms.name
   var director by StarWarsFilms.director
@@ -74,7 +71,6 @@ val movies = StarWarsFilm.find { StarWarsFilms.sequelId eq 8 }
 val movie = StarWarsFilm.findById(5)
 ```
 * For a list of available predicates see [DSL Where expression](https://github.com/JetBrains/Exposed/wiki/DSL#where-expression).  
-
 Read a value from a property similar to any property in a Kotlin class:
 ```kotlin
 val name = movie.name
@@ -98,7 +94,6 @@ movie.name = "Episode VIII – The Last Jedi"
 ```kotlin
 movie.delete() 
 ```
-
 ## Referencing
 ### many-to-one reference
 Let's say you have this table:
@@ -106,10 +101,8 @@ Let's say you have this table:
 object Users: IntIdTable() {
     val name = varchar("name", 50)
 }
-
 class User(id: EntityID<Int>): IntEntity(id) {
     companion object : IntEntityClass<User>(Users)
-
     var name by Users.name
 }
 ```
@@ -120,10 +113,8 @@ object UserRatings: IntIdTable() {
     val film = reference("film", StarWarsFilms)
     val user = reference("user", Users)
 }
-
 class UserRating(id: EntityID<Int>): IntEntity(id) {
     companion object : IntEntityClass<UserRating>(UserRatings)
-
     var value by UserRatings.value
     var film by StarWarsFilm referencedOn UserRatings.film // use referencedOn for normal references
     var user by User referencedOn UserRatings.user
@@ -137,7 +128,6 @@ Now if you wanted to get all the ratings for a film, you could do that by using 
 ```kotlin
 class StarWarsFilm(id: EntityID<Int>) : IntEntity(id) {
     companion object : IntEntityClass<StarWarsFilm>(StarWarsFilms)
-
     ...
     val ratings by UserRating referrersOn UserRatings.film // make sure to use val and referrersOn
     ...
@@ -155,10 +145,8 @@ object UserRatings: IntIdTable() {
     val secondUser = reference("second_user", Users).nullable() // this reference is nullable!
     ...
 }
-
 class UserRating(id: EntityID<Int>): IntEntity(id) {
     companion object : IntEntityClass<UserRating>(UserRatings)
-
     ...
     var secondUser by User optionalReferencedOn UserRatings.secondUser // use optionalReferencedOn for nullable references
     ...
@@ -166,7 +154,6 @@ class UserRating(id: EntityID<Int>): IntEntity(id) {
 ```
 Now `secondUser` will be a nullable field.
 Of course, you can still use `referrersOn`.
-
 ### many-to-many reference
 In some cases, a many-to-many reference may be required.
 Let's assume you want to add a reference to the following Actors table to the StarWarsFilm class:
@@ -175,10 +162,8 @@ object Actors: IntIdTable() {
     val firstname = varchar("firstname", 50)
     val lastname = varchar("lastname", 50)
 }
-
 class Actor(id: EntityID<Int>): IntEntity(id) {
     companion object : IntEntityClass<Actor>(Actors)
-
     var firstname by Actors.firstname
     var lastname by Actors.lastname
 }
@@ -186,15 +171,15 @@ class Actor(id: EntityID<Int>): IntEntity(id) {
 Create an additional intermediate table to store the references:
 ```kotlin
 object StarWarsFilmActors : Table() {
-    val starWarsFilm = reference("starWarsFilm", StarWarsFilms).primaryKey(0)
-    val actor = reference("actor", Actors).primaryKey(1)
+    val starWarsFilm = reference("starWarsFilm", StarWarsFilms)
+    val actor = reference("actor", Actors)
+    override val primaryKey = PrimaryKey(starWarsFilm, actor, name = "PK_StarWarsFilmActors_swf_act") // PK_StarWarsFilmActors_swf_act is optional here
 }
 ```
 Add a reference to `StarWarsFilm`:
 ```kotlin
 class StarWarsFilm(id: EntityID<Int>) : IntEntity(id) {
     companion object : IntEntityClass<StarWarsFilm>(StarWarsFilms)
-
     ...
     var actors by Actor via StarWarsFilmActors
     ...
@@ -221,7 +206,6 @@ val film = transaction {
     director = "Rian Johnson"
   }
 }
-
 //create actor
 val actor = transaction {
   Actor.new {
@@ -229,7 +213,6 @@ val actor = transaction {
     lastname = "Ridley"
   }
 }
-
 //add reference
 transaction {
   film.actors = SizedCollection(listOf(actor))
@@ -248,13 +231,11 @@ object NodeToNodes : Table() {
 }
 class Node(id: EntityID<Int>) : IntEntity(id) {
     companion object : IntEntityClass<Node>(NodeTable)
-
     var name by NodeTable.name
     var parents by Node.via(NodeToNodes.child, NodeToNodes.parent)
     var children by Node.via(NodeToNodes.parent, NodeToNodes.child)
 }
 ```
-
 As you can see `NodeToNodes` columns target only `NodeTable` and another version of `via` function were used. 
 Now you can create a hierarchy of nodes.
 ```kotlin
@@ -263,43 +244,26 @@ val child1 = Node.new {
     name = "child1" 
 }
 child1.parents = SizedCollection(root) // assign parent
-
 val child2 = Node.new { name = "child2" }
 root.children = SizedCollection(listOf(child1, child2)) // assign children
 ```
 Beware that you can't setup references inside a `new` block as an entity is not created yet and id is not defined to be referenced to.
-
 ### Eager Loading
 **Available since 0.13.1**. 
 References in Exposed are lazily loaded, meaning queries to fetch the data for the reference are made at the moment the reference is first utilised. For scenarios wherefore you know you will require references ahead of time, Exposed can eager load them at the time of the parent query, this is prevents the classic "N+1" problem as references can be aggregated and loaded in a single query.
-
 To eager load a reference you can call the "load" function and pass the DAO's reference as a KProperty:
-
 ```kotlin
-
 StarWarsFilm.findById(1).load(StarWarsFilm::actors)
-
 ```
-
 This works for references of references also, for example if Actors had a rating reference you could:
-
 ```kotlin
-
 StarWarsFilm.findById(1).load(StarWarsFilm::actors, Actor::rating)
-
 ```
-
 Similarly you can eager load references on Collections of DAO's such as Lists and SizedIterables, for collections you can use the with function in the same fashion as before, passing the DAO's references as KProperty's.
-
 ```kotlin
-
 StarWarsFilm.all().with(StarWarsFilm::actors)
-
 ```
-
 NOTE: References that are eagerly loaded are stored inside the Transaction Cache, this means that they are not available in other transactions and thus must be loaded and referenced inside the same transaction.
-
-
 ## Advanced CRUD operations
 ### Read entity with a join to another table
 Let's imagine that you want to find all users who rated second SW film with more than 5.
@@ -315,10 +279,8 @@ After that all we have to do is to "wrap" a result with User entity:
 ```kotlin
 val users = User.wrapRows(query).toList()
 ```
-
 ### Auto-fill created and updated columns on entity change
 See example by @PaulMuriithi [here](https://github.com/PaulMuriithi/ExposedDatesAutoFill/blob/master/src/main/kotlin/app/Models.kt).
-
 ### Use queries as expressions
 Imagine that you want to sort cities by how many users each city has. In order to do so, you can write a sub-query which counts users in each city and order by that number. Though in order to do so you'll have to convert `Query` to `Expression`. This can be done using `wrapAsExpression` function:
 ```kotlin
@@ -327,25 +289,20 @@ val expression = wrapAsExpression<Int>(Users
   .select {
       Cities.id eq Users.cityId
   })
-
 val cities = Cities
   .selectAll()
   .orderBy(expression, SortOrder.DESC)
   .toList()
 ```
-
 ## Entities mapping
-
 ### Fields transformation
 As databases could store only basic types like integers and strings it's not always conveniently to keep the same simplicity on DAO level. 
 Sometimes you may want to make some transformations like parsing json from a varchar column or get some value from a cache based on value from a database.
-
 In that case the preferred way is to use column transformations. Assume that we want to define unsigned integer field on Entity, but Exposed doesn't have such column type yet.
 ```kotlin
 object TableWithUnsignedInteger : IntIdTable() {
     val uint = integer("uint")
 }
-
 class EntityWithUInt : IntEntity() {
     var uint: UInt by TableWithUnsignedInteger.uint.transform({ it.toInt() }, { it.toUInt() })
     
@@ -353,8 +310,6 @@ class EntityWithUInt : IntEntity() {
 }
 ```
 `transform` function accept two lambdas to convert values to and from an original column type. 
-
 After that in your code you'll be able to put only `UInt` instances into `uint` field. 
 It still possible to insert/update values with negative integers via DAO, but your business code becomes much cleaner. 
-
 Please keep in mind what such transformations will aqure on every access to a field what means that you should avoid heavy transformations here.
