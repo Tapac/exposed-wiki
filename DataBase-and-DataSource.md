@@ -1,6 +1,11 @@
 ### Working with DataBase and DataSource
 Every database access using Exposed is starting by obtaining a connection and creating a transaction.  
-To get a connection:
+First of all, you have to tell Exposed how to connect to a database by using `Database.connect` function. 
+It won't create a real database connection but only provide a descriptor for future usage.
+
+A real connection will be instantiated later by calling `transaction` lambda (see [Transaction](https://github.com/JetBrains/Exposed/wiki/Transactions) for more details).
+
+To get a Database instance by simple providing connection parameters:
 ```kotlin
 val db = Database.connect("jdbc:h2:mem:test", driver = "org.h2.Driver")
 ```
