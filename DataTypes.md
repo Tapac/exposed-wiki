@@ -32,21 +32,21 @@ For such enum `private enum class Foo { Bar, Baz }` you can use provided code fo
 
 **H2**
 ```Kotlin
-    val existingEnumColumn = customEnumeration("enumColumn", {Foo.values()[it as Int]}, {it.name})
-    val newEnumColumn = customEnumeration("enumColumn", "ENUM('Bar', 'Baz')" {Foo.values()[it as Int]}, {it.name})
+val existingEnumColumn = customEnumeration("enumColumn", { Foo.values()[it as Int] }, { it.name })
+val newEnumColumn = customEnumeration("enumColumn", "ENUM('Bar', 'Baz')", { Foo.values()[it as Int] }, { it.name })
 ```
 
 **MySQL**
 ```Kotlin
-    val existingEnumColumn = customEnumeration("enumColumn", {value -> Foo.valueOf(value as String)}, {it.name})
-    val newEnumColumn = customEnumeration("enumColumn", "ENUM('Bar', 'Baz')" {value -> Foo.valueOf(value as String)}, {it.name})
+val existingEnumColumn = customEnumeration("enumColumn", { value -> Foo.valueOf(value as String) }, { it.name })
+val newEnumColumn = customEnumeration("enumColumn", "ENUM('Bar', 'Baz')", { value -> Foo.valueOf(value as String) }, { it.name })
 ```
 
 **PostgreSQL**
 
 PostgreSQL requires that ENUM is defined as a separate type, so you have to create it before creating your table. Also postgresql jdbc driver returns PGobject instances for such values. The full working sample is provided below.
 ```Kotlin
-class PGEnum<T:Enum<T>>(enumTypeName: String, enumValue: T?) : PGobject() {
+class PGEnum<T : Enum<T>>(enumTypeName: String, enumValue: T?) : PGobject() {
     init {
         value = enumValue?.name
         type = enumTypeName
@@ -54,7 +54,7 @@ class PGEnum<T:Enum<T>>(enumTypeName: String, enumValue: T?) : PGobject() {
 }
 
 object EnumTable : Table() {
-    val enumColumn = customEnumeration("enumColumn", "FooEnum", {value -> Foo.valueOf(value as String)}, { PGEnum("FooEnum", it)}
+    val enumColumn = customEnumeration("enumColumn", "FooEnum", {value -> Foo.valueOf(value as String)}, { PGEnum("FooEnum", it) }
 }
 ...
 transaction {
