@@ -1,1 +1,1 @@
- 
+[Contribute to wiki](https://github.com/JetBrains/Exposed/wiki/Contributing#how-to-improve-wiki-pages) 
