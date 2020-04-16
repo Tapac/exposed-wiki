@@ -119,7 +119,7 @@ dependencies {
 ```
 
 ### JDBC driver and logging
-You also need a JDBC driver for the database system you are using (see [DataBase-and-DataSource](./DataBase-and-DataSource)) and a logger for `addLogger(StdOutSqlLogger)`. Example (Gradle syntax):
+You also need a JDBC driver for the database system you are using (see [[DataBase and DataSource|DataBase-and-DataSource]]) and a logger for `addLogger(StdOutSqlLogger)`. Example (Gradle syntax):
 ```kotlin
 dependencies {
     // for H2
