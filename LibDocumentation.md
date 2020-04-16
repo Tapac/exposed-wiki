@@ -86,6 +86,11 @@ Dependencies mapping listed bellow is similar (by functionality) to the previous
     <artifactId>exposed-jodatime</artifactId>
     <version>0.23.1</version>
   </dependency>
+  <dependency>
+    <groupId>org.jetbrains.exposed</groupId>
+    <artifactId>exposed-java-time</artifactId>
+    <version>0.23.1</version>
+  </dependency>
 </dependencies>
 
 ```
@@ -97,6 +102,8 @@ dependencies {
   compile 'org.jetbrains.exposed:exposed-dao:0.23.1'
   compile 'org.jetbrains.exposed:exposed-jdbc:0.23.1'
   compile 'org.jetbrains.exposed:exposed-jodatime:0.23.1'
+  // or
+  compile 'org.jetbrains.exposed:exposed-java-time:0.23.1'
 }
 ```
 #### Gradle Kotlin DSL
@@ -106,6 +113,19 @@ dependencies {
     compile("org.jetbrains.exposed", "exposed-dao", "0.23.1")
     compile("org.jetbrains.exposed", "exposed-jdbc", "0.23.1")
     compile("org.jetbrains.exposed", "exposed-jodatime", "0.23.1")
+    // or
+    compile("org.jetbrains.exposed", "exposed-java-time", "0.23.1")
 }
 ```
 
+### JDBC driver and logging
+You also need a JDBC driver for the database system you are using (see [DataBase-and-DataSource](./DataBase-and-DataSource)) and a logger for `addLogger(StdOutSqlLogger)`. Example (Gradle syntax):
+```kotlin
+dependencies {
+    // for H2
+    implementation "com.h2database:h2:1.4.200"
+    // for logging (StdOutSqlLogger), see
+    // http://www.slf4j.org/codes.html#StaticLoggerBinder
+    implementation "org.slf4j:slf4j-nop:1.7.30"
+}
+```
