@@ -37,12 +37,27 @@ Database.connect("jdbc:pgsql://localhost:12346/test", driver = "com.impossibl.po
 //Gradle
 compile("com.impossibl.pgjdbc-ng", "pgjdbc-ng", "0.8.3")  
 ```
-* MySQL
+* MySQL/MariaDB
 ```kotlin
 Database.connect("jdbc:mysql://localhost:3306/test", driver = "com.mysql.jdbc.Driver", 
                  user = "root", password = "your_pwd")  
 //Gradle
-compile("mysql:mysql-connector-java:5.1.46")  
+compile("mysql:mysql-connector-java:5.1.48")
+```
+* MySQL/MariaDB with latest JDBC driver + Hikari pooling
+```kotlin
+val config = HikariConfig().apply {
+    jdbcUrl         = "jdbc:mysql://localhost/dbname"
+    driverClassName = "com.mysql.cj.jdbc.Driver"
+    username        = "username"
+    password        = "secret"
+    maximumPoolSize = 10
+}
+val dataSource = HikariDataSource(config)
+Database.connect(dataSource)
+// Gradle
+implementation "mysql:mysql-connector-java:8.0.19"
+implementation "com.zaxxer:HikariCP:3.4.2"
 ```
 * Oracle
 ```kotlin
@@ -57,11 +72,18 @@ Database.connect("jdbc:jdbc:oracle:thin:@//localhost:1521/test", driver = "oracl
 Database.connect("jdbc:sqlite:/data/data.db", "org.sqlite.JDBC")  
 // In memory
 Database.connect("jdbc:sqlite:file:test?mode=memory&cache=shared", "org.sqlite.JDBC")  
+// For both: set SQLite compatible isolation level, see 
+// https://github.com/JetBrains/Exposed/wiki/FAQ
+TransactionManager.manager.defaultIsolationLevel = 
+    Connection.TRANSACTION_SERIALIZABLE
+    // or Connection.TRANSACTION_READ_UNCOMMITTED
 //Gradle
-compile("org.xerial:sqlite-jdbc:3.21.0.1")  
+compile("org.xerial:sqlite-jdbc:3.30.1")  
 ```  
 * H2
 ```kotlin
+// Database in file, needs full path or relative path starting with ./
+Database.connect("jdbc:h2:./myh2file", "org.h2.Driver")
 // In memory
 Database.connect("jdbc:h2:mem:regular", "org.h2.Driver")  
 // In memory / keep alive between connections/transactions
