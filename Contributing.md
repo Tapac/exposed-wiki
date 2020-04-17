@@ -1,8 +1,8 @@
-# How to contribute to an Exposed project
+# How to contribute to Exposed project
 ## What to contribute
 When you had faced some problems or absent functionality in Exposed, feel free to search through [opened issues](https://github.com/JetBrains/Exposed/issues) to find a similar one. If there is no such an issue, you could try to resolve it by yourself and provide us with Pull Request (see below). 
 
-If you want to help the project and don't know how you could, start with looking for issues tagged with [good-first-issue](https://github.com/JetBrains/Exposed/issues?q=is%3Aopen+is%3Aissue+label%3Agood-first-issue) tag. Select one, assign it on you and start to work on Pull Request.
+If you want to help the project and don't know how, you could start with looking for issues tagged with [good-first-issue](https://github.com/JetBrains/Exposed/issues?q=is%3Aopen+is%3Aissue+label%3Agood-first-issue) tag. Select one, assign it on you and start to work on Pull Request.
 
 Please do not keep an issue assigned on you if you do not plan to fix it as someone else could take it.
 
