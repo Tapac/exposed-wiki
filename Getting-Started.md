@@ -15,17 +15,17 @@
     <dependency>
       <groupId>org.jetbrains.exposed</groupId>
       <artifactId>exposed-core</artifactId>
-      <version>0.23.1</version>
+      <version>0.24.1</version>
     </dependency>
     <dependency>
       <groupId>org.jetbrains.exposed</groupId>
       <artifactId>exposed-dao</artifactId>
-      <version>0.23.1</version>
+      <version>0.24.1</version>
     </dependency>
     <dependency>
       <groupId>org.jetbrains.exposed</groupId>
       <artifactId>exposed-jdbc</artifactId>
-      <version>0.23.1</version>
+      <version>0.24.1</version>
     </dependency>
 </dependencies>
 
@@ -38,9 +38,9 @@ repositories {
   jcenter()
 }
 dependencies {
-  compile("org.jetbrains.exposed", "exposed-core", "0.23.1")
-  compile("org.jetbrains.exposed", "exposed-dao", "0.23.1")
-  compile("org.jetbrains.exposed", "exposed-jdbc", "0.23.1")
+  compile("org.jetbrains.exposed", "exposed-core", "0.24.1")
+  compile("org.jetbrains.exposed", "exposed-dao", "0.24.1")
+  compile("org.jetbrains.exposed", "exposed-jdbc", "0.24.1")
 }
 ```
 
