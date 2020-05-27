@@ -106,5 +106,10 @@ dependencies {
 }
 ```
 
+### Q: How can I specify a primary key column type e.g StringIdTable?
+A: You need to define your own! See examples:  
+[#855](https://github.com/JetBrains/Exposed/issues/855)  
+https://stackoverflow.com/a/61940820/1155026
+
 ### More questions on Stack Overflow:
 https://stackoverflow.com/questions/tagged/kotlin-exposed
