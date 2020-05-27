@@ -91,7 +91,7 @@ A: It possible only through using a raw connection. See example [here](https://g
 A: It possible with custom function. See [example](https://github.com/JetBrains/Exposed/issues/373#issuecomment-414123325).
 
 ### Q: Where can I find snapshot builds of Exposed
-A; You could use jitpack.io service for that. 
+A: You could use jitpack.io service for that. 
 
 Add jitpack.io to repositories:
 ```
