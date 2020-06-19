@@ -9,7 +9,7 @@ Please do not keep an issue assigned on you if you do not plan to fix it as some
 ## How to contribute
 1. Fork [Exposed repository](https://github.com/JetBrains/Exposed). (Read more about forks in [github documentation](https://help.github.com/en/github/getting-started-with-github/fork-a-repo)).
 2. Make appropriate changes in your repository copy.
-3. Run embedded tests by executing `./gradlew tests` inside the root folder of your local copy.
+3. Run embedded tests by executing `./gradlew test` inside the root folder of your local copy.
 4. Run docker tests for every supported database (see below) or skip if you will check them on TeamCity CI.
 5. [Create a Pull Request](https://help.github.com/en/github/collaborating-with-issues-and-pull-requests/creating-a-pull-request-from-a-fork) and check the PR id.
 6. Open [Exposed](https://teamcity.jetbrains.com/project.html?projectId=Exposed) section on https://teamcity.jetbrains.com/ and filter it by your PR id.
@@ -22,11 +22,12 @@ There are many databases, which could not be tested without running the real ins
 When you have Docker installed:
 1. Open [gradle.properties](https://github.com/JetBrains/Exposed/blob/master/gradle.properties) file locally.
 2. Change `dialect` parameter from `none` to one of:
--`mysql` - run against the latest MySQL 5.7
--`mysql8` - run against the latest MySQL 8.0
--`mariadb` - run against the latest MariaDB
--`sqlserver` - run against the latest SQLServer 2017
--`oracle` - run against the latest Oracle 18 XE
+* `mysql` - run against the latest MySQL 5.7
+* `mysql8` - run against the latest MySQL 8.0
+* `mariadb` - run against the latest MariaDB
+* `sqlserver` - run against the latest SQLServer 2017
+* `oracle` - run against the latest Oracle 18 XE
+* `snowflake` - you'll need to update the snowflake properties in the file too
 3. Run `./gradlew exposedDialectTestWithDocker` inside the root folder.
 4. Await tests to finish (it could take time to download database images on the first run).
 5. Repeat with another database dialect if needed.
