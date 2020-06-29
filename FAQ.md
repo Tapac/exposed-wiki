@@ -91,7 +91,7 @@ A: It possible only through using a raw connection. See example [here](https://g
 A: It possible with custom function. See [example](https://github.com/JetBrains/Exposed/issues/373#issuecomment-414123325).
 
 ### Q: Where can I find snapshot builds of Exposed
-A; You could use jitpack.io service for that. 
+A: You could use jitpack.io service for that. 
 
 Add jitpack.io to repositories:
 ```
@@ -105,6 +105,11 @@ dependencies {
     implementation 'com.github.JetBrains:Exposed:-SNAPSHOT'
 }
 ```
+
+### Q: How can I specify a primary key column type e.g StringIdTable?
+A: You need to define your own! See examples:  
+[#855](https://github.com/JetBrains/Exposed/issues/855)  
+https://stackoverflow.com/a/61940820/1155026
 
 ### More questions on Stack Overflow:
 https://stackoverflow.com/questions/tagged/kotlin-exposed
