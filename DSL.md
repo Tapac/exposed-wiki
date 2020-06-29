@@ -68,7 +68,7 @@ If you want to select only distinct value then use `withDistinct()` function:
 ```kotlin
 val directors = StarWarsFilms.
    slice(StarWarsFilms.director).
-   select { StarWarsFilms.sequelId < 5 }.
+   select { StarWarsFilms.sequelId less 5 }.
    withDistinct().map {
       it[StarWarsFilms.director]
    }
@@ -229,6 +229,7 @@ Same example using the full syntax:
 ```kotlin
 Players.join(StarWarsFilms, JoinType.INNER, additionalConstraint = {StarWarsFilms.sequelId eq Players.sequelId})
   .slice(Players.name.count(), StarWarsFilms.name)
+  .selectAll()
   .groupBy(StarWarsFilms.name)
 ```
 ## Alias
@@ -324,7 +325,7 @@ val allCitiesID = cities.batchInsert(cityNames) { name ->
   this[cities.name] = name
 }
 ```
-*NOTE:* The `batchInsert` function will still create multiple `INSERT` statements when interacting with your database. You most likely want to couple this with the `rewriteBatchedInserts=true` (or `rewriteBatchedStatements=true` option of your relevant JDBC driver, which will convert those into a single bulkInsert.
+*NOTE:* The `batchInsert` function will still create multiple `INSERT` statements when interacting with your database. You most likely want to couple this with the `rewriteBatchedInserts=true` (or `rewriteBatchedStatements=true`) option of your relevant JDBC driver, which will convert those into a single bulkInsert.
 You can find the documentation for this option for MySQL [here](https://dev.mysql.com/doc/connector-j/5.1/en/connector-j-reference-configuration-properties.html) and PostgreSQL [here](https://jdbc.postgresql.org/documentation/94/connect.html).
 ## Insert From Select
 If you want to use `INSERT INTO ... SELECT ` SQL clause try Exposed analog `Table.insert(Query)`.
