@@ -67,7 +67,8 @@ A: See example here: https://github.com/JetBrains/Exposed/issues/248
 
 ### Q: SQLite3 fails with the error Transaction attempt #0 failed: SQLite supports only TRANSACTION_SERIALIZABLE and TRANSACTION_READ_UNCOMMITTED.
 
-A: Make your connect code look like below (taken from [ThreadLocalManagerTest.kt](https://github.com/JetBrains/Exposed/blob/4360ae18c708072dfda261742e65b8b56a696adc/src/test/kotlin/org/jetbrains/exposed/sql/tests/shared/ThreadLocalManagerTest.kt#L282-L291)). The setting below tells SQLite3 to enforce transactional integrity by [serializing writes from different connections](https://sqlite.org/isolation.html).
+A1: Update to Exposed 0.24.1 or later
+A2: Make your connect code look like below (taken from [ThreadLocalManagerTest.kt](https://github.com/JetBrains/Exposed/blob/4360ae18c708072dfda261742e65b8b56a696adc/src/test/kotlin/org/jetbrains/exposed/sql/tests/shared/ThreadLocalManagerTest.kt#L282-L291)). The setting below tells SQLite3 to enforce transactional integrity by [serializing writes from different connections](https://sqlite.org/isolation.html).
 ```kotlin
 // Your connection properties here
 Database.connect("jdbc:sqlite:my.db", "org.sqlite.JDBC")
@@ -76,7 +77,8 @@ TransactionManager.manager.defaultIsolationLevel = Connection.TRANSACTION_SERIAL
 
 ### Q: Oracle fails with the error Transaction attempt #0 failed: `READ_COMMITTED and SERIALIZABLE are the only valid transaction levels`
 
-A: Make your connect code look like below (taken from [ThreadLocalManagerTest.kt](https://github.com/JetBrains/Exposed/blob/4360ae18c708072dfda261742e65b8b56a696adc/src/test/kotlin/org/jetbrains/exposed/sql/tests/shared/ThreadLocalManagerTest.kt#L282-L291)). 
+A1: Update to Exposed 0.24.1 or later
+A2: Make your connect code look like below (taken from [ThreadLocalManagerTest.kt](https://github.com/JetBrains/Exposed/blob/4360ae18c708072dfda261742e65b8b56a696adc/src/test/kotlin/org/jetbrains/exposed/sql/tests/shared/ThreadLocalManagerTest.kt#L282-L291)). 
 ```kotlin
 // Your connection properties here
 Database.connect("jdbc:jdbc:oracle:thin:@//localhost:1521/test", "oracle.jdbc.OracleDriver") 
