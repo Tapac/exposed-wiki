@@ -82,7 +82,7 @@ transaction {
 
 ### DSL & DAO 
 
-Expose comes in two flavors: DSL (Domain Specific Language) and DAO (Data Access Object).  
+Exposed comes in two flavors: DSL (Domain Specific Language) and DAO (Data Access Object).  
 On a high level, DSL means type-safe syntax that is similar to SQL whereas DAO means doing CRUD operations on entities.  
 Observe the below examples and head on to the specific section of each API for more details.
 
