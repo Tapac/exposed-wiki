@@ -31,7 +31,7 @@
 
 ```
 
-### Gradle
+### Gradle Kotlin Script
 
 ```
 repositories {
