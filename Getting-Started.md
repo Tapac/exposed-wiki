@@ -33,6 +33,8 @@
 
 ### Gradle Kotlin Script
 
+If you're using older version of Gradle, add the following to your `build.gradle` file.
+
 ```
 repositories {
   jcenter()
@@ -44,13 +46,27 @@ dependencies {
 }
 ```
 
-* Note: There are another modules. Detailed information located in [[Modules Documentation|LibDocumentation]] section.
+If you're using newer versions of Gradle, you can add the following to your `build.gradle`.
+
+```
+implementation "org.jetbrains.exposed:exposed-core:$exposed_version"
+implementation "org.jetbrains.exposed:exposed-dao:$exposed_version"
+implementation "org.jetbrains.exposed:exposed-jdbc:$exposed_version"
+```
+
+And the version in your `gradle.properties`
+
+```
+exposed_version=0.25.1
+```
+
+- Note: There are another modules. Detailed information located in [[Modules Documentation|LibDocumentation]] section.
 
 ## Getting Started
 
 ### Starting a transaction
 
-Every database access using Exposed is started by obtaining a connection and creating a transaction.  
+Every database access using Exposed is started by obtaining a connection and creating a transaction.
 
 To get a connection:
 
@@ -59,6 +75,7 @@ Database.connect("jdbc:h2:mem:test", driver = "org.h2.Driver")
 ```
 
 It is also possible to provide `javax.sql.DataSource` for advanced behaviors such as connection pooling:
+
 ```kotlin
 Database.connect(dataSource)
 ```
@@ -66,6 +83,7 @@ Database.connect(dataSource)
 More details on [[DataBase and DataSource|DataBase-and-DataSource]]
 
 After obtaining a connection all SQL statements should be placed inside a transaction:
+
 ```kotlin
 transaction {
   // Statements here
@@ -73,14 +91,15 @@ transaction {
 ```
 
 To see the actual DB calls, add a logger:
+
 ```kotlin
 transaction {
   // print sql to std-out
   addLogger(StdOutSqlLogger)
-} 
+}
 ```
 
-### DSL & DAO 
+### DSL & DAO
 
 Exposed comes in two flavors: DSL (Domain Specific Language) and DAO (Data Access Object).  
 On a high level, DSL means type-safe syntax that is similar to SQL whereas DAO means doing CRUD operations on entities.  
@@ -92,20 +111,20 @@ Observe the below examples and head on to the specific section of each API for m
 
 
 fun main(args: Array<String>) {
-  //an example connection to H2 DB  
+  //an example connection to H2 DB
   Database.connect("jdbc:h2:mem:test", driver = "org.h2.Driver")
 
   transaction {
     // print sql to std-out
     addLogger(StdOutSqlLogger)
-    
+
     SchemaUtils.create (Cities)
 
     // insert new city. SQL: INSERT INTO Cities (name) VALUES ('St. Petersburg')
     val stPeteId = Cities.insert {
       it[name] = "St. Petersburg"
     } get Cities.id
-    
+
     // 'select *' SQL: SELECT Cities.id, Cities.name FROM Cities
     println("Cities: ${Cities.selectAll()}")
   }
@@ -116,27 +135,29 @@ object Cities: IntIdTable() {
 }
 
 ```
+
 More on [[DSL API|DSL]]
+
 ### Your first Exposed DAO
 
 ```kotlin
 
 
 fun main(args: Array<String>) {
-  //an example connection to H2 DB  
+  //an example connection to H2 DB
   Database.connect("jdbc:h2:mem:test", driver = "org.h2.Driver")
 
   transaction {
     // print sql to std-out
     addLogger(StdOutSqlLogger)
-    
+
     SchemaUtils.create (Cities)
 
     // insert new city. SQL: INSERT INTO Cities (name) VALUES ('St. Petersburg')
     val stPete = City.new {
             name = "St. Petersburg"
     }
-    
+
     // 'select *' SQL: SELECT Cities.id, Cities.name FROM Cities
     println("Cities: ${City.all()}")
   }
@@ -152,6 +173,7 @@ class City(id: EntityID<Int>) : IntEntity(id) {
     var name by Cities.name
 }
 ```
+
 More on [[DAO API|DAO]]
 
 Or... back to [[Introduction|Home]]
