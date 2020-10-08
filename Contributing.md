@@ -9,7 +9,7 @@ Please do not keep an issue assigned on you if you do not plan to fix it as some
 ## How to contribute
 1. Fork [Exposed repository](https://github.com/JetBrains/Exposed). (Read more about forks in [github documentation](https://help.github.com/en/github/getting-started-with-github/fork-a-repo)).
 2. Make appropriate changes in your repository copy.
-3. Run embedded tests by executing `./gradlew tests` inside the root folder of your local copy.
+3. Run embedded tests by executing `./gradlew test` inside the root folder of your local copy.
 4. Run docker tests for every supported database (see below) or skip if you will check them on TeamCity CI.
 5. [Create a Pull Request](https://help.github.com/en/github/collaborating-with-issues-and-pull-requests/creating-a-pull-request-from-a-fork) and check the PR id.
 6. Open [Exposed](https://teamcity.jetbrains.com/project.html?projectId=Exposed) section on https://teamcity.jetbrains.com/ and filter it by your PR id.
