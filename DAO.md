@@ -264,6 +264,17 @@ Similarly you can eager load references on Collections of DAO's such as Lists an
 StarWarsFilm.all().with(StarWarsFilm::actors)
 ```
 NOTE: References that are eagerly loaded are stored inside the Transaction Cache, this means that they are not available in other transactions and thus must be loaded and referenced inside the same transaction.
+
+#### Eager loading for Text Fields
+Some database drivers do not load text content immediately (for performance and memory reasons) which means that you can obtain the column value only within the open transaction. 
+
+If you desire to make content available outside the transaction, you can use the eagerLoading param when defining the DB Table.
+```kotlin
+object StarWarsFilms : Table() {
+  ...
+  val description = text("name", eagerLoading=true)
+}
+```
 ## Advanced CRUD operations
 ### Read entity with a join to another table
 Let's imagine that you want to find all users who rated second SW film with more than 5.
