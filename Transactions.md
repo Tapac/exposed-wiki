@@ -28,7 +28,7 @@ val jamesList = transaction {
 ### Working with a multiple databases
 _This functionality supported since 0.10.1 version_
 
-When you want to work with different databases then you have to store database reference returned by `Database.connect()` and provide it to `transaction` function as first parameter. As before 0.10.1, `transaction` block without parameters will work with the latest _connected_ database.
+When you want to work with different databases then you have to store database reference returned by `Database.connect()` and provide it to `transaction` function as first parameter.
 ```kotlin
 val db1 = connect("jdbc:h2:mem:db1;DB_CLOSE_DELAY=-1;", "org.h2.Driver", "root", "")
 val db2 = connect("jdbc:h2:mem:db2;DB_CLOSE_DELAY=-1;", "org.h2.Driver", "root", "")
@@ -43,6 +43,15 @@ transaction(db1) {
 ```
 
 Entities (see [[DAO API|DAO]] page) `stick` to a transaction that was used to load that entity. That means that all changes persist to the same database and what cross-database references are prohibited and will throw exceptions.
+
+### Setting default database
+`transaction` block without parameters will use the default database.
+As before 0.10.1 this will be the latest _connected_ database.
+It is also possible to set the default database explicitly.
+```kotlin
+val db = Database.connect()
+TransactionManager.defaultDatabase = db
+```
 
 ### Using nested transactions
 Since Exposed 0.16.1 it is possible to use nested transactions. To enable this feature you should set `useNestedTransactions` on desire `Database` instance to `true`.
