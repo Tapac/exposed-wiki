@@ -18,11 +18,22 @@ val jamesList = transaction {
 }
 // jamesList is now a List<ResultRow> containing Users data
 ```
-*Note:* `Blob` and `text` fields wont be available without transaction if you don't load them directly like:
+*Note:* `Blob` and `text` fields won't be available outside of a transaction if you don't load them directly. For `text` fields you can also use the `eagerLoading` param when defining the Table to make the text fields available outside of the transaction.
 ```kotlin
-   val idsAndContent = transaction {
-       Documents.selectAll().limit(10).map { it[Documents.id] to it[Documents.content] }
-   }
+// without eagerLoading
+val idsAndContent = transaction {
+   Documents.selectAll().limit(10).map { it[Documents.id] to it[Documents.content] }
+}
+
+// with eagerLoading for text fields
+object Documents : Table() {
+  ...
+  val content = text("content", eagerLoading = true)
+}
+
+val documentsWithContent = transaction {
+   Documents.selectAll().limit(10)
+}
 ```
 
 ### Working with a multiple databases
