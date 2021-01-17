@@ -107,15 +107,21 @@ dependencies {
 }
 ```
 #### Gradle Kotlin DSL
+In `build.gradle.kts`:
 ```kotlin
+val exposedVersion: String by project
 dependencies {
-    compile("org.jetbrains.exposed", "exposed-core", "0.24.1")
-    compile("org.jetbrains.exposed", "exposed-dao", "0.24.1")
-    compile("org.jetbrains.exposed", "exposed-jdbc", "0.24.1")
-    compile("org.jetbrains.exposed", "exposed-jodatime", "0.24.1")
+    implementation("org.jetbrains.exposed:exposed-core:$exposedVersion")
+    implementation("org.jetbrains.exposed:exposed-dao:$exposedVersion")
+    implementation("org.jetbrains.exposed:exposed-jdbc:$exposedVersion")
+    implementation("org.jetbrains.exposed:exposed-jodatime:$exposedVersion")
     // or
-    compile("org.jetbrains.exposed", "exposed-java-time", "0.24.1")
+    implementation("org.jetbrains.exposed:exposed-java-time:$exposedVersion")
 }
+```
+and in `gradle.properties`
+```
+exposedVersion=0.28.1
 ```
 
 ### JDBC driver and logging

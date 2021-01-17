@@ -46,18 +46,21 @@ dependencies {
 }
 ```
 
-If you're using newer versions of Gradle, you can add the following to your `build.gradle`.
+If you're using newer versions of Gradle, you can add the following to your `build.gradle.kts`.
 
 ```
-implementation "org.jetbrains.exposed:exposed-core:$exposed_version"
-implementation "org.jetbrains.exposed:exposed-dao:$exposed_version"
-implementation "org.jetbrains.exposed:exposed-jdbc:$exposed_version"
+val exposedVersion: String by project
+dependencies {
+    implementation("org.jetbrains.exposed:exposed-core:$exposedVersion")
+    implementation("org.jetbrains.exposed:exposed-dao:$exposedVersion")
+    implementation("org.jetbrains.exposed:exposed-jdbc:$exposedVersion")
+}
 ```
 
 And the version in your `gradle.properties`
 
 ```
-exposed_version=0.25.1
+exposedVersion=0.28.1
 ```
 
 - Note: There are another modules. Detailed information located in [[Modules Documentation|LibDocumentation]] section.
