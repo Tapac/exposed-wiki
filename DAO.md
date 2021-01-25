@@ -152,8 +152,17 @@ class UserRating(id: EntityID<Int>): IntEntity(id) {
     ...
 }
 ```
-Now `secondUser` will be a nullable field.
-Of course, you can still use `referrersOn`.
+Now `secondUser` will be a nullable field, and you should use `optionalReferrersOn` instead of `referrersOn` to get all the ratings for a `secondUser`.
+
+```kotlin
+class User(id: EntityID<Int>): IntEntity(id) {
+    companion object : IntEntityClass<User>(Users)
+    ...
+    val secondRatings by UserRating optionalReferrersOn UserRatings.secondUser // make sure to use val and optionalReferrersOn
+    ...
+}
+```
+
 ### many-to-many reference
 In some cases, a many-to-many reference may be required.
 Let's assume you want to add a reference to the following Actors table to the StarWarsFilm class:
