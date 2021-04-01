@@ -1,15 +1,25 @@
 ## Dependencies
-Exposed modules available from JFrog Bintray and JCenter repositories.
+Exposed modules are available from Maven Central (JFrog Bintray and JCenter for older version) repositories.
 To use them you have to add appropriate dependency into your repositories mapping.
 
 #### Maven
 ```xml
+<!-- Versions after 0.30.1 -->
 <repositories>
-  <repository>
-    <id>jcenter</id>
-    <name>jcenter</name>
-    <url>https://jcenter.bintray.com</url>
-  </repository>
+    <repository>
+        <id>mavenCentral</id>
+        <name>mavenCentral</name>
+        <url>https://repo1.maven.org/maven2/</url>
+    </repository>
+</repositories>
+
+<!-- Versions after 0.30.1 -->
+<repositories>
+    <repository>
+        <id>jcenter</id>
+        <name>jcenter</name>
+        <url>https://jcenter.bintray.com</url>
+    </repository>
 </repositories>
 ```
 
@@ -17,7 +27,11 @@ To use them you have to add appropriate dependency into your repositories mappin
 
 ```kotlin
 repositories {
-  jcenter()
+    // Versions after 0.30.1
+    mavenCentral()
+
+    // Versions before 0.30.1
+    jcenter()
 }
 ```
 
@@ -69,27 +83,27 @@ Dependencies mapping listed bellow is similar (by functionality) to the previous
   <dependency>
     <groupId>org.jetbrains.exposed</groupId>
     <artifactId>exposed-core</artifactId>
-    <version>0.24.1</version>
+    <version>0.30.1</version>
   </dependency>
   <dependency>
     <groupId>org.jetbrains.exposed</groupId>
     <artifactId>exposed-dao</artifactId>
-    <version>0.29.1</version>
+    <version>0.30.1</version>
   </dependency>
   <dependency>
     <groupId>org.jetbrains.exposed</groupId>
     <artifactId>exposed-jdbc</artifactId>
-    <version>0.29.1</version>
+    <version>0.30.1</version>
   </dependency>
   <dependency>
     <groupId>org.jetbrains.exposed</groupId>
     <artifactId>exposed-jodatime</artifactId>
-    <version>0.29.1</version>
+    <version>0.30.1</version>
   </dependency>
   <dependency>
     <groupId>org.jetbrains.exposed</groupId>
     <artifactId>exposed-java-time</artifactId>
-    <version>0.29.1</version>
+    <version>0.30.1</version>
   </dependency>
 </dependencies>
 
@@ -98,12 +112,12 @@ Dependencies mapping listed bellow is similar (by functionality) to the previous
 #### Gradle Groovy
 ```groovy
 dependencies {
-  compile 'org.jetbrains.exposed:exposed-core:0.29.1'
-  compile 'org.jetbrains.exposed:exposed-dao:0.29.1'
-  compile 'org.jetbrains.exposed:exposed-jdbc:0.29.1'
-  compile 'org.jetbrains.exposed:exposed-jodatime:0.29.1'
+  compile 'org.jetbrains.exposed:exposed-core:0.30.1'
+  compile 'org.jetbrains.exposed:exposed-dao:0.30.1'
+  compile 'org.jetbrains.exposed:exposed-jdbc:0.30.1'
+  compile 'org.jetbrains.exposed:exposed-jodatime:0.30.1'
   // or
-  compile 'org.jetbrains.exposed:exposed-java-time:0.29.1'
+  compile 'org.jetbrains.exposed:exposed-java-time:0.30.1'
 }
 ```
 #### Gradle Kotlin DSL
@@ -121,7 +135,7 @@ dependencies {
 ```
 and in `gradle.properties`
 ```
-exposedVersion=0.29.1
+exposedVersion=0.30.1
 ```
 
 ### JDBC driver and logging

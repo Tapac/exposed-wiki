@@ -3,29 +3,40 @@
 ### Maven
 
 ```xml
+<!-- Versions after 0.30.1 -->
 <repositories>
-  <repository>
-    <id>jcenter</id>
-    <name>jcenter</name>
-    <url>https://jcenter.bintray.com</url>
-  </repository>
+    <repository>
+        <id>mavenCentral</id>
+        <name>mavenCentral</name>
+        <url>https://repo1.maven.org/maven2/</url>
+    </repository>
 </repositories>
+
+<!-- Versions after 0.30.1 -->
+<repositories>
+    <repository>
+        <id>jcenter</id>
+        <name>jcenter</name>
+        <url>https://jcenter.bintray.com</url>
+    </repository>
+</repositories>
+
 
 <dependencies>
     <dependency>
       <groupId>org.jetbrains.exposed</groupId>
       <artifactId>exposed-core</artifactId>
-      <version>0.29.1</version>
+      <version>0.30.1</version>
     </dependency>
     <dependency>
       <groupId>org.jetbrains.exposed</groupId>
       <artifactId>exposed-dao</artifactId>
-      <version>0.29.1</version>
+      <version>0.30.1</version>
     </dependency>
     <dependency>
       <groupId>org.jetbrains.exposed</groupId>
       <artifactId>exposed-jdbc</artifactId>
-      <version>0.29.1</version>
+      <version>0.30.1</version>
     </dependency>
 </dependencies>
 
@@ -37,12 +48,16 @@ If you're using older version of Gradle, add the following to your `build.gradle
 
 ```
 repositories {
+  // Versions after 0.30.1
+  mavenCentral()
+  
+  // Versions before 0.30.1
   jcenter()
 }
 dependencies {
-  compile("org.jetbrains.exposed", "exposed-core", "0.29.1")
-  compile("org.jetbrains.exposed", "exposed-dao", "0.29.1")
-  compile("org.jetbrains.exposed", "exposed-jdbc", "0.29.1")
+  compile("org.jetbrains.exposed", "exposed-core", "0.30.1")
+  compile("org.jetbrains.exposed", "exposed-dao", "0.30.1")
+  compile("org.jetbrains.exposed", "exposed-jdbc", "0.30.1")
 }
 ```
 
@@ -60,7 +75,7 @@ dependencies {
 And the version in your `gradle.properties`
 
 ```
-exposedVersion=0.29.1
+exposedVersion=0.30.1
 ```
 
 - Note: There are another modules. Detailed information located in [[Modules Documentation|LibDocumentation]] section.
