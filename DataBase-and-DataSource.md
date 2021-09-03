@@ -61,7 +61,7 @@ implementation "com.zaxxer:HikariCP:3.4.2"
 ```
 * Oracle
 ```kotlin
-Database.connect("jdbc:jdbc:oracle:thin:@//localhost:1521/test", driver = "oracle.jdbc.OracleDriver", 
+Database.connect("jdbc:oracle:thin:@//localhost:1521/test", driver = "oracle.jdbc.OracleDriver", 
                  user = "root", password = "your_pwd")  
 //Gradle
 // Oracle jdbc-driver should be obtained from Oracle maven repo: https://blogs.oracle.com/dev2dev/get-oracle-jdbc-drivers-and-ucp-from-oracle-maven-repository-without-ides
