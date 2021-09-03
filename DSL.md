@@ -242,11 +242,11 @@ val lucasDirectedQuery = StarWarsFilms.slice(StarWarsFilms.name).select { StarWa
 val abramsDirectedQuery = StarWarsFilms.slice(StarWarsFilms.name).select { StarWarsFilms.director eq "J.J. Abrams" }
 val filmNames = lucasDirectedQuery.union(abramsDirectedQuery).map { it[StarWarsFilms.name] }
 ```
-Only unique rows are returned by default.  Duplicates may be returned using `.withAll()`.
+Only unique rows are returned by default. Duplicates may be returned using `.unionAll()`.
 ```kotlin
 val lucasDirectedQuery = StarWarsFilms.slice(StarWarsFilms.name).select { StarWarsFilms.director eq "George Lucas" }
 val originalTrilogyQuery = StarWarsFilms.slice(StarWarsFilms.name).select { StarWarsFilms.sequelId inList (3..5) }
-val filmNames = lucasDirectedQuery.union(originalTrilogyQuery).withAll().map { it[StarWarsFilms.name] }
+val filmNames = lucasDirectedQuery.unionAll(originalTrilogyQuery).map { it[StarWarsFilms.name] }
 ```
 ## Alias
 Aliases allow preventing ambiguity between field names and table names.
