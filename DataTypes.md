@@ -10,12 +10,18 @@ Currently Exposed support the following data types in table definition:
 * `enumeration` - `INT` ordinal value
 * `enumerationByName` - `VARCHAR`
 * `customEnumeration` - see [additional section](#how-to-use-database-enum-types)
-* `date` - `DATETIME`
-* `datetime` - `DATETIME`
 * `blob` - `BLOB`
 * `binary` - `VARBINARY` with length
 * `uuid` - `BINARY(16)`
 * `reference` - a foreign key
+
+The `exposed-java-time` extension (`org.jetbrains.exposed:exposed-java-time:$exposed_version`) provides additional types
+
+* `date` - `DATETIME`
+* `time` - `TIME`
+* `datetime` - `DATETIME`
+* `timestamp` - `TIMESTAMP`
+* `duration` - `DURATION`
 
 Note: some types are different for specific DB dialect.
 
