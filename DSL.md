@@ -11,6 +11,7 @@
 * [Group-by](#group-by)
 * [Limit](#limit)
 * [Join](#join)
+* [Union](#union)
 * [Alias](#alias)
 * [Schema](#schema)
 * [Sequence](#sequence)
@@ -231,6 +232,21 @@ Players.join(StarWarsFilms, JoinType.INNER, additionalConstraint = {StarWarsFilm
   .slice(Players.name.count(), StarWarsFilms.name)
   .selectAll()
   .groupBy(StarWarsFilms.name)
+```
+## Union
+You can combine the results of multiple queries using using `.union(...)`.
+Per the SQL specification, the queries must have the same number of columns, and not be marked for update.
+Subqueries may be combined when supported by the database.
+```kotlin
+val lucasDirectedQuery = StarWarsFilms.slice(StarWarsFilms.name).select { StarWarsFilms.director eq "George Lucas" }
+val abramsDirectedQuery = StarWarsFilms.slice(StarWarsFilms.name).select { StarWarsFilms.director eq "J.J. Abrams" }
+val filmNames = lucasDirectedQuery.union(abramsDirectedQuery).map { it[StarWarsFilms.name] }
+```
+Only unique rows are returned by default.  Duplicates may be returned using `.withAll()`.
+```kotlin
+val lucasDirectedQuery = StarWarsFilms.slice(StarWarsFilms.name).select { StarWarsFilms.director eq "George Lucas" }
+val originalTrilogyQuery = StarWarsFilms.slice(StarWarsFilms.name).select { StarWarsFilms.sequelId inList (3..5) }
+val filmNames = lucasDirectedQuery.union(originalTrilogyQuery).withAll().map { it[StarWarsFilms.name] }
 ```
 ## Alias
 Aliases allow preventing ambiguity between field names and table names.
