@@ -22,11 +22,12 @@ There are many databases, which could not be tested without running the real ins
 When you have Docker installed:
 1. Open [gradle.properties](https://github.com/JetBrains/Exposed/blob/master/gradle.properties) file locally.
 2. Change `dialect` parameter from `none` to one of:
--`mysql` - run against the latest MySQL 5.7
--`mysql8` - run against the latest MySQL 8.0
--`mariadb` - run against the latest MariaDB
--`sqlserver` - run against the latest SQLServer 2017
--`oracle` - run against the latest Oracle 18 XE
+* `mysql` - run against the latest MySQL 5.7
+* `mysql8` - run against the latest MySQL 8.0
+* `mariadb` - run against the latest MariaDB
+* `sqlserver` - run against the latest SQLServer 2017
+* `oracle` - run against the latest Oracle 18 XE
+* `snowflake` - you'll need to update the snowflake properties in the file too
 3. Run `./gradlew exposedDialectTestWithDocker` inside the root folder.
 4. Await tests to finish (it could take time to download database images on the first run).
 5. Repeat with another database dialect if needed.
