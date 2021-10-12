@@ -12,7 +12,7 @@
     </repository>
 </repositories>
 
-<!-- Versions after 0.30.1 -->
+<!-- Versions before 0.30.1 -->
 <repositories>
     <repository>
         <id>jcenter</id>
