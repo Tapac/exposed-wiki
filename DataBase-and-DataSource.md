@@ -28,21 +28,21 @@ object DbSettings {
 Database.connect("jdbc:postgresql://localhost:12346/test", driver = "org.postgresql.Driver", 
                  user = "root", password = "your_pwd")  
 //Gradle
-compile("org.postgresql:postgresql:42.2.2")  
+implementation("org.postgresql:postgresql:42.2.2")  
 ```
 * PostgreSQL using the pgjdbc-ng JDBC driver
 ```kotlin
 Database.connect("jdbc:pgsql://localhost:12346/test", driver = "com.impossibl.postgres.jdbc.PGDriver", 
                  user = "root", password = "your_pwd")  
 //Gradle
-compile("com.impossibl.pgjdbc-ng", "pgjdbc-ng", "0.8.3")  
+implementation("com.impossibl.pgjdbc-ng", "pgjdbc-ng", "0.8.3")  
 ```
 * MySQL/MariaDB
 ```kotlin
-Database.connect("jdbc:mysql://localhost:3306/test", driver = "com.mysql.jdbc.Driver", 
+Database.connect("jdbc:mysql://localhost:3306/test", driver = "com.mysql.cj.jdbc.Driver", 
                  user = "root", password = "your_pwd")  
 //Gradle
-compile("mysql:mysql-connector-java:5.1.48")
+implementation("mysql:mysql-connector-java:8.0.2")
 ```
 * MySQL/MariaDB with latest JDBC driver + Hikari pooling
 ```kotlin
