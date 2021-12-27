@@ -20,16 +20,20 @@ Please do not keep an issue assigned on you if you do not plan to fix it as some
 There are many databases, which could not be tested without running the real instances. To run tests against them, you have to install [Docker](https://docs.docker.com/get-docker/) on your system. Note that it requires a huge amount of free disc space to store database images.
 
 When you have Docker installed:
-1. Open [gradle.properties](https://github.com/JetBrains/Exposed/blob/master/gradle.properties) file locally.
-2. Change `dialect` parameter from `none` to one of:
--`mysql` - run against the latest MySQL 5.7
--`mysql8` - run against the latest MySQL 8.0
--`mariadb` - run against the latest MariaDB
--`sqlserver` - run against the latest SQLServer 2017
--`oracle` - run against the latest Oracle 18 XE
-3. Run `./gradlew exposedDialectTestWithDocker` inside the root folder.
-4. Await tests to finish (it could take time to download database images on the first run).
-5. Repeat with another database dialect if needed.
+1. Inside the root folder run:
+
+`./gradlew mysql51Test` - to test against the latest MySQL 5.7 (with MySQL Connector/J 5.1.x), 
+
+`./gradlew mysql80Test` - to test against the latest MySQL 8.0 (with MySQL Connector/J 8.0.x),
+
+`./gradlew mariadbTest` - to test against the latest MariaDB,
+
+`./gradlew sqlServerTest` - to test against the latest SQLServer 2017,
+
+`./gradlew oracleTest` - to test against the latest Oracle 18 XE.
+
+2. Await tests to finish (it could take time to download database images on the first run).
+3. Repeat with another database dialect if needed.
 
 # How to improve wiki pages
 
