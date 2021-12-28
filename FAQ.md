@@ -100,8 +100,8 @@ A: Just implements [IColumnType](https://github.com/JetBrains/Exposed/blob/76a67
 
 eg: **Create custom UUID types (inpired by [@pjagielski article](https://medium.com/@pjagielski/how-we-use-kotlin-with-exposed-at-touk-eacaae4565b5#e4e4))**
 ```kotlin
-interface TypedId {
-    val id: UUID
+abstract class TypedId(open val id: UUID): Serializable, Comparable<TypedId> {
+    override fun compareTo(other: TypedId) = this.id.compareTo(other.id)
 }
 
 class TypedUUIDColumnType<T: TypedId>(val constructor: (UUID) -> T, private val uuidColType: UUIDColumnType = UUIDColumnType()): IColumnType by uuidColType {
@@ -111,13 +111,14 @@ class TypedUUIDColumnType<T: TypedId>(val constructor: (UUID) -> T, private val 
     private fun valueUnwrap(value: Any) = (value as? TypedId)?.id ?: value
 }
 
-fun <T: TypedId> Table.typedUuid(name: String, constructor: (UUID) -> T) = registerColumn<UUID>(name, TypedUUIDColumnType<T>(constructor))
+fun <T: TypedId> Table.typedUuid(name: String, constructor: (UUID) -> T) = registerColumn<T>(name, TypedUUIDColumnType<T>(constructor))
+fun <T: TypedId> Column<T>.autoGenerate(constructor: (UUID) -> T): Column<T> = clientDefault { constructor(UUID.randomUUID()) }
 
-@JvmInline
-value class StarWarsFilmId(override val id: UUID): TypedId
+
+class StarWarsFilmId(id: UUID): TypedId(id)
 
 object StarWarsFilms : Table() {
-  val id = typedUuid("id") { StarWarsFilmId(it) }.autoGenerate()
+  val id = typedUuid("id") { StarWarsFilmId(it) }.autoGenerate{ StarWarsFilmId(it) }
   val name: Column<String> = varchar("name", 50)
   val director: Column<String> = varchar("director", 50)
   final override val primaryKey = PrimaryKey(id)
