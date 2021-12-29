@@ -92,5 +92,41 @@ A: You need to define your own! See examples:
 [#855](https://github.com/JetBrains/Exposed/issues/855)  
 https://stackoverflow.com/a/61940820/1155026
 
+### Q: How create custom collumn type
+A: Just implements [IColumnType](https://github.com/JetBrains/Exposed/blob/76a671e57a0105d6aed79e256c088690bd4a56b6/exposed-core/src/main/kotlin/org/jetbrains/exposed/sql/ColumnType.kt#L25)
+ and use [registerColumn](https://github.com/JetBrains/Exposed/blob/76a671e57a0105d6aed79e256c088690bd4a56b6/exposed-core/src/main/kotlin/org/jetbrains/exposed/sql/Table.kt#L387)
+ to [extends](https://kotlinlang.org/docs/extensions.html) a [Table](https://github.com/JetBrains/Exposed/blob/76a671e57a0105d6aed79e256c088690bd4a56b6/exposed-core/src/main/kotlin/org/jetbrains/exposed/sql/Table.kt#L326)
+
+
+eg: **Create custom UUID types (inpired by [@pjagielski article](https://medium.com/@pjagielski/how-we-use-kotlin-with-exposed-at-touk-eacaae4565b5#e4e4))**
+```kotlin
+abstract class TypedId(open val id: UUID): Serializable, Comparable<TypedId> {
+    override fun compareTo(other: TypedId) = this.id.compareTo(other.id)
+}
+
+class TypedUUIDColumnType<T: TypedId>(val constructor: (UUID) -> T, private val uuidColType: UUIDColumnType = UUIDColumnType()): IColumnType by uuidColType {
+    override fun valueFromDB(value: Any) = constructor(uuidColType.valueFromDB(value))
+    override fun notNullValueToDB(value: Any): Any = uuidColType.notNullValueToDB(valueUnwrap(value))
+    override fun nonNullValueToString(value: Any): String = uuidColType.nonNullValueToString(valueUnwrap(value))
+    private fun valueUnwrap(value: Any) = (value as? TypedId)?.id ?: value
+}
+
+fun <T: TypedId> Table.typedUuid(name: String, constructor: (UUID) -> T) = registerColumn<T>(name, TypedUUIDColumnType<T>(constructor))
+fun <T: TypedId> Column<T>.autoGenerate(constructor: (UUID) -> T): Column<T> = clientDefault { constructor(UUID.randomUUID()) }
+
+
+class StarWarsFilmId(id: UUID): TypedId(id)
+
+object StarWarsFilms : Table() {
+  val id = typedUuid("id") { StarWarsFilmId(it) }.autoGenerate{ StarWarsFilmId(it) }
+  val name: Column<String> = varchar("name", 50)
+  val director: Column<String> = varchar("director", 50)
+  final override val primaryKey = PrimaryKey(id)
+}
+```
+
+
+Reference: [#149](https://github.com/JetBrains/Exposed/issues/149)
+
 ### More questions on Stack Overflow:
 https://stackoverflow.com/questions/tagged/kotlin-exposed
