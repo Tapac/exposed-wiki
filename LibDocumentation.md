@@ -68,12 +68,14 @@ dependencies {
 ### Exposed 0.18.1 and higher
 To move forward and support such features as Java 8 Time, async drivers and so on it was decided to split Exposed into more specific modules. It will allow you to take the only modules you need and will add flexibility in the future.
 
-At the moment `Exposed` coexists of five modules
+At the moment `Exposed` coexists of provided modules
 * exposed-core - base module, which contains both DSL api along with mapping
 * exposed-dao - DAO api 
 * exposed-jdbc - transport level implementation based on Java JDBC API
 * exposed-jodatime - date-time extensions based on JodaTime library
 * exposed-java-time - date-time extensions based on Java8 Time API
+* exposed-kotlin-datetime - date-time extensions based on kotlinx-datetime
+* exposed-money - extensions to support MonetaryAmount from "javax.money:money-api"
 
 Dependencies mapping listed bellow is similar (by functionality) to the previous versions:
 #### Maven
