@@ -78,7 +78,7 @@ TransactionManager.manager.defaultIsolationLevel =
     Connection.TRANSACTION_SERIALIZABLE
     // or Connection.TRANSACTION_READ_UNCOMMITTED
 //Gradle
-compile("org.xerial:sqlite-jdbc:3.30.1")  
+implementation("org.xerial:sqlite-jdbc:3.30.1")  
 ```  
 * H2
 ```kotlin
@@ -89,12 +89,12 @@ Database.connect("jdbc:h2:mem:regular", "org.h2.Driver")
 // In memory / keep alive between connections/transactions
 Database.connect("jdbc:h2:mem:regular;DB_CLOSE_DELAY=-1;", "org.h2.Driver")  
 //Gradle
-compile("com.h2database:h2:1.4.199")  
+implementation("com.h2database:h2:1.4.199")  
 ```  
 * SQL Server
 ```kotlin
 Database.connect("jdbc:sqlserver://localhost:32768;databaseName=test", "com.microsoft.sqlserver.jdbc.SQLServerDriver", 
                  user = "root", password = "your_pwd")  
 //Gradle
-compile("com.microsoft.sqlserver:mssql-jdbc:6.4.0.jre7")  
+implementation("com.microsoft.sqlserver:mssql-jdbc:6.4.0.jre7")  
 ```
