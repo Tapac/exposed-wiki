@@ -4,19 +4,19 @@
   * [查询](#查询)
   * [修改](#修改)
   * [删除](#删除)
-* [Where 条件表达式](#where-expression)
-* [有条件的 where](#conditional-where)
-* [统计Count](#count)
-* [排序Order-by](#order-by)
-* [分组Group-by](#group-by)
-* [限制Limit](#limit)
+* [Where 条件表达式](#Where 条件表达式)
+* [有条件的 where](#有条件的 where)
+* [统计Count](#统计Count)
+* [排序Order-by](#排序Order-by)
+* [分组Group-by](#分组Group-by)
+* [限制Limit](#限制Limit)
 * [Join](#join)
 * [Union](#union)
-* [别名Alias](#alias)
+* [别名Alias](#别名Alias)
 * [Schema](#schema)
-* [序列Sequence](#sequence)
-* [批量插入Batch Insert](#batch-insert)
-* [查询新增Insert From Select](#insert-from-select)
+* [序列Sequence](#序列Sequence)
+* [批量插入Batch Insert](#批量插入 Batch Insert)
+* [查询新增Insert From Select](#查询插入 Insert From Select)
 ***
 ## 概览
 Exposed 的 DSL（Domain Specific Language）API , 类似 Kotlin 提供的具有类型安全性的实际 SQL 语句.
@@ -94,7 +94,7 @@ StarWarsFilms.update({ StarWarsFilms.sequelId eq 8 }) {
 ```kotlin
 StarWarsFilms.deleteWhere { StarWarsFilms.sequelId eq 8 }
 ```
-## Where expression
+## Where 条件表达式
 查询表达式（where）需要一个布尔运算符（即：`Op<Boolean>`）.  
 以下是允许的条件(conditions):  
 ```
@@ -172,18 +172,18 @@ playerName?.let {
         .andWhere { Players.name eq playerName }
 }
 ```
-## Count
+## 统计Count
 `count()` 是 `Query` 的一个方法，如下例所示:
 ```kotlin
 val count = StarWarsFilms.select { StarWarsFilms.sequelId eq  8 }.count()
 ```
-## Order-by
+## 排序Order-by
 Order-by 接受一个list(元素为columns到布尔指示的映射)，指示排序应该是升序还是降序.
 例子:
 ```kotlin
 StarWarsFilms.selectAll().orderBy(StarWarsFilms.sequelId to SortOrder.ASC)
 ```
-## Group-by
+## 分组Group-by
 在 group-by 中，通过 `slice()` 方法定义字段及其函数（例如 `count`）.
 ```kotlin
 StarWarsFilms
@@ -250,7 +250,7 @@ val lucasDirectedQuery = StarWarsFilms.slice(StarWarsFilms.name).select { StarWa
 val originalTrilogyQuery = StarWarsFilms.slice(StarWarsFilms.name).select { StarWarsFilms.sequelId inList (3..5) }
 val filmNames = lucasDirectedQuery.unionAll(originalTrilogyQuery).map { it[StarWarsFilms.name] }
 ```
-## Alias
+## 别名Alias
 alias 别名可以防止混淆字段名和表名.
 使用别名变量而不是原始变量:
 ```Kotlin
@@ -296,7 +296,7 @@ val schema = Schema("my_schema", authorization = "owner")
 ```Kotlin
 SchemaUtils.setSchema(schema)
 ```
-## Sequence
+## 序列Sequence
 如果你想使用 Sequence，Exposed 是允许的:
 ### 定义一个 Sequence
 ```Kotlin
@@ -349,7 +349,6 @@ val allCitiesID = cities.batchInsert(cityNames) { name ->
 如果您不需要获取新生成的值（例如：自动递增的 ID），请将 `shouldReturnGeneratedValues` 参数设置为 false，这样可以通过将它们分批来提高批量插入的性能，而不是一直等待数据库同步新插入的对象状态.
 
 如果要检查 `rewriteBatchedInserts` + `batchInsert` 是否正常工作，请检查如何为您的驱动程序启用 JDBC 日志记录，因为 Exposed 将始终显示未重写的多个插入。您可以找到有关如何在 PostgreSQL 中启用日志记录的文档 [这里](https://jdbc.postgresql.org/documentation/head/logging.html).
-
 ## 查询插入 Insert From Select
 如果您想使用 `INSERT INTO ... SELECT ` SQL 语句, 可以尝试 Exposed 的 `Table.insert(Query)`.
 ```kotlin
