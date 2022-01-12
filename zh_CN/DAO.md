@@ -6,9 +6,9 @@
   * [修改](#修改)
   * [删除](#删除)
 * [关联Referencing](#关联Referencing)
-  * [多对一 many-to-one reference](#多对一 many-to-one-reference)
+  * [多对一many-to-one reference](#多对一many-to-one-reference)
   * [Optional reference](#optional-reference)
-  * [多对多 many-to-many reference](#多对多 many-to-many-reference)
+  * [多对多many-to-many reference](#多对多many-to-many-reference)
   * [Parent-Child reference](#parent-child-reference)
   * [Eager Loading](#eager-loading)
 * [高级的增删改查操作](#高级的增删改查操作)
@@ -95,7 +95,7 @@ movie.name = "Episode VIII – The Last Jedi"
 movie.delete() 
 ```
 ## 关联Referencing
-### 多对一 many-to-one reference
+### 多对一many-to-one reference
 假如您有一张表:
 ```kotlin
 object Users: IntIdTable() {
@@ -163,7 +163,7 @@ class User(id: EntityID<Int>): IntEntity(id) {
 }
 ```
 
-### 多对多 many-to-many reference
+### 多对多many-to-many reference
 在某些情况下，可能需要多对多引用 many-to-many reference.
 假设您想向 StarWarsFilm 类添加对以下 Actors 表的引用:
 ```kotlin
