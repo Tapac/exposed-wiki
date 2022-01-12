@@ -6,15 +6,15 @@
   * [删除](#删除)
 * [Where 条件表达式](#Where条件表达式)
 * [有条件的 where](#有条件的where)
-* [统计Count](#统计Count)
-* [排序Order-by](#排序Order-by)
-* [分组Group-by](#分组Group-by)
-* [限制Limit](#限制Limit)
+* [统计Count](#统计count)
+* [排序Order-by](#排序order-by)
+* [分组Group-by](#分组group-by)
+* [限制Limit](#限制limit)
 * [Join](#join)
 * [Union](#union)
-* [别名Alias](#别名Alias)
+* [别名Alias](#别名alias)
 * [Schema](#schema)
-* [序列Sequence](#序列Sequence)
+* [序列Sequence](#序列sequence)
 * [批量插入Batch Insert](#批量插入Batch-Insert)
 * [查询新增Insert From Select](#查询插入Insert-From-Select)
 ***
@@ -172,18 +172,18 @@ playerName?.let {
         .andWhere { Players.name eq playerName }
 }
 ```
-## 统计Count
+## 统计count
 `count()` 是 `Query` 的一个方法，如下例所示:
 ```kotlin
 val count = StarWarsFilms.select { StarWarsFilms.sequelId eq  8 }.count()
 ```
-## 排序Order-by
+## 排序order-by
 Order-by 接受一个list(元素为columns到布尔指示的映射)，指示排序应该是升序还是降序.
 例子:
 ```kotlin
 StarWarsFilms.selectAll().orderBy(StarWarsFilms.sequelId to SortOrder.ASC)
 ```
-## 分组Group-by
+## 分组group-by
 在 group-by 中，通过 `slice()` 方法定义字段及其函数（例如 `count`）.
 ```kotlin
 StarWarsFilms
@@ -200,7 +200,7 @@ min
 average
 ...
 ``` 
-## 限制Limit
+## 限制limit
 You can use limit function to prevent loading large data sets or use it for pagination with second `offset` parameter.
 您可以使用 limit 函数来防止加载大型数据集或使用它带有第二个`offset`偏移参数的进行分页操作.
 ```kotlin
@@ -250,7 +250,7 @@ val lucasDirectedQuery = StarWarsFilms.slice(StarWarsFilms.name).select { StarWa
 val originalTrilogyQuery = StarWarsFilms.slice(StarWarsFilms.name).select { StarWarsFilms.sequelId inList (3..5) }
 val filmNames = lucasDirectedQuery.unionAll(originalTrilogyQuery).map { it[StarWarsFilms.name] }
 ```
-## 别名Alias
+## 别名alias
 alias 别名可以防止混淆字段名和表名.
 使用别名变量而不是原始变量:
 ```Kotlin
@@ -296,7 +296,7 @@ val schema = Schema("my_schema", authorization = "owner")
 ```Kotlin
 SchemaUtils.setSchema(schema)
 ```
-## 序列Sequence
+## 序列sequence
 如果你想使用 Sequence，Exposed 是允许的:
 ### 定义一个 Sequence
 ```Kotlin
