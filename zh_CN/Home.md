@@ -12,8 +12,8 @@ Exposed 有两种类型的数据库访问：类型安全的 SQL wrapping DSL 和
   * [DSL API](DSL.md)
   * [DAO API](DAO.md)
   * [模块文档](LibDocumentation.md)
-    - [支持的数据类型](DataTypes.md)
-    - [内置的SQL函数](Functions.md)
+  * [支持的数据类型](DataTypes.md)
+  * [内置的SQL函数](Functions.md)
   * [常见问题](FAQ.md)
   * [迁移指南](Migration-Guide.md)
 

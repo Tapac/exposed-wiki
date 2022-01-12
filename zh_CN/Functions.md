@@ -68,3 +68,5 @@ val replacedName = CustomFunction<String?>("REPLACE", VarCharColumnType(), FooTa
 val replacedName = CustomStringFunction("REPLACE", FooTable.name, stringParam("foo"), stringParam("bar"))
 
 ``` 
+
+或者... 返回 [主页](Home.md)

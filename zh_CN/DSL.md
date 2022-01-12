@@ -361,3 +361,5 @@ cities.insert(users.slice(substring).selectAll().orderBy(users.id).limit(2))
 val userCount = users.selectAll().count()
 users.insert(users.slice(stringParam("Foo"), Random().castTo<String>(VarCharColumnType()).substring(1, 10)).selectAll(), columns = listOf(users.name, users.id))
 ```
+
+或者... 返回 [主页](Home.md)

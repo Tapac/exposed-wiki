@@ -98,3 +98,5 @@ Database.connect("jdbc:sqlserver://localhost:32768;databaseName=test", "com.micr
 //Gradle
 implementation("com.microsoft.sqlserver:mssql-jdbc:6.4.0.jre7")  
 ```
+
+或者... 返回 [主页](Home.md)

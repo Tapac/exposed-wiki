@@ -155,7 +155,7 @@ object Cities: IntIdTable() {
 
 ```
 
-详见 [[DSL API|DSL]]
+详见 [DSL API](DSL.md)
 
 ### Your first Exposed DAO
 
@@ -193,6 +193,6 @@ class City(id: EntityID<Int>) : IntEntity(id) {
 }
 ```
 
-详见 [[DAO API|DAO]]
+详见 [DAO API](DAO.md)
 
-或者... 返回 [[简介|Home]]
+或者... 返回 [主页](Home.md)
