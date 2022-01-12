@@ -4,8 +4,8 @@
   * [查询](#查询)
   * [修改](#修改)
   * [删除](#删除)
-* [Where 条件表达式](#Where 条件表达式)
-* [有条件的 where](#有条件的 where)
+* [Where 条件表达式](#Where条件表达式)
+* [有条件的 where](#有条件的where)
 * [统计Count](#统计Count)
 * [排序Order-by](#排序Order-by)
 * [分组Group-by](#分组Group-by)
@@ -15,8 +15,8 @@
 * [别名Alias](#别名Alias)
 * [Schema](#schema)
 * [序列Sequence](#序列Sequence)
-* [批量插入Batch Insert](#批量插入 Batch Insert)
-* [查询新增Insert From Select](#查询插入 Insert From Select)
+* [批量插入Batch Insert](#批量插入Batch Insert)
+* [查询新增Insert From Select](#查询插入Insert From Select)
 ***
 ## 概览
 Exposed 的 DSL（Domain Specific Language）API , 类似 Kotlin 提供的具有类型安全性的实际 SQL 语句.
@@ -94,7 +94,7 @@ StarWarsFilms.update({ StarWarsFilms.sequelId eq 8 }) {
 ```kotlin
 StarWarsFilms.deleteWhere { StarWarsFilms.sequelId eq 8 }
 ```
-## Where 条件表达式
+## Where条件表达式
 查询表达式（where）需要一个布尔运算符（即：`Op<Boolean>`）.  
 以下是允许的条件(conditions):  
 ```
@@ -123,7 +123,7 @@ not
 and
 or
 ```
-## 有条件的 where
+## 有条件的where
 It rather common case when your query's `where` condition depends on some other code conditions. Moreover, it could be independent or nested conditions what make it more complicated to prepare such `where`. 
 Let's imagine that we have a form on a website where a user can optionally filter "Star Wars" films by a director and/or a sequel.
 In Exposed version before 0.8.1 you had to code it like:
@@ -335,7 +335,7 @@ val id = StarWarsFilms.insertAndGetId {
 ```Kotlin
 val firstValue = StarWarsFilms.slice(nextVal).selectAll().single()[nextVal]
 ```
-## 批量插入 Batch Insert
+## 批量插入Batch Insert
 批量插入允许在一个 sql 语句中将实体列表映射到数据库原始数据。它比一个一个插入更有效，因为它只初始化一个statement语句。这是一个例子:
 ```kotlin
 val cityNames = listOf("Paris", "Moscow", "Helsinki")
@@ -349,7 +349,7 @@ val allCitiesID = cities.batchInsert(cityNames) { name ->
 如果您不需要获取新生成的值（例如：自动递增的 ID），请将 `shouldReturnGeneratedValues` 参数设置为 false，这样可以通过将它们分批来提高批量插入的性能，而不是一直等待数据库同步新插入的对象状态.
 
 如果要检查 `rewriteBatchedInserts` + `batchInsert` 是否正常工作，请检查如何为您的驱动程序启用 JDBC 日志记录，因为 Exposed 将始终显示未重写的多个插入。您可以找到有关如何在 PostgreSQL 中启用日志记录的文档 [这里](https://jdbc.postgresql.org/documentation/head/logging.html).
-## 查询插入 Insert From Select
+## 查询插入Insert From Select
 如果您想使用 `INSERT INTO ... SELECT ` SQL 语句, 可以尝试 Exposed 的 `Table.insert(Query)`.
 ```kotlin
 val substring = users.name.substring(1, 2)
