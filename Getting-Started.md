@@ -4,6 +4,7 @@
 
 ```xml
 <!-- Versions after 0.30.1 -->
+<!-- Versions before 0.30.1 is unavailable for now-->
 <repositories>
     <repository>
         <id>mavenCentral</id>
@@ -11,16 +12,6 @@
         <url>https://repo1.maven.org/maven2/</url>
     </repository>
 </repositories>
-
-<!-- Versions before 0.30.1 -->
-<repositories>
-    <repository>
-        <id>jcenter</id>
-        <name>jcenter</name>
-        <url>https://jcenter.bintray.com</url>
-    </repository>
-</repositories>
-
 
 <dependencies>
     <dependency>
@@ -49,10 +40,8 @@ If you're using older version of Gradle, add the following to your `build.gradle
 ```
 repositories {
   // Versions after 0.30.1
+  // Versions before 0.30.1 is unavailable for now
   mavenCentral()
-  
-  // Versions before 0.30.1
-  jcenter()
 }
 dependencies {
   implementation("org.jetbrains.exposed", "exposed-core", "0.37.3")

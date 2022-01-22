@@ -1,24 +1,16 @@
 ## Dependencies
-Exposed modules are available from Maven Central (JFrog Bintray and JCenter for older version) repositories.
+Exposed modules are available from Maven Central repository.
 To use them you have to add appropriate dependency into your repositories mapping.
 
 #### Maven
 ```xml
 <!-- Versions after 0.30.1 -->
+<!-- Versions before 0.30.1 is unavailable for now-->
 <repositories>
     <repository>
         <id>mavenCentral</id>
         <name>mavenCentral</name>
         <url>https://repo1.maven.org/maven2/</url>
-    </repository>
-</repositories>
-
-<!-- Versions before 0.30.1 -->
-<repositories>
-    <repository>
-        <id>jcenter</id>
-        <name>jcenter</name>
-        <url>https://jcenter.bintray.com</url>
     </repository>
 </repositories>
 ```
@@ -28,10 +20,8 @@ To use them you have to add appropriate dependency into your repositories mappin
 ```kotlin
 repositories {
     // Versions after 0.30.1
+    // Versions before 0.30.1 is unavailable for now
     mavenCentral()
-
-    // Versions before 0.30.1
-    jcenter()
 }
 ```
 
