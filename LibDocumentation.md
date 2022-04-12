@@ -128,7 +128,7 @@ dependencies {
 ```
 and in `gradle.properties`
 ```
-exposedVersion=0.37.3
+exposedVersion=0.38.1
 ```
 
 ### JDBC driver and logging
