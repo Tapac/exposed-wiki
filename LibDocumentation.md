@@ -66,6 +66,7 @@ At the moment `Exposed` coexists of provided modules
 * exposed-java-time - date-time extensions based on Java8 Time API
 * exposed-kotlin-datetime - date-time extensions based on kotlinx-datetime
 * exposed-money - extensions to support MonetaryAmount from "javax.money:money-api"
+* exposed-crypt - provides additional column types to store encrypted data in DB and encode/decode it on client-side
 
 Dependencies mapping listed bellow is similar (by functionality) to the previous versions:
 #### Maven
