@@ -80,22 +80,22 @@ Dependencies mapping listed bellow is similar (by functionality) to the previous
   <dependency>
     <groupId>org.jetbrains.exposed</groupId>
     <artifactId>exposed-dao</artifactId>
-    <version>0.37.3</version>
+    <version>0.38.1</version>
   </dependency>
   <dependency>
     <groupId>org.jetbrains.exposed</groupId>
     <artifactId>exposed-jdbc</artifactId>
-    <version>0.37.3</version>
+    <version>0.38.1</version>
   </dependency>
   <dependency>
     <groupId>org.jetbrains.exposed</groupId>
     <artifactId>exposed-jodatime</artifactId>
-    <version>0.37.3</version>
+    <version>0.38.1</version>
   </dependency>
   <dependency>
     <groupId>org.jetbrains.exposed</groupId>
     <artifactId>exposed-java-time</artifactId>
-    <version>0.37.3</version>
+    <version>0.38.1</version>
   </dependency>
 </dependencies>
 
@@ -104,12 +104,12 @@ Dependencies mapping listed bellow is similar (by functionality) to the previous
 #### Gradle Groovy
 ```groovy
 dependencies {
-  implementation 'org.jetbrains.exposed:exposed-core:0.37.3'
-  implementation 'org.jetbrains.exposed:exposed-dao:0.37.3'
-  implementation 'org.jetbrains.exposed:exposed-jdbc:0.37.3'
-  implementation 'org.jetbrains.exposed:exposed-jodatime:0.37.3'
+  implementation 'org.jetbrains.exposed:exposed-core:0.38.1'
+  implementation 'org.jetbrains.exposed:exposed-dao:0.38.1'
+  implementation 'org.jetbrains.exposed:exposed-jdbc:0.38.1'
+  implementation 'org.jetbrains.exposed:exposed-jodatime:0.38.1'
   // or
-  implementation 'org.jetbrains.exposed:exposed-java-time:0.37.3'
+  implementation 'org.jetbrains.exposed:exposed-java-time:0.38.1'
 }
 ```
 #### Gradle Kotlin DSL
