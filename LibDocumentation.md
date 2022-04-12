@@ -76,7 +76,7 @@ Dependencies mapping listed bellow is similar (by functionality) to the previous
   <dependency>
     <groupId>org.jetbrains.exposed</groupId>
     <artifactId>exposed-core</artifactId>
-    <version>0.37.3</version>
+    <version>0.38.1</version>
   </dependency>
   <dependency>
     <groupId>org.jetbrains.exposed</groupId>
