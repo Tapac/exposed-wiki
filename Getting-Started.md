@@ -17,17 +17,17 @@
     <dependency>
       <groupId>org.jetbrains.exposed</groupId>
       <artifactId>exposed-core</artifactId>
-      <version>0.38.2</version>
+      <version>0.39.1</version>
     </dependency>
     <dependency>
       <groupId>org.jetbrains.exposed</groupId>
       <artifactId>exposed-dao</artifactId>
-      <version>0.38.2</version>
+      <version>0.39.1</version>
     </dependency>
     <dependency>
       <groupId>org.jetbrains.exposed</groupId>
       <artifactId>exposed-jdbc</artifactId>
-      <version>0.38.2</version>
+      <version>0.39.1</version>
     </dependency>
 </dependencies>
 
@@ -44,9 +44,9 @@ repositories {
   mavenCentral()
 }
 dependencies {
-  implementation("org.jetbrains.exposed", "exposed-core", "0.38.2")
-  implementation("org.jetbrains.exposed", "exposed-dao", "0.38.2")
-  implementation("org.jetbrains.exposed", "exposed-jdbc", "0.38.2")
+  implementation("org.jetbrains.exposed", "exposed-core", "0.39.1")
+  implementation("org.jetbrains.exposed", "exposed-dao", "0.39.1")
+  implementation("org.jetbrains.exposed", "exposed-jdbc", "0.39.1")
 }
 ```
 
@@ -64,7 +64,7 @@ dependencies {
 And the version in your `gradle.properties`
 
 ```
-exposedVersion=0.38.2
+exposedVersion=0.39.1
 ```
 
 - Note: There are another modules. Detailed information located in [[Modules Documentation|LibDocumentation]] section.
