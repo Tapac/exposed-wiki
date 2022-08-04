@@ -17,17 +17,17 @@
     <dependency>
       <groupId>org.jetbrains.exposed</groupId>
       <artifactId>exposed-core</artifactId>
-      <version>0.39.1</version>
+      <version>0.39.2</version>
     </dependency>
     <dependency>
       <groupId>org.jetbrains.exposed</groupId>
       <artifactId>exposed-dao</artifactId>
-      <version>0.39.1</version>
+      <version>0.39.2</version>
     </dependency>
     <dependency>
       <groupId>org.jetbrains.exposed</groupId>
       <artifactId>exposed-jdbc</artifactId>
-      <version>0.39.1</version>
+      <version>0.39.2</version>
     </dependency>
 </dependencies>
 
