@@ -136,7 +136,7 @@ You also need a JDBC driver for the database system you are using (see [[DataBas
 ```kotlin
 dependencies {
     // for H2
-    implementation("com.h2database:h2:1.4.202")
+    implementation("com.h2database:h2:2.1.214")
     // for logging (StdOutSqlLogger), see
     // http://www.slf4j.org/codes.html#StaticLoggerBinder
     implementation("org.slf4j:slf4j-nop:1.7.30")
