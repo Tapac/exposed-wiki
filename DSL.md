@@ -162,13 +162,13 @@ sequelId?.let {
     query.andWhere { StarWarsFilms.sequelId eq it }
 }
 ```
-But what if we have conditionaly select from another table and want to join it only when condition is true? 
+But what if we want to conditionally select from another table and join it only when a condition is true? 
 You have to use `adjustColumnSet` and `adjustSlice` functions (available since 0.8.1) which allows to extend and modify `join` and `slice` parts of a query (see kdoc on that functions):
 ```Kotlin
-playerName?.let {
-    query.adjustColumnSet { innerJoin(Players, {StarWarsFilms.sequelId}, {Players.sequelId}) }
-        .adjustSlice { slice(fields + Players.columns) }
-        .andWhere { Players.name eq playerName }
+actorName?.let {
+    query.adjustColumnSet { innerJoin(Actors, {StarWarsFilms.sequelId}, {Actors.sequelId}) }
+        .adjustSlice { slice(fields + Actors.columns) }
+        .andWhere { Actors.name eq actorName }
 }
 ```
 ## Count
@@ -203,35 +203,56 @@ average
 You can use limit function to prevent loading large data sets or use it for pagination with second `offset` parameter.
 ```kotlin
 // Take 2 films after the first one.
-StarWarsFilms.select { StarWarsFilms.sequelId eq Players.sequelId }.limit(2, offset = 1)
+StarWarsFilms.select { StarWarsFilms.sequelId eq Actors.sequelId }.limit(2, offset = 1)
 ```
 ## Join
-For join example consider the following tables:
+For the join examples below, consider the following tables:
 ```kotlin
 object StarWarsFilms : IntIdTable() {
   val sequelId: Column<Int> = integer("sequel_id").uniqueIndex()
   val name: Column<String> = varchar("name", 50)
   val director: Column<String> = varchar("director", 50)
 }
-object Players : Table() {
+object Actors : IntIdTable() {
   val sequelId: Column<Int> = integer("sequel_id").uniqueIndex()
   val name: Column<String> = varchar("name", 50)
 }
+object Roles : Table() {
+  val sequelId: Column<Int> = integer("sequel_id")
+  val actorId: Column<EntityID<Int>> = reference("actor_id", Actors)
+  val characterName: Column<String> = varchar("name", 50)
+}
 ```
-Join to count how many players play in each movie:
+Join to count how many actors star in each movie:
 ```kotlin
-(Players innerJoin StarWarsFilms)
-  .slice(Players.name.count(), StarWarsFilms.name)
-  .select { StarWarsFilms.sequelId eq Players.sequelId }
-  .groupBy(StarWarsFilms.name)
-``` 
-* In case there is a foreign key it is possible to replace `select{}` with `selectAll()`
-Same example using the full syntax:
-```kotlin
-Players.join(StarWarsFilms, JoinType.INNER, additionalConstraint = {StarWarsFilms.sequelId eq Players.sequelId})
-  .slice(Players.name.count(), StarWarsFilms.name)
+Actors.join(StarWarsFilms, JoinType.INNER, onColumn = Actors.sequelId, otherColumn = StarWarsFilms.sequelId)
+  .slice(Actors.name.count(), StarWarsFilms.name)
   .selectAll()
   .groupBy(StarWarsFilms.name)
+``` 
+Instead of specifying `onColumn` and `otherColumn`, `additionalConstraint` can be used (and allows specifying 
+other types of join conditions).
+```kotlin
+Actors.join(StarWarsFilms, JoinType.INNER, additionalConstraint = {StarWarsFilms.sequelId eq Actors.sequelId})
+  .slice(Actors.name.count(), StarWarsFilms.name)
+  .selectAll()
+  .groupBy(StarWarsFilms.name)
+```
+When joining on a foreign key, the more concise `innerJoin` can be used:
+```kotlin
+(Actors innerJoin Roles)
+  .slice(Roles.characterName.count(), Actors.name)
+  .selectAll()
+  .groupBy(Actors.name)
+  .toList()
+```
+This is equivalent to the following:
+```kotlin
+Actors.join(Roles, JoinType.INNER, onColumn = Actors.id, otherColumn = Roles.actorId)
+  .slice(Roles.characterName.count(), Actors.name)
+  .selectAll()
+  .groupBy(Actors.name)
+  .toList()
 ```
 ## Union
 You can combine the results of multiple queries using using `.union(...)`.
