@@ -1,4 +1,4 @@
-### Working with DataBase and DataSource
+### Working with Database and DataSource
 Every database access using Exposed is starting by obtaining a connection and creating a transaction.  
 First of all, you have to tell Exposed how to connect to a database by using `Database.connect` function. 
 It won't create a real database connection but only provide a descriptor for future usage.

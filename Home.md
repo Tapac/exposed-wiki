@@ -7,7 +7,7 @@ This wiki contains the following pages:
 
   * [[Introduction|Home]] - This page
   * [[Getting Started|Getting-Started]]
-  * [[DataBase and DataSource|DataBase-and-DataSource]]
+  * [[Database and DataSource|Database-and-DataSource]]
   * [[Transactions|Transactions]]
   * [[DSL API|DSL]]
   * [[DAO API|DAO]]

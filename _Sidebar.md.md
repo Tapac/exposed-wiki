@@ -1,6 +1,6 @@
   * [[Introduction|Home]]
   * [[Getting Started|Getting-Started]]
-  * [[DataBase and DataSource|DataBase-and-DataSource]]
+  * [[Database and DataSource|Database-and-DataSource]]
   * [[Transactions|Transactions]]
   * [[DSL API|DSL]]
   * [[DAO API|DAO]]
