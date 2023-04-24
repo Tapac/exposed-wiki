@@ -346,7 +346,7 @@ You can find the documentation for this option for MySQL [here](https://dev.mysq
 
 If you don't need to get the newly generated values (example: auto incremented ID), set the `shouldReturnGeneratedValues` parameter to false, this increases the performance of batch inserts by batching them in chunks, instead of always waiting for the database to synchronize the newly inserted object state.
 
-If you want to check if the `rewriteBatchedInserts` + `batchInsert` is working correctly, check how to enable JDBC logging for your driver because Exposed will always show the non-rewritten multiple inserts. You can find the documentation for how to enable logging in PostgreSQL [here](https://jdbc.postgresql.org/documentation/head/logging.html).
+If you want to check if the `rewriteBatchedInserts` + `batchInsert` is working correctly, check how to enable JDBC logging for your driver because Exposed will always show the non-rewritten multiple inserts. You can find the documentation for how to enable logging in PostgreSQL [here](https://jdbc.postgresql.org/documentation/logging).
 
 ## Insert From Select
 If you want to use `INSERT INTO ... SELECT ` SQL clause try Exposed analog `Table.insert(Query)`.
