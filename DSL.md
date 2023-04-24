@@ -342,7 +342,7 @@ val allCitiesID = cities.batchInsert(cityNames) { name ->
 }
 ```
 *NOTE:* The `batchInsert` function will still create multiple `INSERT` statements when interacting with your database. You most likely want to couple this with the `rewriteBatchedInserts=true` (or `rewriteBatchedStatements=true`) option of your relevant JDBC driver, which will convert those into a single bulkInsert.
-You can find the documentation for this option for MySQL [here](https://dev.mysql.com/doc/connector-j/5.1/en/connector-j-reference-configuration-properties.html) and PostgreSQL [here](https://jdbc.postgresql.org/documentation/94/connect.html).
+You can find the documentation for this option for MySQL [here](https://dev.mysql.com/doc/connector-j/5.1/en/connector-j-reference-configuration-properties.html) and PostgreSQL [here](https://jdbc.postgresql.org/documentation/use).
 
 If you don't need to get the newly generated values (example: auto incremented ID), set the `shouldReturnGeneratedValues` parameter to false, this increases the performance of batch inserts by batching them in chunks, instead of always waiting for the database to synchronize the newly inserted object state.
 
