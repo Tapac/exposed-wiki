@@ -1,5 +1,6 @@
 Currently Exposed support the following data types in table definition:  
 * `integer` - translates to DB `INT`
+* `short` - translates to DB `SMALLINT`
 * `long` - `BIGINT`
 * `float` - `FLOAT`
 * `decimal` - `DECIMAL` with scale and precision

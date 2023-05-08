@@ -194,8 +194,7 @@ class StarWarsFilm(id: EntityID<Int>) : IntEntity(id) {
     ...
 }
 ```
-Note: Creating the entity and the reference in the same `transaction` does only work if you set the
-id column manually. If you're using `UUIDTables` and `UUIDEntity` you can do it like this:
+Note: You can set up IDs manually inside a transaction like this:
 ```kotlin
 transaction {
  //only works with UUIDTable and UUIDEntity
@@ -203,28 +202,6 @@ transaction {
     ...
     actors = SizedCollection(listOf(actor))
   }
-}
-```
-If you don't want to set the ID column manually, you have to create the entity in it's own `transaction` and set the relation afterward in another `transaction`:
-```kotlin
-// create film
-val film = transaction {
-   StarWarsFilm.new {
-    name = "The Last Jedi"
-    sequelId = 8
-    director = "Rian Johnson"
-  }
-}
-//create actor
-val actor = transaction {
-  Actor.new {
-    firstname = "Daisy"
-    lastname = "Ridley"
-  }
-}
-//add reference
-transaction {
-  film.actors = SizedCollection(listOf(actor))
 }
 ```
 ### Parent-Child reference 
