@@ -87,7 +87,7 @@ It is also possible to provide `javax.sql.DataSource` for advanced behaviors suc
 Database.connect(dataSource)
 ```
 
-More details on [[DataBase and DataSource|DataBase-and-DataSource]]
+More details on [[Database and DataSource|Database-and-DataSource]]
 
 After obtaining a connection all SQL statements should be placed inside a transaction:
 
