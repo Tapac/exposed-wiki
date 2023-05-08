@@ -194,7 +194,7 @@ class StarWarsFilm(id: EntityID<Int>) : IntEntity(id) {
     ...
 }
 ```
-Note: If you're using `UUIDTables` and `UUIDEntity` you can setup IDs manually inside transaction like this:
+Note: You can set up IDs manually inside a transaction like this:
 ```kotlin
 transaction {
  //only works with UUIDTable and UUIDEntity
