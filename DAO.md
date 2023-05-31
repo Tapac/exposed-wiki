@@ -233,7 +233,7 @@ child1.parents = SizedCollection(root) // assign parent
 val child2 = Node.new { name = "child2" }
 root.children = SizedCollection(listOf(child1, child2)) // assign children
 ```
-Beware that you can't setup references inside a `new` block as an entity is not created yet and id is not defined to be referenced to.
+
 ### Eager Loading
 **Available since 0.13.1**. 
 References in Exposed are lazily loaded, meaning queries to fetch the data for the reference are made at the moment the reference is first utilised. For scenarios wherefore you know you will require references ahead of time, Exposed can eager load them at the time of the parent query, this is prevents the classic "N+1" problem as references can be aggregated and loaded in a single query.
