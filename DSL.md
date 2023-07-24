@@ -17,6 +17,7 @@
 * [Sequence](#sequence)
 * [Batch Insert](#batch-insert)
 * [Insert From Select](#insert-from-select)
+* [Insert Or Ignore](#insert-or-ignore)
 ***
 ## Overview
 The DSL (Domain Specific Language) API of Exposed, is similar to actual SQL statements with type safety that Kotlin offers.  
@@ -122,9 +123,13 @@ Allowed logical conditions are:
 not
 and
 or
+andIfNotNull
+orIfNotNull
+compoundAnd()
+compoundOr()
 ```
 ## Conditional where
-It rather common case when your query's `where` condition depends on some other code conditions. Moreover, it could be independent or nested conditions what make it more complicated to prepare such `where`. 
+It is a rather common case to have a query with a `where` clause that depends on some other code's conditions. Moreover, independent or nested conditions could make it more complicated to prepare such `where` clauses. 
 Let's imagine that we have a form on a website where a user can optionally filter "Star Wars" films by a director and/or a sequel.
 In Exposed version before 0.8.1 you had to code it like:
 ```Kotlin 
@@ -375,8 +380,25 @@ If you want to use `INSERT INTO ... SELECT ` SQL clause try Exposed analog `Tabl
 val substring = users.name.substring(1, 2)
 cities.insert(users.slice(substring).selectAll().orderBy(users.id).limit(2))
 ```
-By default it will try to insert into all non auto-increment `Table` columns in order they defined in Table instance. If you want to specify columns or change the order, provide list of columns as second parameter:
+By default it will try to insert into all non auto-increment `Table` columns in the order they are defined in the Table instance. If you want to specify columns or change the order, provide a list of columns as second parameter:
 ```kotlin
 val userCount = users.selectAll().count()
 users.insert(users.slice(stringParam("Foo"), Random().castTo<String>(VarCharColumnType()).substring(1, 10)).selectAll(), columns = listOf(users.name, users.id))
+```
+
+## Insert Or Ignore
+If supported by your specific database, `insertIgnore()` allows insert statements to be executed without throwing any ignorable errors. This may be useful, for example, when insertion conflicts are possible:
+```kt
+StarWarsFilms.insert {
+    it[sequelId] = 8  // column pre-defined with a unique index
+    it[name] = "The Last Jedi"
+    it[director] = "Rian Johnson"
+}
+// If insert() was used, this would throw a constraint violation exception
+// Instead, this new row is ignored and discarded
+StarWarsFilms.insertIgnore {
+    it[sequelId] = 8
+    it[name] = "The Rise of Skywalker"
+    it[director] = "JJ Abrams"
+}
 ```
