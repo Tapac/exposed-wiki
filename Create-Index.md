@@ -1,3 +1,9 @@
+* [Single Column Index](#single-column-index)
+* [Multiple Column Index](#multiple-column-index)
+* [Customizing An Index](#customizing-an-index)
+  - [Index With Type](#index-with-type)
+* [Accessing Index Statements](#accessing-index-statements)
+
 ## Single Column Index
 
 The simplest way to create an index is to use an extension function directly on a column:
