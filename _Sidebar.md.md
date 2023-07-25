@@ -3,6 +3,7 @@
   * [[Database and DataSource|Database-and-DataSource]]
   * [[Transactions|Transactions]]
   * [[DSL API|DSL]]
+    * [[Create Index|Create-Index]]
   * [[DAO API|DAO]]
   * [[Modules Documentation|LibDocumentation]]
     * [[Supported Data Types|DataTypes]]
