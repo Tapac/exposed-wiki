@@ -29,6 +29,20 @@ object StarWarsFilms : Table() {
   override val primaryKey = PrimaryKey(id, name = "PK_StarWarsFilms_Id") // PK_StarWarsFilms_Id is optional here
 }
 ```
+By default, the lower case of the DB table representation will be used as the table name unless another name is explicitly
+specified. In this case, Exposed will assume the `StarWarsFilms` stores records in the `starwarsfilms` table.
+
+If your DB table representation name does not fit this convention, you may manually specify the
+table name by calling the `Table` constructor with the correct name as argument:
+```kotlin
+object StarWarsFilms : Table("star_wars_films") {
+  val id: Column<Int> = integer("id").autoIncrement()
+  val sequelId: Column<Int> = integer("sequel_id").uniqueIndex()
+  val name: Column<String> = varchar("name", 50)
+  val director: Column<String> = varchar("director", 50)
+  override val primaryKey = PrimaryKey(id, name = "PK_StarWarsFilms_Id") // PK_StarWarsFilms_Id is optional here
+}
+```
 Tables that contain an `Int` id with the name `id` can be declared like this:
 ```kotlin
 object StarWarsFilms : IntIdTable() {
