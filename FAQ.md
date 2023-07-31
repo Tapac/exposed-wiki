@@ -13,7 +13,7 @@ The complete list of supported data types can be found here: [[Data Types|DataTy
 
 ### Q: Is `upsert` supported?
 
-A: Yes. See [[Insert Or Update|DSL#insert-or-update]].
+A: Yes. See [[Insert Or Update|DSL#insert-or-update]]
 
 ### Q: Is `json` type supported?
 
