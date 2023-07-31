@@ -14,6 +14,8 @@
 * [Advanced CRUD operations](#advanced-crud-operations)
   * [Read entity with a join to another table](#read-entity-with-a-join-to-another-table)
   * [Auto-fill created and updated columns on entity change](#auto-fill-created-and-updated-columns-on-entity-change)
+  * [Use queries as expressions](#use-queries-as-expressions)
+  * [Add computed fields to entity class](#add-computed-fields-to-entity-class)
 * [Entities mapping](#entities-mapping)
   * [Fields transformation](#fields-transformation)
 ***
@@ -262,6 +264,7 @@ object StarWarsFilms : Table() {
 }
 ```
 ## Advanced CRUD operations
+
 ### Read entity with a join to another table
 Let's imagine that you want to find all users who rated second SW film with more than 5.
 First of all, we should write that query using Exposed DSL.
@@ -276,8 +279,10 @@ After that all we have to do is to "wrap" a result with User entity:
 ```kotlin
 val users = User.wrapRows(query).toList()
 ```
+
 ### Auto-fill created and updated columns on entity change
 See example by @PaulMuriithi [here](https://github.com/PaulMuriithi/ExposedDatesAutoFill/blob/master/src/main/kotlin/app/Models.kt).
+
 ### Use queries as expressions
 Imagine that you want to sort cities by how many users each city has. In order to do so, you can write a sub-query which counts users in each city and order by that number. Though in order to do so you'll have to convert `Query` to `Expression`. This can be done using `wrapAsExpression` function:
 ```kotlin
@@ -291,6 +296,49 @@ val cities = Cities
   .orderBy(expression, SortOrder.DESC)
   .toList()
 ```
+
+### Add computed fields to entity class
+Imagine that you want to use a window function to rank SW films with each entity fetch. Any open function in `EntityClass` can be overriden inside the object's companion object, but to achieve this functionality only `searchQuery()` needs to be overriden. The results of the function can then be accessed using a property of the entity class:
+```kotlin
+object StarWarsFilms : IntIdTable() {
+    val sequelId = integer("sequel_id").uniqueIndex()
+    val name = varchar("name", 50)
+    val rating = double("rating")
+
+    val rank = Rank().over().orderBy(rating, SortOrder.DESC)
+}
+
+class StarWarsFilm(id: EntityID<Int>) : IntEntity(id) {
+    var sequelId by StarWarsFilms.sequelId
+    var name by StarWarsFilms.name
+    var rating by StarWarsFilms.rating
+
+    val rank: Long
+        get() = readValues[StarWarsFilms.rank]
+
+    companion object : IntEntityClass<StarWarsFilm>(StarWarsFilms) {
+        override fun searchQuery(op: Op<Boolean>): Query {
+            return super.searchQuery(op).adjustSlice {
+                slice(columns + StarWarsFilms.rank)
+            }
+        }
+    }
+}
+
+transaction {
+    StarWarsFilm.new {
+        sequelId = 8
+        name = "The Last Jedi"
+        rating = 4.2
+    }
+    // more insertions ...
+    entityCache.clear()
+
+    // fetch entities with value (or store entities then read value)
+    StarWarsFilm.find { StarWarsFilms.name like "The%" }.map { it.name to it.rank }
+}
+```
+
 ## Entities mapping
 ### Fields transformation
 As databases could store only basic types like integers and strings it's not always conveniently to keep the same simplicity on DAO level. 
