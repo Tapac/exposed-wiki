@@ -2,6 +2,7 @@
 * [String functions](#string-functions)
 * [Aggregating functions](#aggregating-functions)
 * [Custom functions](#custom-functions)
+* [Window functions](#window-functions)
 
 ## How to use functions
 In cases when you want to retrieve a function result from a query, then you have to declare the function as a variable like:
@@ -146,3 +147,42 @@ transaction {
 }
 
 ```
+
+## Window Functions
+
+Window functions allow calculations across a set of table rows that are related to the current row.
+
+Existing aggregate functions (like `sum()`, `avg()`) can be used, as well as new rank and value functions:
+* `cumeDist()`
+* `denseRank()`
+* `firstValue()`
+* `lag()`
+* `lastValue()`
+* `lead()`
+* `nthValue()`
+* `nTile()`
+* `percentRank()`
+* `rank()`
+* `rowNumber()`
+
+To use a window function, include the `OVER` clause by chaining `.over()` after the function call. A `PARTITION BY` and `ORDER BY` clause can be optionally chained using `.partitionBy()` and `.orderBy()`, which both take multiple arguments:
+```kotlin
+FooTable.amount.sum().over().partitionBy(FooTable.year, FooTable.product).orderBy(FooTable.amount)
+
+rowNumber().over().partitionBy(FooTable.year, FooTable.product).orderBy(FooTable.amount)
+
+FooTable.amount.sum().over().orderBy(FooTable.year to SortOrder.DESC, FooTable.product to SortOrder.ASC_NULLS_FIRST)
+```
+Frame clause functions (like `rows()`, `range()`, and `groups()`) are also supported and take a `WindowFrameBound` option depending on the expected result:
+* `WindowFrameBound.currentRow()`
+* `WindowFrameBound.unboundedPreceding()`
+* `WindowFrameBound.unboundedFollowing()`
+* `WindowFrameBound.offsetPreceding()`
+* `WindowFrameBound.offsetFollowing()`
+```kotlin
+FooTable.amount.sum().over()
+    .partitionBy(FooTable.year, FooTable.product)
+    .orderBy(FooTable.amount)
+    .range(WindowFrameBound.offsetPreceding(2), WindowFrameBound.currentRow())
+```
+**Note**: If multiple frame clause functions are chained together, only the last one will be used.
