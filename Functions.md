@@ -39,6 +39,20 @@ val userName = concat(stringLiteral("User - "), FooTable.name)
 val userNames = FooTable.slice(userName).selectAll().map { it[userName] }
 
 ```
+### Locate
+Returns the index of the first occurrence of a specified substring or 0.
+```kotlin
+val firstAIndex = FooTable.name.locate("a")
+val firstAIndices = FooTable.slice(firstAIndex).selectAll().map { it[firstAIndex] }
+
+```
+### CharLength
+Returns the length, measured in characters, or `null` if the String value is null.
+```kotlin
+val nameLength = FooTable.name.charLength()
+val nameLengths = FooTable.slice(nameLength).selectAll().map { it[nameLength] }
+
+```
 
 ## Aggregating functions
 These functions should be used in queries with [[groupBy|DSL#group-by]].
