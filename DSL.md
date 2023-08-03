@@ -19,6 +19,7 @@
 * [Insert From Select](#insert-from-select)
 * [Insert Or Ignore](#insert-or-ignore)
 * [Insert Or Update](#insert-or-update)
+* [Replace](#replace)
 ***
 ## Overview
 The DSL (Domain Specific Language) API of Exposed, is similar to actual SQL statements with type safety that Kotlin offers.  
@@ -390,6 +391,7 @@ users.insert(users.slice(stringParam("Foo"), Random().castTo<String>(VarCharColu
 ```
 
 ## Insert Or Ignore
+
 If supported by your specific database, `insertIgnore()` allows insert statements to be executed without throwing any ignorable errors. This may be useful, for example, when insertion conflicts are possible:
 ```kt
 StarWarsFilms.insert {
@@ -407,6 +409,7 @@ StarWarsFilms.insertIgnore {
 ```
 
 ## Insert Or Update
+
 Insert or update (Upsert) is a database operation that either inserts a new row or updates an existing row if a duplicate constraint already exists. The supported functionality of `upsert()` is dependent on the specific database being used.
 For example, MySQL's `INSERT ... ON DUPLICATE KEY UPDATE` statement automatically assesses the primary key and unique indices for a duplicate value, so using the function in Exposed would look like this:
 ```kotlin
@@ -437,4 +440,46 @@ StarWarsFilms.upsert(
 }
 ```
 If a specific database supports user-defined key columns and none are provided, the table's primary key is used. If there is no defined primary key, the first unique index is used. If there are no unique indices, each database handles this case differently, so it is strongly advised that keys are defined to avoid unexpected results.
-**Note:** Databases that do not support a specific upsert command implement the standard `MERGE USING` statement with aliases and a derived table. These include Oracle, SQL Server, and H2 compatibility modes (except for MySQL mode).
+
+**Note:** Databases that do not support a specific upsert command implement the standard `MERGE INTO .. USING` statement with aliases and a derived table column list. These include Oracle, SQL Server, and H2 compatibility modes (except for MySQL mode). Any columns defined as key constraints (to be used in the `ON` clause) must be included in the statement block to avoid throwing an error.
+
+## Replace
+
+SQLite, MySQL, and MariaDB (as well as the H2 compatibility modes of the latter 2 databases) support a `REPLACE` statement that acts in a similar manner to an `INSERT OR UPDATE` statement. The only difference is that, if an insertion would violate a unique constraint, the existing row is deleted (not updated) before the new row is inserted.
+```kotlin
+object StarWarsFilms : Table() {
+    val sequelId: Column<Int> = integer("sequel_id").uniqueIndex()
+    val releaseYear: Column<Int> = integer("release_year")
+    val name: Column<String> = varchar("name", 50)
+    val director: Column<String> = varchar("director", 50)
+    val rating: Column<Double> = double("rating").default(10.0)
+
+    override val primaryKey = PrimaryKey(sequelId, releaseYear)
+}
+
+transaction {
+    // ...
+    // inserts a new row with default rating
+    StarWarsFilms.replace {
+        it[sequelId] = 9
+        it[releaseYear] = 2019
+        it[name] = "The Rise of Skywalker"
+        it[director] = "JJ Abrams"
+    }
+    // deletes existing row and inserts new row with set [rating]
+    StarWarsFilms.replace {
+        it[sequelId] = 9
+        it[releaseYear] = 2019
+        it[name] = "The Rise of Skywalker"
+        it[director] = "JJ Abrams"
+        it[rating] = 5.2
+    }
+}
+```
+Unlike Insert or Update, none of the supporting databases allows a `WHERE` clause. Also, the constraints used to assess a violation are limited to the primary key and unique indexes, so there is no parameter for a custom key set.
+
+The values specified in the statement block will be used for the insert statement and any omitted columns are set to their default values, if applicable.
+
+**Note:** In the example above, if the original row was inserted with a user-defined `rating`, then `replace()` was executed with a new query that omitted a new value for `rating`, the newly inserted row would store the default `rating` value. This is because the old row was completely deleted first.
+
+
