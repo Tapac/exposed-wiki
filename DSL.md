@@ -364,13 +364,36 @@ val id = StarWarsFilms.insertAndGetId {
 val firstValue = StarWarsFilms.slice(nextVal).selectAll().single()[nextVal]
 ```
 ## Batch Insert
-Batch Insert allow mapping a list of entities into DB raws in one sql statement. It is more efficient than inserting one by one as it initiates only one statement. Here is an example:
+Batch Insert allow mapping a list of entities into DB raws in one sql statement. It is more efficient than inserting one by one as it initiates only one statement. Here is an example that uses a simple list:
 ```kotlin
 val cityNames = listOf("Paris", "Moscow", "Helsinki")
 val allCitiesID = cities.batchInsert(cityNames) { name ->
   this[cities.name] = name
 }
 ```
+
+Here is an example that uses a list of data class instances:
+```kotlin
+data class SWFilmData(val sequelId: Int, val name: String, val director: String)
+
+transaction {
+    // ...
+    val films = listOf(
+        SWFilmData(5, "The Empire Strikes Back", "Irvin Kershner"),
+        SWFilmData(4, "A New Hope", "George Lucas"),
+        SWFilmData(7, "The Force Awakens", "JJ Abrams")
+    )
+
+    StarWarsFilms.batchInsert(films) { (id, name, director) ->
+        this[StarWarsFilms.sequelId] = id
+        this[StarWarsFilms.name] = name
+        this[StarWarsFilms.director] = director
+    }
+
+    StarWarsFilms.selectAll().count() // 3
+}
+```
+
 *NOTE:* The `batchInsert` function will still create multiple `INSERT` statements when interacting with your database. You most likely want to couple this with the `rewriteBatchedInserts=true` (or `rewriteBatchedStatements=true`) option of your relevant JDBC driver, which will convert those into a single bulkInsert.
 You can find the documentation for this option for MySQL [here](https://dev.mysql.com/doc/connector-j/5.1/en/connector-j-reference-configuration-properties.html) and PostgreSQL [here](https://jdbc.postgresql.org/documentation/use/).
 
