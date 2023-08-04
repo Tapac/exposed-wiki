@@ -4,6 +4,7 @@ Currently Exposed support the following data types in table definition:
 * `long` - `BIGINT`
 * `float` - `FLOAT`
 * `decimal` - `DECIMAL` with scale and precision
+* `double` - `DOUBLE PRECISION`
 * `bool` - `BOOLEAN`
 * `char` - `CHAR`
 * `varchar` - `VARCHAR` with length
