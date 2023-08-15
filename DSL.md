@@ -449,6 +449,8 @@ StarWarsFilms.upsert {
     it[director] = "JJ Abrams"
 }
 ```
+If none of the optional arguments are provided to `upsert()`, the statements in the `body` block will be used for both the insert and update parts of the operation. This means that, for example, if a table mapping has columns with default values and these columns are omitted from the `body` block, the default values will be used for insertion as well as for the update operation. If the update operation should differ from the insert operation, then `onUpdate` should be provided an argument with the specific columns to update, as seen in the example below.
+
 Using another example, PostgreSQL allows more control over which key constraint columns to check for conflict, whether different values should be used for an update, and whether the update statement should have a `WHERE` clause:
 ```kotlin
 val incrementSequelId = listOf(StarWarsFilms.sequelId to StarWarsFilms.sequelId.plus(1))
