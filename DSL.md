@@ -13,6 +13,7 @@
 * [Join](#join)
 * [Union](#union)
 * [Alias](#alias)
+* [SubQuery](#subquery)
 * [Schema](#schema)
 * [Sequence](#sequence)
 * [Batch Insert](#batch-insert)
@@ -298,6 +299,75 @@ starWarsFilms
     .selectAll()
     .map { it[id] to it[name] }
 ```
+
+## SubQuery
+
+Alias can be used to implement Join with SubQuery.
+For example, assume the following SQL is to be executed.
+```sql
+select
+    DEPARTMENT.department_name,
+    dptcnt.cnt
+from
+    DEPARTMENT INNER JOIN (
+        select
+            department_id,
+            count(employee_id) cnt
+        from
+            EMPLOYEE
+        group by
+            department_id
+    ) dptcnt ON DEPARTMENT.department_id = dptcnt.department_id
+```
+First, define each of the required tables.
+```kotlin
+object DepartmentTable : Table("DEPARTMENT") {
+    val departmentId = varchar("DEPARTMENT_ID", 10)
+    val departmentName = varchar("DEPARTMENT_NAME", 256)
+}
+```
+```kotlin
+object EmployeeTable : Table("EMPLOYEE") {
+  val employeeId = varchar("EMPLOYEE_ID", 10)
+  val departmentId = varchar("DEPARTMENT_ID", 10)
+}
+```
+In this example, the SubQuery portion is defined as an object.
+```kotlin
+object EmployeeCntSubQuery {
+    val employeeCnt = EmployeeTable.employeeId.count().alias("cnt")
+    fun getSubQuery(): QueryAlias {
+        return EmployeeTable
+        .slice(EmployeeTable.departmentId, employeeCnt)
+            .selectAll()
+            .groupBy(EmployeeTable.departmentId)
+            .alias("dptcnt")
+    }
+}
+```
+Then, you can use Alias and Subquery to join by writing the following.
+The way to access the retrieved data is the `resultRow[DepartmentTable.departmentId]` part.
+```kotlin
+class DepartmentDataAccessor {
+    fun getEmployeeCountGroupByDepartment() {
+        val employeeCntSubQuery = EmployeeCntSubQuery.getSubQuery()
+        val result = DepartmentTable.join(
+            employeeCntSubQuery,
+            JoinType.INNER,
+            additionalConstraint = {
+                DepartmentTable.departmentId eq employeeCntSubQuery[EmployeeTable.departmentId]
+            }
+        ).slice(
+            DepartmentTable.departmentName,
+            employeeCntSubQuery[EmployeeCntSubQuery.employeeCnt],
+        ).selectAll().toList().map{
+            resultRow ->
+                Pair(resultRow[DepartmentTable.departmentId], resultRow[employeeCntSubQuery[EmployeeCntSubQuery.employeeCnt]])
+        }
+    }
+}
+```
+
 ## Schema
 You can create a schema or drop an existing one:
 ```Kotlin
