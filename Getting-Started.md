@@ -118,14 +118,14 @@ Observe the below examples and head on to the specific section of each API for m
 
 
 fun main(args: Array<String>) {
-  //an example connection to H2 DB
+  // an example connection to H2 DB
   Database.connect("jdbc:h2:mem:test", driver = "org.h2.Driver")
 
   transaction {
     // print sql to std-out
     addLogger(StdOutSqlLogger)
 
-    SchemaUtils.create (Cities)
+    SchemaUtils.create(Cities)
 
     // insert new city. SQL: INSERT INTO Cities (name) VALUES ('St. Petersburg')
     val stPeteId = Cities.insert {
